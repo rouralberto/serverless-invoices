@@ -12,18 +12,15 @@
             </tr>
             </thead>
             <tbody v-if="invoices">
-            <tr v-for="invoice in invoices"
-                class="pointer"
-                :key="invoice.id"
-                @click="openInvoice(invoice)">
-                <td>{{ invoice.number }}</td>
-                <td>{{ invoice.client ? invoice.client.company_name : '' }}</td>
-                <td>{{ invoice.issued_at | date('D MMM YYYY', 'YYYY-MM-DD') }}</td>
-                <td>
+            <tr v-for="invoice in invoices" :key="invoice.id">
+                <td class="pointer" @click="openInvoice(invoice)">{{ invoice.number }}</td>
+                <td class="pointer" @click="openInvoice(invoice)">{{ invoice.client ? invoice.client.company_name : '' }}</td>
+                <td class="pointer" @click="openInvoice(invoice)">{{ invoice.issued_at | date('D MMM YYYY', 'YYYY-MM-DD') }}</td>
+                <td class="pointer" @click="openInvoice(invoice)">
                     {{ invoice.subTotal | currency }}
                     <small v-if="invoice.taxTotal"><br>({{ invoice.total | currency }})</small>
                 </td>
-                <td class="text-right text-capitalize">
+                <td class="pointer text-right text-capitalize" @click="openInvoice(invoice)">
                     <i class="material-icons material-icons-round md-18 mr-2 text-warning"
                        v-if="isOverDue(invoice)"
                        v-b-tooltip.hover title="Overdue">warning</i>
@@ -31,6 +28,12 @@
                        v-else-if="invoice.status === 'paid'">done</i>
                     {{ $t(`statuses.${invoice.status}`) }}
                 </td>
+              <td>
+                <i class="pointer material-icons material-icons-round md-18"
+                   v-b-tooltip.hover title="Duplicate Invoice">
+                  copy
+                </i>
+              </td>
             </tr>
             </tbody>
         </table>
