@@ -73,5 +73,13 @@ export default {
       this.$emit('update', props);
     },
   },
+  watch: {
+    'invoice.number'(newVal) {
+      document.title = newVal || 'Serverless Invoices';
+    },
+  },
+  updated() {
+    document.title = this.invoice.number ? this.invoice.number : 'Serverless Invoices';
+  },
 };
 </script>
