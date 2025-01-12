@@ -1,0 +1,26 @@
+services:
+  serverless-invoices:
+    build:
+      context: .
+    command: ["npm", "run", "serve"]
+    platform: linux/amd64
+    network_mode: bridge
+    container_name: serverless-invoices
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./dist:/app/dist
+      - ./public:/app/public
+      - ./src/assets:/app/src/assets
+      - ./src/components:/app/src/components
+      - ./src/filters:/app/src/filters
+      - ./src/services:/app/src/services
+      - ./src/store:/app/src/store
+      - ./src/utils:/app/src/utils
+      - ./src/views:/app/src/views
+      - ./src/App.vue:/app/src/App.vue
+      - ./src/main.js:/app/src/main.js
+      - ./src/registerServiceWorker.js:/app/src/registerServiceWorker.js
+      - ./src/router.js:/app/src/router.js
+      - ./package.json:/app/package.json
+      - ./vue.config.js:/app/vue.config.js
