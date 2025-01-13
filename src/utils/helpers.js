@@ -73,7 +73,7 @@ export function removeVuexORMFlags(obj) {
 
 export function generateInvoiceNumber(invoices) {
   const date = dayjs()
-    .format('YYYY');
+    .format('YYYYMMDD');
   const number = invoices.length + 1;
   return `${date}-${number}`;
 }
