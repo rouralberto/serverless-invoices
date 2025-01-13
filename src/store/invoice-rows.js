@@ -48,6 +48,8 @@ export default {
           : rootGetters['taxes/allWithLabels'];
         addTaxes(taxes, row);
       }
+
+      return row.id;
     },
     overwriteTaxes({ rootGetters, rootState }) {
       const taxes = rootGetters['taxes/allWithLabels'];
