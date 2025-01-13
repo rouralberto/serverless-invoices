@@ -61,6 +61,27 @@ export default {
       });
       return invoice.id;
     },
+    async duplicateInvoice({ dispatch, getters }, originalInvoiceId) {
+      const invoiceId = await dispatch('createNewInvoice');
+
+      const {
+        $id,
+        $isDirty,
+        $isNew,
+        id,
+        number,
+        status,
+        created_at,
+        due_at,
+        issued_at,
+        updated_at,
+        ...props
+      } = await getInvoice(originalInvoiceId);
+
+      await dispatch('updateInvoice', { invoiceId, props });
+
+      return invoiceId;
+    },
     invoiceProps(store, payload) {
       return Invoice.update({
         where: payload.invoiceId,
@@ -115,8 +136,8 @@ export default {
     async updateInvoice({ dispatch, commit }, payload) {
       if (payload.props) {
         await dispatch('invoiceProps', payload);
-        await dispatch('updateClient', payload);
-        await dispatch('updateTeam', payload);
+        // await dispatch('updateClient', payload);
+        // await dispatch('updateTeam', payload);
       }
 
       commit('clearErrors');
