@@ -9,6 +9,11 @@
                 <th>{{ $t('issued_at') }}</th>
                 <th>{{ $t('total') }}</th>
                 <th class="text-right">{{ $t('status') }}</th>
+                <th class="text-right">
+                  <i class="pointer material-icons material-icons-round md-18">
+                    handyman
+                  </i>
+                </th>
             </tr>
             </thead>
             <tbody v-if="invoices">
@@ -28,7 +33,7 @@
                        v-else-if="invoice.status === 'paid'">done</i>
                     {{ $t(`statuses.${invoice.status}`) }}
                 </td>
-              <td>
+              <td class="text-right">
                 <i class="pointer material-icons material-icons-round md-18"
                    v-b-tooltip.hover title="Duplicate Invoice"
                    @click="duplicateInvoice(invoice.id)">
