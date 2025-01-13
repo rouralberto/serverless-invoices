@@ -34,6 +34,7 @@ export default {
       }, { root: true });
     },
     async addRow({ getters, rootGetters }, invoiceId) {
+      const invoice = rootGetters['invoices/invoice'];
       const row = await InvoiceRow.createNew();
       const rowCount = InvoiceRow.query().where('invoice_id', invoiceId).count();
       await row.$update({
@@ -41,7 +42,11 @@ export default {
         order: rowCount,
       });
 
-      const client = rootGetters['invoices/invoice'].client;
+      let client = null;
+      if (invoice && invoice.hasOwnProperty('client')) {
+        client = invoice.client;
+      }
+
       if ((client && client.has_tax) || !client) {
         const taxes = getters.taxes.length > 0
           ? getters.taxes
@@ -77,7 +82,13 @@ export default {
   },
   getters: {
     taxes(state, getters, rootState, rootGetters) {
-      let taxes = rootGetters['invoices/invoice'].rows.map(row => row.taxes);
+      const invoice = rootGetters['invoices/invoice'];
+
+      if (!invoice || !Array.isArray(invoice.rows)) {
+        return [];
+      }
+
+      let taxes = invoice.rows.map(row => row.taxes);
       taxes = flatten(taxes);
       taxes = uniqBy(taxes, 'label');
       taxes = taxes.filter(tax => !!tax.label);
