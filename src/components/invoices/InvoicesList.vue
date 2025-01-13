@@ -30,7 +30,8 @@
                 </td>
               <td>
                 <i class="pointer material-icons material-icons-round md-18"
-                   v-b-tooltip.hover title="Duplicate Invoice">
+                   v-b-tooltip.hover title="Duplicate Invoice"
+                   @click="duplicateInvoice(invoice.id)">
                   copy
                 </i>
               </td>
@@ -76,9 +77,10 @@ export default {
         params: { id: invoice.id },
       });
     },
-    isOverDue(invoice) {
-      return invoice.status === 'sent' && invoice.due_at < dayjs()
-        .format();
+    isOverDue: (invoice) => invoice.status === 'sent' && invoice.due_at < dayjs().format(),
+    duplicateInvoice(invoiceId) {
+      this.$store.dispatch('invoices/duplicateInvoice', invoiceId)
+        .then(id => this.$router.push({ name: 'invoice', params: { id } }));
     },
   },
 };
