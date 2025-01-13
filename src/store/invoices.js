@@ -75,10 +75,27 @@ export default {
         due_at,
         issued_at,
         updated_at,
-        ...props
+        ...invoiceProps
       } = await getInvoice(originalInvoiceId);
 
-      await dispatch('updateInvoice', { invoiceId, props });
+      await dispatch('updateInvoice', { invoiceId, props: invoiceProps });
+
+      for (const row of invoiceProps.rows) {
+        const {
+          $id,
+          $isDirty,
+          $isNew,
+          id,
+          invoice_id,
+          ...props
+        } = row;
+
+        dispatch('invoiceRows/updateInvoiceRow', {
+          props,
+          id: await dispatch('invoiceRows/addRow', invoiceId, { root: true }),
+          invoiceId,
+        }, { root: true });
+      }
 
       return invoiceId;
     },
