@@ -153,8 +153,6 @@ export default {
     async updateInvoice({ dispatch, commit }, payload) {
       if (payload.props) {
         await dispatch('invoiceProps', payload);
-        // await dispatch('updateClient', payload);
-        // await dispatch('updateTeam', payload);
       }
 
       commit('clearErrors');
