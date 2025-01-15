@@ -61,7 +61,7 @@ export default {
       });
       return invoice.id;
     },
-    async duplicateInvoice({ dispatch, getters }, originalInvoiceId) {
+    async duplicateInvoice({ dispatch }, originalInvoiceId) {
       const invoiceId = await dispatch('createNewInvoice');
 
       const {
@@ -80,21 +80,26 @@ export default {
 
       await dispatch('updateInvoice', { invoiceId, props: invoiceProps });
 
-      for (const row of invoiceProps.rows) {
+      for (let i = 0; i < invoiceProps.rows.length; i++) {
         const {
-          $id,
-          $isDirty,
-          $isNew,
-          id,
+          $id: _$id,
+          $isDirty: $_isDirty,
+          $isNew: $_isNew,
+          id: _id,
           invoice_id,
           ...props
-        } = row;
+        } = invoiceProps.rows[i];
 
-        dispatch('invoiceRows/updateInvoiceRow', {
-          props,
-          id: await dispatch('invoiceRows/addRow', invoiceId, { root: true }),
-          invoiceId,
-        }, { root: true });
+        dispatch(
+          'invoiceRows/updateInvoiceRow',
+          {
+            props,
+            /* eslint-disable no-await-in-loop */
+            id: await dispatch('invoiceRows/addRow', invoiceId, { root: true }),
+            invoiceId,
+          },
+          { root: true },
+        );
       }
 
       return invoiceId;

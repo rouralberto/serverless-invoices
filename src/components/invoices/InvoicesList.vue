@@ -82,7 +82,7 @@ export default {
         params: { id: invoice.id },
       });
     },
-    isOverDue: (invoice) => invoice.status === 'sent' && invoice.due_at < dayjs().format(),
+    isOverDue: invoice => invoice.status === 'sent' && invoice.due_at < dayjs().format(),
     duplicateInvoice(invoiceId) {
       this.$store.dispatch('invoices/duplicateInvoice', invoiceId)
         .then(id => this.$router.push({ name: 'invoice', params: { id } }));
