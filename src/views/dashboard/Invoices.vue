@@ -6,15 +6,15 @@
                 {{ $t('title') }}
                 <span class="badge font-weight-light">
                   <span class="text-info" v-b-tooltip.hover title="Total Invoiced">
-                    {{ formattedTotalMoney }} ({{ totalInvoices }})
+                    {{ getInvoiceTotals().amount }} ({{ getInvoiceTotals().count }})
                   </span>
                   <span class="text-secondary mx-2">|</span>
                   <span class="text-success" v-b-tooltip.hover title="Total Paid">
-                    {{ formattedTotalMoneyPaid }} ({{ totalPaidInvoices }})
+                    {{ getInvoiceTotals('paid').amount }} ({{ getInvoiceTotals('paid').count }})
                   </span>
                   <span class="text-secondary mx-2">|</span>
                   <span class="text-danger" v-b-tooltip.hover title="Total Pending">
-                    {{ formattedTotalMoneyPending }} ({{ totalPendingInvoices }})
+                    {{ getInvoiceTotals('sent').amount }} ({{ getInvoiceTotals('sent').count }})
                   </span>
                 </span>
               </h4>
@@ -66,37 +66,6 @@ export default {
     isStorageLocal() {
       return config.storageType === 'local';
     },
-    totalPendingInvoices() {
-      return this.invoices.filter(invoice => invoice.status === 'sent').length;
-    },
-    totalPaidInvoices() {
-      return this.invoices.filter(invoice => invoice.status === 'paid').length;
-    },
-    totalInvoices() {
-      return this.invoices.length;
-    },
-    totalMoneyPending() {
-      return this.invoices
-        .filter(invoice => invoice.status === 'sent')
-        .reduce((sum, invoice) => sum + invoice.total, 0).toFixed(0);
-    },
-    totalMoneyPaid() {
-      return this.invoices
-        .filter(invoice => invoice.status === 'paid')
-        .reduce((sum, invoice) => sum + invoice.total, 0).toFixed(0);
-    },
-    totalMoney() {
-      return this.invoices.reduce((sum, invoice) => sum + invoice.total, 0).toFixed(0);
-    },
-    formattedTotalMoney() {
-      return this.formatCurrency(this.totalMoney);
-    },
-    formattedTotalMoneyPending() {
-      return this.formatCurrency(this.totalMoneyPending);
-    },
-    formattedTotalMoneyPaid() {
-      return this.formatCurrency(this.totalMoneyPaid);
-    },
   },
   methods: {
     createNewInvoice() {
@@ -108,6 +77,15 @@ export default {
     },
     openImportModal() {
       this.$store.commit('data/isImportModalOpen', true);
+    },
+    getInvoiceTotals(status = 'all') {
+      const filteredInvoices = status === 'all'
+        ? this.invoices
+        : this.invoices.filter(invoice => invoice.status === status);
+
+      const amount = filteredInvoices.reduce((sum, invoice) => sum + invoice.total, 0).toFixed(0);
+
+      return { amount: this.formatCurrency(amount), count: filteredInvoices.length };
     },
     formatCurrency(value) {
       return new Intl.NumberFormat('en-AU', {
