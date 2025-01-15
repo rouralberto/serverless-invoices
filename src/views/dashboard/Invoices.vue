@@ -67,7 +67,7 @@ export default {
       return config.storageType === 'local';
     },
     totalPendingInvoices() {
-      return this.invoices.filter(invoice => invoice.status === 'sent' || invoice.status === 'booked').length;
+      return this.invoices.filter(invoice => invoice.status === 'sent').length;
     },
     totalPaidInvoices() {
       return this.invoices.filter(invoice => invoice.status === 'paid').length;
@@ -77,7 +77,7 @@ export default {
     },
     totalMoneyPending() {
       return this.invoices
-        .filter(invoice => invoice.status === 'sent' || invoice.status === 'booked')
+        .filter(invoice => invoice.status === 'sent')
         .reduce((sum, invoice) => sum + invoice.total, 0).toFixed(0);
     },
     totalMoneyPaid() {
