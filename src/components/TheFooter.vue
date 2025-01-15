@@ -33,10 +33,6 @@
                      alt="Serverless Invoices Github"
                      v-else>
             </a>
-            <a href="https://app.mokuapp.io/"
-               class="btn btn-sm btn-primary ml-2"
-               target="_blank"
-               v-if="!isStorageWordpress">{{ $t('upgrade') }}</a>
         </div>
     </footer>
 </template>
