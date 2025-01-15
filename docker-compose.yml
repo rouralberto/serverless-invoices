@@ -23,4 +23,3 @@ services:
       - ./src/registerServiceWorker.js:/app/src/registerServiceWorker.js
       - ./src/router.js:/app/src/router.js
       - ./package.json:/app/package.json
-      - ./vue.config.js:/app/vue.config.js
