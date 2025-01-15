@@ -5,12 +5,16 @@
               <h4 class="mb-0">
                 {{ $t('title') }}
                 <span class="badge font-weight-light">
-                  <span class="text-info" v-b-tooltip.hover title="Total Invoiced">
+                  <span class="text-primary" v-b-tooltip.hover title="Total Invoiced">
                     {{ getInvoiceTotals().amount }} ({{ getInvoiceTotals().count }})
                   </span>
                   <span class="text-secondary mx-2">|</span>
                   <span class="text-success" v-b-tooltip.hover title="Total Paid">
                     {{ getInvoiceTotals('paid').amount }} ({{ getInvoiceTotals('paid').count }})
+                  </span>
+                  <span class="text-secondary mx-2">|</span>
+                  <span class="text-info" v-b-tooltip.hover title="Total Booked">
+                    {{ getInvoiceTotals('booked').amount }} ({{ getInvoiceTotals('booked').count }})
                   </span>
                   <span class="text-secondary mx-2">|</span>
                   <span class="text-danger" v-b-tooltip.hover title="Total Pending">
