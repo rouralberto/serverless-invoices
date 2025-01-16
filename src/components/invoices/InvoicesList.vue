@@ -37,6 +37,8 @@
                     <i class="material-icons material-icons-round md-18 mr-2 text-danger"
                        v-if="isOverDue(invoice)"
                        v-b-tooltip.hover title="Overdue">warning</i>
+                    <i class="material-icons material-icons-round md-18 mr-2 text-warning"
+                       v-else-if="invoice.status === 'draft'">edit_note</i>
                     <i class="material-icons material-icons-round md-18 mr-2 text-success"
                        v-else-if="invoice.status === 'paid'">done</i>
                     {{ $t(`statuses.${invoice.status}`) }}
