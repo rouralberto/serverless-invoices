@@ -18,15 +18,23 @@
             </thead>
             <tbody v-if="invoices">
             <tr v-for="invoice in invoices" :key="invoice.id">
-                <td class="pointer" @click="openInvoice(invoice)">{{ invoice.number }}</td>
-                <td class="pointer" @click="openInvoice(invoice)">{{ invoice.client ? invoice.client.company_name : '' }}</td>
-                <td class="pointer" @click="openInvoice(invoice)">{{ invoice.issued_at | date('D MMM YYYY', 'YYYY-MM-DD') }}</td>
+                <td class="pointer" @click="openInvoice(invoice)">
+                  {{ invoice.number }}
+                </td>
+                <td class="pointer" @click="openInvoice(invoice)">
+                  {{ invoice.client ? invoice.client.company_name : '' }}
+                </td>
+                <td class="pointer" @click="openInvoice(invoice)">
+                  {{ invoice.issued_at | date('D MMM YYYY', 'YYYY-MM-DD') }}
+                </td>
                 <td class="pointer" @click="openInvoice(invoice)">
                     {{ invoice.subTotal | currency }}
-                    <small v-if="invoice.taxTotal"><br>({{ invoice.total | currency }})</small>
+                    <small class="text-secondary" v-if="invoice.taxTotal">
+                      <br>({{ invoice.taxTotal | currency }} tax)
+                    </small>
                 </td>
                 <td class="pointer text-right text-capitalize" @click="openInvoice(invoice)">
-                    <i class="material-icons material-icons-round md-18 mr-2 text-warning"
+                    <i class="material-icons material-icons-round md-18 mr-2 text-danger"
                        v-if="isOverDue(invoice)"
                        v-b-tooltip.hover title="Overdue">warning</i>
                     <i class="material-icons material-icons-round md-18 mr-2 text-success"
@@ -71,9 +79,7 @@ export default {
       invoices: 'invoices/all',
     }),
   },
-  mounted() {
-    this.$store.dispatch('invoices/getInvoices');
-  },
+  mounted: () => this.$store.dispatch('invoices/getInvoices'),
   methods: {
     openInvoice(invoice) {
       this.$store.commit('invoices/invoiceId', invoice.id);
