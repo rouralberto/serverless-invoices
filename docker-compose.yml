@@ -9,7 +9,6 @@ services:
     ports:
       - "8081:8080"
     volumes:
-      - ./dist:/app/dist
       - ./public:/app/public
       - ./src/assets:/app/src/assets
       - ./src/components:/app/src/components
@@ -23,3 +22,4 @@ services:
       - ./src/registerServiceWorker.js:/app/src/registerServiceWorker.js
       - ./src/router.js:/app/src/router.js
       - ./package.json:/app/package.json
+      - ./vue.config.js.example:/app/vue.config.js
