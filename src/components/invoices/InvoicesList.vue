@@ -81,7 +81,9 @@ export default {
       invoices: 'invoices/all',
     }),
   },
-  mounted: () => this.$store.dispatch('invoices/getInvoices'),
+  mounted() {
+    this.$store.dispatch('invoices/getInvoices');
+  },
   methods: {
     openInvoice(invoice) {
       this.$store.commit('invoices/invoiceId', invoice.id);
