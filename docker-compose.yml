@@ -1,13 +1,16 @@
+networks:
+  default:
+    name: localdev
+    external: true
+
 services:
   serverless-invoices:
     build:
       context: .
     command: ["npm", "run", "serve"]
     platform: linux/amd64
-    network_mode: bridge
+    networks: [ default ]
     container_name: serverless-invoices
-    ports:
-      - "8081:8080"
     volumes:
       - ./public:/app/public
       - ./src/assets:/app/src/assets
@@ -23,3 +26,6 @@ services:
       - ./src/router.js:/app/src/router.js
       - ./package.json:/app/package.json
       - ./vue.config.js.example:/app/vue.config.js
+    environment:
+      VIRTUAL_HOST: invoices.docker # Assuming a reverse proxy is in place in the "default" network
+      VIRTUAL_PORT: "8080"
