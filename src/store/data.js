@@ -1,6 +1,6 @@
 import localForage from 'localforage';
 import MigrationService from '@/services/migration.service';
-import { download } from '../utils/helpers';
+import { download, storeInBucket } from '../utils/helpers';
 
 export default {
   namespaced: true,
@@ -15,6 +15,21 @@ export default {
   actions: {
     async migrate() {
       return MigrationService.migrate();
+    },
+    async saveJson() {
+      let results = [];
+      const keys = await localForage.keys();
+      keys.forEach((key) => {
+        results.push(localForage.getItem(key));
+      });
+      results = await Promise.all(results);
+
+      const data = {};
+      keys.forEach((key, index) => {
+        data[key] = results[index];
+      });
+
+      storeInBucket(JSON.stringify(data), 'serverless-invoices.json', 'application/json');
     },
     async exportJson() {
       let results = [];

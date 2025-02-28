@@ -33,6 +33,8 @@
                         </template>
                         <b-dropdown-item @click="exportJson">{{ $t('export') }}</b-dropdown-item>
                         <b-dropdown-item @click="openImportModal">{{ $t('import') }}</b-dropdown-item>
+                        <li role="presentation"><span class="dropdown-item">—</span></li>
+                        <b-dropdown-item @click="saveJson">Save in S3</b-dropdown-item>
                     </b-dropdown>
                 </div>
             </div>
@@ -78,6 +80,9 @@ export default {
     },
     exportJson() {
       this.$store.dispatch('data/exportJson');
+    },
+    saveJson() {
+      this.$store.dispatch('data/saveJson');
     },
     openImportModal() {
       this.$store.commit('data/isImportModalOpen', true);

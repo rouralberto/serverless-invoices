@@ -1,5 +1,6 @@
 /* eslint-disable */
 import dayjs from 'dayjs';
+import AWS from 'aws-sdk';
 
 export function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -94,5 +95,34 @@ export function download(data, filename, type) {
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
     }, 0);
+  }
+}
+
+export async function storeInBucket (data, filename, type) {
+  const timestamp = new Date().toISOString();
+  const filenameWithTimestamp = `${timestamp}-${filename}`;
+
+  const awsOptions = {
+    region: process.env.VUE_APP_AWS_REGION,
+    accessKeyId: process.env.VUE_APP_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.VUE_APP_AWS_SECRET_ACCESS_KEY,
+  };
+
+  const s3 = new AWS.S3(awsOptions);
+
+  try {
+    await s3.putObject({
+      Bucket: process.env.VUE_APP_BUCKET_NAME,
+      Key: `serverless-invoices/${filenameWithTimestamp}`,
+      Body: data,
+      ContentType: type
+    }).promise();
+
+    alert('Backup successfully saved!');
+    return filenameWithTimestamp;
+  } catch (error) {
+    console.error('Error uploading to S3:', error);
+    alert('Failed to upload file to S3. Please try again.');
+    throw error;
   }
 }
