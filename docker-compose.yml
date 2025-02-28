@@ -29,3 +29,7 @@ services:
     environment:
       VIRTUAL_HOST: invoices.docker # Assuming a reverse proxy is in place in the "default" network
       VIRTUAL_PORT: "8080"
+      VUE_APP_AWS_REGION: "eu-south-2"
+      VUE_APP_AWS_ACCESS_KEY_ID: "accessKey"
+      VUE_APP_AWS_SECRET_ACCESS_KEY: "secretAccessKey"
+      VUE_APP_BUCKET_NAME: 'bucket-name'
