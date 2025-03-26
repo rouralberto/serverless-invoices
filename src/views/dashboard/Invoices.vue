@@ -39,6 +39,18 @@
                 </div>
             </div>
         </div>
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="border rounded p-3">
+                    <div class="d-flex flex-wrap">
+                        <div v-for="(amount, month) in getMonthlyTotals()" :key="month" class="mr-4 mb-2">
+                            <small class="text-muted d-block">{{ month }}</small>
+                            <div class="font-weight-bold">{{ amount }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-12">
                 <InvoicesList/>
@@ -95,6 +107,29 @@ export default {
       const amount = filteredInvoices.reduce((sum, invoice) => sum + invoice.total, 0).toFixed(0);
 
       return { amount: this.formatCurrency(amount), count: filteredInvoices.length };
+    },
+    getMonthlyTotals() {
+      const monthlyTotals = {};
+      
+      this.invoices.forEach(invoice => {
+        if (!invoice.issued_at) return;
+        
+        const date = new Date(invoice.issued_at);
+        const monthYear = date.toLocaleString('default', { month: 'short', year: 'numeric' });
+        
+        if (!monthlyTotals[monthYear]) {
+          monthlyTotals[monthYear] = 0;
+        }
+        
+        monthlyTotals[monthYear] += invoice.total;
+      });
+
+      // Convert amounts to formatted currency
+      Object.keys(monthlyTotals).forEach(month => {
+        monthlyTotals[month] = this.formatCurrency(monthlyTotals[month].toFixed(0));
+      });
+
+      return monthlyTotals;
     },
     formatCurrency(value) {
       return new Intl.NumberFormat('en-AU', {
