@@ -25,6 +25,7 @@ services:
       - ./src/registerServiceWorker.js:/app/src/registerServiceWorker.js
       - ./src/router.js:/app/src/router.js
       - ./package.json:/app/package.json
+      - ./package-lock.json:/app/package-lock.json
       - ./vue.config.js.example:/app/vue.config.js
     environment:
       VIRTUAL_HOST: invoices.docker # Assuming a reverse proxy is in place in the "default" network
