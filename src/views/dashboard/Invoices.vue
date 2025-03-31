@@ -111,18 +111,20 @@ export default {
     getMonthlyTotals() {
       const monthlyTotals = {};
       
-      this.invoices.forEach(invoice => {
-        if (!invoice.issued_at) return;
-        
-        const date = new Date(invoice.issued_at);
-        const monthYear = date.toLocaleString('default', { month: 'short', year: 'numeric' });
-        
-        if (!monthlyTotals[monthYear]) {
-          monthlyTotals[monthYear] = 0;
-        }
-        
-        monthlyTotals[monthYear] += invoice.total;
-      });
+      this.invoices
+        .filter(invoice => invoice.status !== 'draft')
+        .forEach(invoice => {
+          if (!invoice.issued_at) return;
+          
+          const date = new Date(invoice.issued_at);
+          const monthYear = date.toLocaleString('default', { month: 'short', year: 'numeric' });
+          
+          if (!monthlyTotals[monthYear]) {
+            monthlyTotals[monthYear] = 0;
+          }
+          
+          monthlyTotals[monthYear] += invoice.total;
+        });
 
       // Convert amounts to formatted currency
       Object.keys(monthlyTotals).forEach(month => {
