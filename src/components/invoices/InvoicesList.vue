@@ -29,6 +29,9 @@
                 </td>
                 <td class="pointer" @click="openInvoice(invoice)">
                     {{ invoice.subTotal | currency }}
+                    <span v-if="getClientTotal(invoice.client_id) > 0" class="text-secondary">
+                      / {{ getClientTotal(invoice.client_id) | currency }}
+                    </span>
                     <small class="text-secondary" v-if="invoice.taxTotal">
                       <br>({{ invoice.taxTotal | currency }} tax)
                     </small>
@@ -97,6 +100,14 @@ export default {
       this.$store.dispatch('invoices/duplicateInvoice', invoiceId)
         .then(id => this.$router.push({ name: 'invoice', params: { id } }));
     },
+    getClientTotal(clientId) {
+      if (!clientId) return 0;
+      
+      return this.invoices
+        .filter(invoice => invoice.client_id === clientId)
+        .filter(invoice => ['sent', 'paid'].includes(invoice.status))
+        .reduce((total, invoice) => total + invoice.subTotal, 0);
+    }
   },
 };
 </script>
