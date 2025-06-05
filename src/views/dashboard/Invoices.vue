@@ -101,7 +101,7 @@ export default {
     },
     getInvoiceTotals(status = 'all') {
       const filteredInvoices = status === 'all'
-        ? this.invoices
+        ? this.invoices.filter(invoice => invoice.status !== 'draft' && invoice.status !== 'cancelled')
         : this.invoices.filter(invoice => invoice.status === status);
 
       const amount = filteredInvoices.reduce((sum, invoice) => sum + invoice.total, 0).toFixed(0);
