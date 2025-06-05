@@ -23,6 +23,11 @@
                 </span>
               </h4>
                 <div>
+                    <button class="btn btn-sm btn-outline-secondary mr-2"
+                            @click="openCustomerRankingModal">
+                      <i class="material-icons md-18 mr-1">leaderboard</i>
+                      Customer Ranking
+                    </button>
                     <button class="btn btn-sm btn-outline-dark"
                             :class="{ 'mr-3': !isStorageLocal }"
                             @click="createNewInvoice">{{ $t('new_invoice') }}
@@ -56,11 +61,57 @@
                 <InvoicesList/>
             </div>
         </div>
+
+        <!-- Customer Ranking Modal -->
+        <b-modal v-model="isCustomerRankingModalOpen"
+                 centered
+                 hide-footer
+                 title="Customer Ranking by Invoiced Amounts"
+                 size="lg"
+                 content-class="bg-base dp--24">
+            <div v-if="customerRanking.length > 0">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <small class="text-muted">Showing top customers by total invoiced amounts</small>
+                    <small class="text-muted">{{ customerRanking.length }} customers</small>
+                </div>
+                <div class="list-group">
+                    <div v-for="(customer, index) in customerRanking" 
+                         :key="customer.name || 'Unknown'" 
+                         class="list-group-item d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <div class="ranking-position mr-3">
+                                <span class="badge badge-lg" 
+                                      :class="getRankingBadgeClass(index)">
+                                    {{ index + 1 }}
+                                </span>
+                            </div>
+                            <div>
+                                <div class="font-weight-bold">
+                                    {{ customer.name || 'Unknown Customer' }}
+                                </div>
+                                <small class="text-muted">
+                                    {{ customer.invoiceCount }} invoice{{ customer.invoiceCount !== 1 ? 's' : '' }}
+                                </small>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-weight-bold text-primary">
+                                {{ formatCurrency(customer.totalInvoiced.toFixed(0)) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-else class="text-center py-4">
+                <i class="material-icons md-48 text-muted">people_outline</i>
+                <p class="text-muted mt-2">No invoices found</p>
+            </div>
+        </b-modal>
     </div>
 </template>
 
 <script>
-import { BDropdown, BDropdownItem, VBTooltip } from 'bootstrap-vue';
+import { BDropdown, BDropdownItem, BModal, VBTooltip } from 'bootstrap-vue';
 import { mapGetters } from 'vuex';
 import InvoicesList from '@/components/invoices/InvoicesList';
 import config from '@/config/app.config';
@@ -72,9 +123,15 @@ export default {
     InvoicesList,
     BDropdown,
     BDropdownItem,
+    BModal,
   },
   directives: {
     'b-tooltip': VBTooltip,
+  },
+  data() {
+    return {
+      isCustomerRankingModalOpen: false,
+    };
   },
   computed: {
     ...mapGetters({
@@ -83,6 +140,31 @@ export default {
     }),
     isStorageLocal() {
       return config.storageType === 'local';
+    },
+    customerRanking() {
+      const customerTotals = {};
+      
+      // Get all invoiced invoices (non-draft) and group by customer
+      this.invoices
+        .filter(invoice => invoice.status !== 'draft')
+        .forEach(invoice => {
+          const customerName = invoice.client_name || 'Unknown Customer';
+          
+          if (!customerTotals[customerName]) {
+            customerTotals[customerName] = {
+              name: customerName,
+              totalInvoiced: 0,
+              invoiceCount: 0,
+            };
+          }
+          
+          customerTotals[customerName].totalInvoiced += invoice.total || 0;
+          customerTotals[customerName].invoiceCount++;
+        });
+
+      // Convert to array and sort by total invoiced (descending)
+      return Object.values(customerTotals)
+        .sort((a, b) => b.totalInvoiced - a.totalInvoiced);
     },
   },
   methods: {
@@ -98,6 +180,15 @@ export default {
     },
     openImportModal() {
       this.$store.commit('data/isImportModalOpen', true);
+    },
+    openCustomerRankingModal() {
+      this.isCustomerRankingModalOpen = true;
+    },
+    getRankingBadgeClass(index) {
+      if (index === 0) return 'badge-warning'; // Gold
+      if (index === 1) return 'badge-secondary'; // Silver
+      if (index === 2) return 'badge-info'; // Bronze
+      return 'badge-light';
     },
     getInvoiceTotals(status = 'all') {
       const filteredInvoices = status === 'all'
@@ -144,3 +235,15 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.ranking-position .badge-lg {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+</style>
