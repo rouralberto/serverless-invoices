@@ -97,6 +97,7 @@
                         <div class="text-right">
                             <div class="font-weight-bold text-primary">
                                 {{ formatCurrency(customer.totalInvoiced.toFixed(0)) }}
+                                <small class="text-muted ml-1">({{ customer.percentage.toFixed(1) }}%)</small>
                             </div>
                         </div>
                     </div>
@@ -162,8 +163,18 @@ export default {
           customerTotals[customerName].invoiceCount++;
         });
 
-      // Convert to array and sort by total invoiced (descending)
+      // Calculate total invoiced across all customers
+      const totalInvoicedAllCustomers = Object.values(customerTotals)
+        .reduce((sum, customer) => sum + customer.totalInvoiced, 0);
+
+      // Convert to array, calculate percentages, and sort by total invoiced (descending)
       return Object.values(customerTotals)
+        .map(customer => ({
+          ...customer,
+          percentage: totalInvoicedAllCustomers > 0 
+            ? (customer.totalInvoiced / totalInvoicedAllCustomers * 100)
+            : 0
+        }))
         .sort((a, b) => b.totalInvoiced - a.totalInvoiced);
     },
   },
