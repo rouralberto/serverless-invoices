@@ -145,9 +145,9 @@ export default {
     customerRanking() {
       const customerTotals = {};
       
-      // Get all invoiced invoices (non-draft) and group by customer
+      // Get all invoiced invoices (non-draft, non-cancelled) and group by customer
       this.invoices
-        .filter(invoice => invoice.status !== 'draft')
+        .filter(invoice => invoice.status !== 'draft' && invoice.status !== 'cancelled')
         .forEach(invoice => {
           const customerName = invoice.client_name || 'Unknown Customer';
           
