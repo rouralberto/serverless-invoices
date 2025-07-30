@@ -64,6 +64,19 @@
                             </div>
                         </div>
 
+                        <div class="dropdown-item-text px-3">
+                            <div class="custom-control custom-checkbox" style="width: 100%;">
+                                <input type="checkbox"
+                                       class="custom-control-input"
+                                       id="showFySummaryCheckbox"
+                                       v-model="showFySummary"
+                                       @change="onShowFySummaryChange">
+                                <label class="custom-control-label text-muted small" for="showFySummaryCheckbox">
+                                    {{ $t('show_fy_summary') }}
+                                </label>
+                            </div>
+                        </div>
+
                         <hr/>
 
                         <b-dropdown-item @click="exportJson">{{ $t('export') }}</b-dropdown-item>
@@ -74,7 +87,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mb-4">
+        <div class="row mb-4" v-if="showFySummary">
             <div class="col-12">
                 <div class="border rounded p-3">
                     <div class="d-flex flex-wrap">
@@ -172,6 +185,7 @@ export default {
       isCustomerRankingModalOpen: false,
       selectedFyStartMonth: this.loadFyStartMonth(),
       hidePaidInvoices: this.loadHidePaidInvoices(),
+      showFySummary: this.loadShowFySummary(),
       monthOptions: [
         { value: 1, text: 'January' },
         { value: 2, text: 'February' },
@@ -384,6 +398,20 @@ export default {
     onHidePaidInvoicesChange() {
       // Save the preference when user changes the selection
       this.saveHidePaidInvoices(this.hidePaidInvoices);
+    },
+    loadShowFySummary() {
+      // Load the saved show FY summary preference from localStorage
+      // Default to true if no preference is saved (show by default)
+      const saved = localStorage.getItem('showFySummary');
+      return saved ? JSON.parse(saved) : true;
+    },
+    saveShowFySummary(show) {
+      // Save the show FY summary preference to localStorage
+      localStorage.setItem('showFySummary', JSON.stringify(show));
+    },
+    onShowFySummaryChange() {
+      // Save the preference when user changes the selection
+      this.saveShowFySummary(this.showFySummary);
     },
   },
 };

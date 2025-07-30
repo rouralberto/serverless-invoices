@@ -3,5 +3,6 @@
   "new_invoice": "Nueva factura",
   "export": "Exportar",
   "import": "Importar",
-  "hide_paid_invoices": "Ocultar Facturas Pagadas"
+  "hide_paid_invoices": "Ocultar Facturas Pagadas",
+  "show_fy_summary": "Mostrar Resumen del Año Fiscal"
 }

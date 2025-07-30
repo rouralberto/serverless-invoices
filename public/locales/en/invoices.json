@@ -3,5 +3,6 @@
   "new_invoice": "New invoice",
   "export": "Export",
   "import": "Import",
-  "hide_paid_invoices": "Hide Paid Invoices"
+  "hide_paid_invoices": "Hide Paid Invoices",
+  "show_fy_summary": "Show FY Summary"
 }

@@ -3,5 +3,6 @@
   "new_invoice": "Neue Rechnung",
   "export": "Exportieren",
   "import": "Importieren",
-  "hide_paid_invoices": "Bezahlte Rechnungen Ausblenden"
+  "hide_paid_invoices": "Bezahlte Rechnungen Ausblenden",
+  "show_fy_summary": "FY-Zusammenfassung Anzeigen"
 }
