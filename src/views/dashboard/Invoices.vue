@@ -36,6 +36,23 @@
                         <template slot="button-content">
                             <i class="material-icons">more_vert</i>
                         </template>
+
+                        <div class="dropdown-item-text p-3">
+                            <label class="form-label mb-2 text-muted small">Financial Year Start</label>
+                            <select
+                                v-model="selectedFyStartMonth"
+                                class="form-control form-control-sm"
+                                @change="onFyStartMonthChange">
+                                <option v-for="month in monthOptions"
+                                        :key="month.value"
+                                        :value="month.value">
+                                    {{ month.text }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <hr/>
+
                         <b-dropdown-item @click="exportJson">{{ $t('export') }}</b-dropdown-item>
                         <b-dropdown-item @click="openImportModal">{{ $t('import') }}</b-dropdown-item>
                         <li role="presentation"><span class="dropdown-item">—</span></li>
@@ -48,9 +65,17 @@
             <div class="col-12">
                 <div class="border rounded p-3">
                     <div class="d-flex flex-wrap">
-                        <div v-for="(amount, month) in getMonthlyTotals()" :key="month" class="mr-4 mb-2">
-                            <small class="text-muted d-block">{{ month }}</small>
-                            <div class="font-weight-bold">{{ amount }}</div>
+                        <div v-for="fyData in getFinancialYearTotals()" :key="fyData.label" class="mr-4 mb-3">
+                            <div class="mb-2">
+                                <small class="text-muted d-block">{{ fyData.label }}</small>
+                                <div class="font-weight-bold text-primary">{{ fyData.total }}</div>
+                            </div>
+                            <div class="ml-2">
+                                <div v-for="month in fyData.months" :key="month.label" class="mb-1">
+                                    <small class="text-muted">{{ month.label }}: </small>
+                                    <small class="font-weight-medium">{{ month.amount }}</small>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -75,12 +100,12 @@
                     <small class="text-muted">{{ customerRanking.length }} customers</small>
                 </div>
                 <div class="list-group">
-                    <div v-for="(customer, index) in customerRanking" 
-                         :key="customer.name || 'Unknown'" 
+                    <div v-for="(customer, index) in customerRanking"
+                         :key="customer.name || 'Unknown'"
                          class="list-group-item d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
                             <div class="ranking-position mr-3">
-                                <span class="badge badge-lg" 
+                                <span class="badge badge-lg"
                                       :class="getRankingBadgeClass(index)">
                                     {{ index + 1 }}
                                 </span>
@@ -132,6 +157,21 @@ export default {
   data() {
     return {
       isCustomerRankingModalOpen: false,
+      selectedFyStartMonth: this.loadFyStartMonth(),
+      monthOptions: [
+        { value: 1, text: 'January' },
+        { value: 2, text: 'February' },
+        { value: 3, text: 'March' },
+        { value: 4, text: 'April' },
+        { value: 5, text: 'May' },
+        { value: 6, text: 'June' },
+        { value: 7, text: 'July' },
+        { value: 8, text: 'August' },
+        { value: 9, text: 'September' },
+        { value: 10, text: 'October' },
+        { value: 11, text: 'November' },
+        { value: 12, text: 'December' },
+      ],
     };
   },
   computed: {
@@ -144,13 +184,13 @@ export default {
     },
     customerRanking() {
       const customerTotals = {};
-      
+
       // Get all invoiced invoices (non-draft, non-cancelled) and group by customer
       this.invoices
         .filter(invoice => invoice.status !== 'draft' && invoice.status !== 'cancelled')
         .forEach(invoice => {
           const customerName = invoice.client_name || 'Unknown Customer';
-          
+
           if (!customerTotals[customerName]) {
             customerTotals[customerName] = {
               name: customerName,
@@ -158,7 +198,7 @@ export default {
               invoiceCount: 0,
             };
           }
-          
+
           customerTotals[customerName].totalInvoiced += invoice.total || 0;
           customerTotals[customerName].invoiceCount++;
         });
@@ -171,7 +211,7 @@ export default {
       return Object.values(customerTotals)
         .map(customer => ({
           ...customer,
-          percentage: totalInvoicedAllCustomers > 0 
+          percentage: totalInvoicedAllCustomers > 0
             ? (customer.totalInvoiced / totalInvoicedAllCustomers * 100)
             : 0
         }))
@@ -210,30 +250,82 @@ export default {
 
       return { amount: this.formatCurrency(amount), count: filteredInvoices.length };
     },
-    getMonthlyTotals() {
-      const monthlyTotals = {};
-      
+    getFinancialYearTotals() {
+      const fyData = {};
+
       this.invoices
         .filter(invoice => invoice.status !== 'draft')
         .forEach(invoice => {
           if (!invoice.issued_at) return;
-          
+
           const date = new Date(invoice.issued_at);
-          const monthYear = date.toLocaleString('default', { month: 'short', year: 'numeric' });
-          
-          if (!monthlyTotals[monthYear]) {
-            monthlyTotals[monthYear] = 0;
+          const month = date.getMonth() + 1; // 1-12
+          const year = date.getFullYear();
+
+          // Calculate financial year based on selected start month
+          let fyStart, fyEnd;
+          if (month >= this.selectedFyStartMonth) {
+            fyStart = year;
+            fyEnd = year + 1;
+          } else {
+            fyStart = year - 1;
+            fyEnd = year;
           }
-          
-          monthlyTotals[monthYear] += invoice.total;
+
+          // If January is selected as FY start, show natural calendar year
+          const fyLabel = this.selectedFyStartMonth === 1
+            ? fyStart.toString()
+            : `FY ${fyStart}-${fyEnd.toString().slice(-2)}`;
+          const monthYear = date.toLocaleString('default', { month: 'short', year: 'numeric' });
+
+          if (!fyData[fyLabel]) {
+            fyData[fyLabel] = {
+              total: 0,
+              months: {}
+            };
+          }
+
+          if (!fyData[fyLabel].months[monthYear]) {
+            fyData[fyLabel].months[monthYear] = {
+              amount: 0,
+              sortKey: date.getTime()
+            };
+          }
+
+          fyData[fyLabel].total += invoice.total;
+          fyData[fyLabel].months[monthYear].amount += invoice.total;
         });
 
-      // Convert amounts to formatted currency
-      Object.keys(monthlyTotals).forEach(month => {
-        monthlyTotals[month] = this.formatCurrency(monthlyTotals[month].toFixed(0));
-      });
+      // Convert to array format and sort
+      return Object.keys(fyData)
+        .sort((a, b) => {
+          // Extract year for sorting, handling both "2024" and "FY 24-25" formats
+          let yearA, yearB;
 
-      return monthlyTotals;
+          if (a.startsWith('FY ')) {
+            yearA = parseInt(a.split(' ')[1].split('-')[0]);
+          } else {
+            yearA = parseInt(a);
+          }
+
+          if (b.startsWith('FY ')) {
+            yearB = parseInt(b.split(' ')[1].split('-')[0]);
+          } else {
+            yearB = parseInt(b);
+          }
+
+          return yearB - yearA; // Most recent first
+        })
+        .map(fyLabel => ({
+          label: fyLabel,
+          total: this.formatCurrency(fyData[fyLabel].total.toFixed(0)),
+          months: Object.keys(fyData[fyLabel].months)
+            .sort((a, b) => fyData[fyLabel].months[a].sortKey - fyData[fyLabel].months[b].sortKey)
+            .map(monthLabel => ({
+              label: monthLabel,
+              amount: this.formatCurrency(fyData[fyLabel].months[monthLabel].amount.toFixed(0))
+            }))
+        }));
     },
     formatCurrency(value) {
       return new Intl.NumberFormat('en-AU', {
@@ -242,6 +334,22 @@ export default {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0,
       }).format(value);
+    },
+    loadFyStartMonth() {
+      // Load the saved financial year start month from localStorage
+      // Default to July (7) if no preference is saved (Australian FY)
+      const saved = localStorage.getItem('fyStartMonth');
+      return saved ? parseInt(saved, 10) : 7;
+    },
+    saveFyStartMonth(month) {
+      // Save the financial year start month preference to localStorage
+      localStorage.setItem('fyStartMonth', month.toString());
+    },
+    onFyStartMonthChange() {
+      // Save the preference when user changes the selection
+      this.saveFyStartMonth(this.selectedFyStartMonth);
+      // The reactive system will automatically update the financial year totals
+      // when selectedFyStartMonth changes since getFinancialYearTotals() depends on it
     },
   },
 };
@@ -256,5 +364,13 @@ export default {
   justify-content: center;
   font-size: 14px;
   font-weight: bold;
+}
+
+.dropdown-item-text {
+  min-width: 200px;
+}
+
+.dropdown-item-text .form-control-sm {
+  font-size: 0.875rem;
 }
 </style>
