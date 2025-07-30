@@ -2,5 +2,6 @@
     "title": "Invoice",
     "new_invoice": "Invoice Baru",
     "export": "Ekspor",
-    "import": "Impor"
+    "import": "Impor",
+    "hide_paid_invoices": "Sembunyikan Invoice yang Sudah Dibayar"
 }

@@ -1,7 +1,7 @@
 <template>
     <div class="table-responsive">
-        <div v-if="!invoices" class="col-12">{{ $t('loading') }}</div>
-        <table class="table table--card table-hover" v-else-if="invoices && invoices.length > 0">
+        <div v-if="!displayInvoices" class="col-12">{{ $t('loading') }}</div>
+        <table class="table table--card table-hover" v-else-if="displayInvoices && displayInvoices.length > 0">
             <thead>
             <tr>
                 <th>{{ $t('invoice_number') }}</th>
@@ -16,8 +16,8 @@
                 </th>
             </tr>
             </thead>
-            <tbody v-if="invoices">
-            <tr v-for="invoice in invoices" :key="invoice.id">
+            <tbody v-if="displayInvoices">
+            <tr v-for="invoice in displayInvoices" :key="invoice.id">
                 <td class="pointer" @click="openInvoice(invoice)">
                   {{ invoice.number }}
                 </td>
@@ -69,6 +69,12 @@ import { VBTooltip } from 'bootstrap-vue';
 
 export default {
   i18nOptions: { namespaces: ['invoices-list', 'statuses'] },
+  props: {
+    invoices: {
+      type: Array,
+      default: null,
+    },
+  },
   components: {
     EmptyState,
   },
@@ -81,8 +87,12 @@ export default {
   },
   computed: {
     ...mapGetters({
-      invoices: 'invoices/all',
+      allInvoices: 'invoices/all',
     }),
+    displayInvoices() {
+      // Use prop if provided, otherwise fallback to store
+      return this.invoices || this.allInvoices;
+    },
   },
   mounted() {
     this.$store.dispatch('invoices/getInvoices');
@@ -102,8 +112,8 @@ export default {
     },
     getClientTotal(clientId) {
       if (!clientId) return 0;
-      
-      return this.invoices
+
+      return this.allInvoices
         .filter(invoice => invoice.client_id === clientId)
         .filter(invoice => ['sent', 'paid'].includes(invoice.status))
         .reduce((total, invoice) => total + invoice.subTotal, 0);

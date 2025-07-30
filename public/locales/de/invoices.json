@@ -2,5 +2,6 @@
   "title": "Rechnungen",
   "new_invoice": "Neue Rechnung",
   "export": "Exportieren",
-  "import": "Importieren"
+  "import": "Importieren",
+  "hide_paid_invoices": "Bezahlte Rechnungen Ausblenden"
 }

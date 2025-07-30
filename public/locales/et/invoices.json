@@ -2,5 +2,6 @@
   "title": "Arved",
   "new_invoice": "Uus arve",
   "export": "Ekspordi",
-  "import": "Impordi"
+  "import": "Impordi",
+  "hide_paid_invoices": "Peida Makstud Arved"
 }

@@ -2,5 +2,6 @@
     "title": "Factures",
     "new_invoice": "Nouvelle facture",
     "export": "Exporter",
-    "import": "Importer"
+    "import": "Importer",
+    "hide_paid_invoices": "Masquer les Factures Payées"
 }

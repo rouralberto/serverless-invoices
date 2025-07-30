@@ -2,5 +2,6 @@
   "title": "চালান সমূহ",
   "new_invoice": "নতুন চালান",
   "export": "এক্সপোর্ট",
-  "import": "ইমপোর্ট"
+  "import": "ইমপোর্ট",
+  "hide_paid_invoices": "পরিশোধিত চালান লুকান"
 }

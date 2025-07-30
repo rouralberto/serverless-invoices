@@ -37,7 +37,7 @@
                             <i class="material-icons">more_vert</i>
                         </template>
 
-                        <div class="dropdown-item-text p-3">
+                        <div class="dropdown-item-text px-3 pb-3">
                             <label class="form-label mb-2 text-muted small">Financial Year Start</label>
                             <select
                                 v-model="selectedFyStartMonth"
@@ -49,6 +49,19 @@
                                     {{ month.text }}
                                 </option>
                             </select>
+                        </div>
+
+                        <div class="dropdown-item-text px-3">
+                            <div class="custom-control custom-checkbox" style="width: 100%;">
+                                <input type="checkbox"
+                                       class="custom-control-input"
+                                       id="hidePaidInvoicesCheckbox"
+                                       v-model="hidePaidInvoices"
+                                       @change="onHidePaidInvoicesChange">
+                                <label class="custom-control-label text-muted small" for="hidePaidInvoicesCheckbox">
+                                    {{ $t('hide_paid_invoices') }}
+                                </label>
+                            </div>
                         </div>
 
                         <hr/>
@@ -83,7 +96,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <InvoicesList/>
+                <InvoicesList :invoices="filteredInvoices"/>
             </div>
         </div>
 
@@ -158,6 +171,7 @@ export default {
     return {
       isCustomerRankingModalOpen: false,
       selectedFyStartMonth: this.loadFyStartMonth(),
+      hidePaidInvoices: this.loadHidePaidInvoices(),
       monthOptions: [
         { value: 1, text: 'January' },
         { value: 2, text: 'February' },
@@ -181,6 +195,12 @@ export default {
     }),
     isStorageLocal() {
       return config.storageType === 'local';
+    },
+    filteredInvoices() {
+      if (!this.hidePaidInvoices) {
+        return this.invoices;
+      }
+      return this.invoices.filter(invoice => invoice.status !== 'paid');
     },
     customerRanking() {
       const customerTotals = {};
@@ -350,6 +370,20 @@ export default {
       this.saveFyStartMonth(this.selectedFyStartMonth);
       // The reactive system will automatically update the financial year totals
       // when selectedFyStartMonth changes since getFinancialYearTotals() depends on it
+    },
+    loadHidePaidInvoices() {
+      // Load the saved hide paid invoices preference from localStorage
+      // Default to false if no preference is saved
+      const saved = localStorage.getItem('hidePaidInvoices');
+      return saved ? JSON.parse(saved) : false;
+    },
+    saveHidePaidInvoices(hide) {
+      // Save the hide paid invoices preference to localStorage
+      localStorage.setItem('hidePaidInvoices', JSON.stringify(hide));
+    },
+    onHidePaidInvoicesChange() {
+      // Save the preference when user changes the selection
+      this.saveHidePaidInvoices(this.hidePaidInvoices);
     },
   },
 };
