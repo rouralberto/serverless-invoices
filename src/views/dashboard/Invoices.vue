@@ -511,14 +511,17 @@ export default {
   color: var(--text-disabled);
 }
 
-.search-input-group .search-input:focus {
+.search-input-group .search-input:focus,
+.search-input-group .search-input:hover {
   background-color: var(--bg-primary);
   border-color: var(--text-secondary);
   box-shadow: none;
 }
 
+.search-input-group:hover .search-icon,
+.search-input-group:focus-within .search-icon,
 .search-input-group .search-input:focus + .input-group-append .search-clear-btn,
-.search-input-group .search-icon:has(+ .search-input:focus) {
+.search-input-group .search-input:hover + .input-group-append .search-clear-btn {
   border-color: var(--text-secondary);
 }
 
