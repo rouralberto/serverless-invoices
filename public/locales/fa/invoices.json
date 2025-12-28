@@ -3,5 +3,7 @@
   "new_invoice": "فاکتور جدید",
   "export": "صادرات",
   "import": "وارد كردن",
-  "hide_paid_invoices": "مخفی کردن فاکتورهای پرداخت شده"
+  "hide_paid_invoices": "مخفی کردن فاکتورهای پرداخت شده",
+  "show_fy_summary": "نمایش خلاصه سال مالی",
+  "search_client_placeholder": "جستجو بر اساس نام مشتری..."
 }

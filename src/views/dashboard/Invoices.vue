@@ -107,6 +107,37 @@
                 </div>
             </div>
         </div>
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="d-flex align-items-center">
+                    <div class="input-group search-input-group flex-grow-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text search-icon">
+                                <i class="material-icons md-18">search</i>
+                            </span>
+                        </div>
+                        <input type="text"
+                               class="form-control search-input"
+                               v-model="searchQuery"
+                               :placeholder="$t('search_client_placeholder')">
+                        <div class="input-group-append" v-if="searchQuery">
+                            <button class="btn search-clear-btn"
+                                    type="button"
+                                    @click="searchQuery = ''">
+                                <i class="material-icons md-18">close</i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="search-results-summary ml-3" v-if="searchQuery">
+                        <span class="text-muted small">
+                            {{ filteredInvoices.length }} {{ filteredInvoices.length === 1 ? 'invoice' : 'invoices' }}
+                            <span class="mx-1">·</span>
+                            <span class="font-weight-medium">{{ formatCurrency(filteredInvoicesTotal) }}</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-12">
                 <InvoicesList :invoices="filteredInvoices"/>
@@ -186,6 +217,7 @@ export default {
       selectedFyStartMonth: this.loadFyStartMonth(),
       hidePaidInvoices: this.loadHidePaidInvoices(),
       showFySummary: this.loadShowFySummary(),
+      searchQuery: '',
       monthOptions: [
         { value: 1, text: 'January' },
         { value: 2, text: 'February' },
@@ -211,10 +243,30 @@ export default {
       return config.storageType === 'local';
     },
     filteredInvoices() {
-      if (!this.hidePaidInvoices) {
-        return this.invoices;
+      let result = this.invoices;
+
+      // Filter by paid status if enabled
+      if (this.hidePaidInvoices) {
+        result = result.filter(invoice => invoice.status !== 'paid');
       }
-      return this.invoices.filter(invoice => invoice.status !== 'paid');
+
+      // Filter by search query (client name)
+      if (this.searchQuery.trim()) {
+        const query = this.searchQuery.toLowerCase().trim();
+        result = result.filter(invoice => {
+          const clientName = invoice.client_name || '';
+          const companyName = (invoice.client && invoice.client.company_name) || '';
+          return clientName.toLowerCase().includes(query)
+            || companyName.toLowerCase().includes(query);
+        });
+      }
+
+      return result;
+    },
+    filteredInvoicesTotal() {
+      return this.filteredInvoices
+        .filter(invoice => invoice.status !== 'draft' && invoice.status !== 'cancelled')
+        .reduce((sum, invoice) => sum + (invoice.total || 0), 0);
     },
     customerRanking() {
       const customerTotals = {};
@@ -434,5 +486,55 @@ export default {
 
 .dropdown-item-text .form-control-sm {
   font-size: 0.875rem;
+}
+
+/* Search input styles with dark mode support */
+.search-input-group {
+  width: 100%;
+}
+
+.search-input-group .search-icon {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--text-caption);
+  border-right: none;
+  color: var(--text-secondary);
+}
+
+.search-input-group .search-input {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--text-caption);
+  border-left: none;
+  color: var(--text-primary);
+}
+
+.search-input-group .search-input::placeholder {
+  color: var(--text-disabled);
+}
+
+.search-input-group .search-input:focus {
+  background-color: var(--bg-primary);
+  border-color: var(--text-secondary);
+  box-shadow: none;
+}
+
+.search-input-group .search-input:focus + .input-group-append .search-clear-btn,
+.search-input-group .search-icon:has(+ .search-input:focus) {
+  border-color: var(--text-secondary);
+}
+
+.search-input-group .search-clear-btn {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--text-caption);
+  border-left: none;
+  color: var(--text-secondary);
+}
+
+.search-input-group .search-clear-btn:hover {
+  background-color: var(--shade);
+  color: var(--text-primary);
+}
+
+.search-results-summary {
+  white-space: nowrap;
 }
 </style>

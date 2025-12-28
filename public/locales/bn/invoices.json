@@ -3,5 +3,7 @@
   "new_invoice": "নতুন চালান",
   "export": "এক্সপোর্ট",
   "import": "ইমপোর্ট",
-  "hide_paid_invoices": "পরিশোধিত চালান লুকান"
+  "hide_paid_invoices": "পরিশোধিত চালান লুকান",
+  "show_fy_summary": "আর্থিক বছরের সারসংক্ষেপ দেখান",
+  "search_client_placeholder": "গ্রাহকের নাম দিয়ে অনুসন্ধান করুন..."
 }

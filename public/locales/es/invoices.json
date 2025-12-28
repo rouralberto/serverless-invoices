@@ -4,5 +4,6 @@
   "export": "Exportar",
   "import": "Importar",
   "hide_paid_invoices": "Ocultar Facturas Pagadas",
-  "show_fy_summary": "Mostrar Resumen del Año Fiscal"
+  "show_fy_summary": "Mostrar Resumen del Año Fiscal",
+  "search_client_placeholder": "Buscar por nombre de cliente..."
 }

@@ -4,5 +4,6 @@
   "export": "Exportieren",
   "import": "Importieren",
   "hide_paid_invoices": "Bezahlte Rechnungen Ausblenden",
-  "show_fy_summary": "FY-Zusammenfassung Anzeigen"
+  "show_fy_summary": "FY-Zusammenfassung Anzeigen",
+  "search_client_placeholder": "Nach Kundenname suchen..."
 }

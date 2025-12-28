@@ -4,5 +4,6 @@
   "export": "Export",
   "import": "Import",
   "hide_paid_invoices": "Hide Paid Invoices",
-  "show_fy_summary": "Show FY Summary"
+  "show_fy_summary": "Show FY Summary",
+  "search_client_placeholder": "Search by client name..."
 }

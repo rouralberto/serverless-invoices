@@ -3,5 +3,7 @@
     "new_invoice": "Invoice Baru",
     "export": "Ekspor",
     "import": "Impor",
-    "hide_paid_invoices": "Sembunyikan Invoice yang Sudah Dibayar"
+    "hide_paid_invoices": "Sembunyikan Invoice yang Sudah Dibayar",
+    "show_fy_summary": "Tampilkan Ringkasan Tahun Fiskal",
+    "search_client_placeholder": "Cari berdasarkan nama klien..."
 }

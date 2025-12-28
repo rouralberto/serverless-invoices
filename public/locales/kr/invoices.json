@@ -3,5 +3,7 @@
   "new_invoice": "신규 송장",
   "export": "내보내기",
   "import": "가져오기",
-  "hide_paid_invoices": "결제 완료된 송장 숨기기"
+  "hide_paid_invoices": "결제 완료된 송장 숨기기",
+  "show_fy_summary": "회계연도 요약 표시",
+  "search_client_placeholder": "고객 이름으로 검색..."
 }

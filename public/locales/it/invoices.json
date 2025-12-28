@@ -4,5 +4,6 @@
     "export": "Esporta",
     "import": "Importa",
     "hide_paid_invoices": "Nascondi Fatture Pagate",
-    "show_fy_summary": "Mostra Riepilogo Anno Fiscale"
+    "show_fy_summary": "Mostra Riepilogo Anno Fiscale",
+    "search_client_placeholder": "Cerca per nome cliente..."
 }

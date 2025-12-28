@@ -3,5 +3,7 @@
   "new_invoice": "Nova Fatura",
   "export": "Exportar",
   "import": "Importar",
-  "hide_paid_invoices": "Ocultar Faturas Pagas"
+  "hide_paid_invoices": "Ocultar Faturas Pagas",
+  "show_fy_summary": "Mostrar Resumo do Ano Fiscal",
+  "search_client_placeholder": "Pesquisar por nome do cliente..."
 }

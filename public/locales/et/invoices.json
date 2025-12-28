@@ -3,5 +3,7 @@
   "new_invoice": "Uus arve",
   "export": "Ekspordi",
   "import": "Impordi",
-  "hide_paid_invoices": "Peida Makstud Arved"
+  "hide_paid_invoices": "Peida Makstud Arved",
+  "show_fy_summary": "Näita Majandusaasta Kokkuvõtet",
+  "search_client_placeholder": "Otsi kliendi nime järgi..."
 }
