@@ -272,15 +272,15 @@ export default {
     },
     filteredInvoicesTotal() {
       return this.filteredInvoices
-        .filter(invoice => invoice.status !== 'draft' && invoice.status !== 'cancelled')
+        .filter(invoice => invoice.status !== 'draft' && invoice.status !== 'cancelled' && invoice.status !== 'written_off')
         .reduce((sum, invoice) => sum + (invoice.total || 0), 0);
     },
     customerRanking() {
       const customerTotals = {};
 
-      // Get all invoiced invoices (non-draft, non-cancelled) and group by customer
+      // Get all invoiced invoices (non-draft, non-cancelled, non-written-off) and group by customer
       this.invoices
-        .filter(invoice => invoice.status !== 'draft' && invoice.status !== 'cancelled')
+        .filter(invoice => invoice.status !== 'draft' && invoice.status !== 'cancelled' && invoice.status !== 'written_off')
         .forEach(invoice => {
           const customerName = invoice.client_name || 'Unknown Customer';
 
@@ -366,7 +366,7 @@ export default {
     },
     getInvoiceTotals(status = 'all') {
       const filteredInvoices = status === 'all'
-        ? this.invoices.filter(invoice => invoice.status !== 'draft' && invoice.status !== 'cancelled')
+        ? this.invoices.filter(invoice => invoice.status !== 'draft' && invoice.status !== 'cancelled' && invoice.status !== 'written_off')
         : this.invoices.filter(invoice => invoice.status === status);
 
       const amount = filteredInvoices.reduce((sum, invoice) => sum + invoice.total, 0).toFixed(0);
@@ -377,7 +377,7 @@ export default {
       const fyData = {};
 
       this.invoices
-        .filter(invoice => invoice.status !== 'draft')
+        .filter(invoice => invoice.status !== 'draft' && invoice.status !== 'written_off')
         .forEach(invoice => {
           if (!invoice.issued_at) return;
 

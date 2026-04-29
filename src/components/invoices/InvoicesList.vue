@@ -44,6 +44,9 @@
                        v-else-if="invoice.status === 'draft'">edit_note</i>
                     <i class="material-icons material-icons-round md-18 mr-2 text-success"
                        v-else-if="invoice.status === 'paid'">done</i>
+                    <i class="material-icons material-icons-round md-18 mr-2 text-muted"
+                       v-else-if="invoice.status === 'written_off'"
+                       v-b-tooltip.hover title="Written-Off">money_off</i>
                     {{ $t(`statuses.${invoice.status}`) }}
                 </td>
               <td class="text-right">
