@@ -4,6 +4,7 @@
         "booked": "dipesan",
         "sent": "terkirim",
         "paid": "lunas",
+        "written_off": "dihapusbukukan",
         "cancelled": "dibatalkan"
     }
 }

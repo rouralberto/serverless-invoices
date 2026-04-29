@@ -4,6 +4,7 @@
     "booked": "Gebucht",
     "sent": "Gesendet",
     "paid": "Bezahlt",
+    "written_off": "Abgeschrieben",
     "cancelled": "Abgebrochen"
   }
 }

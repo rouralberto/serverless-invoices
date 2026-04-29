@@ -82,6 +82,9 @@ export default {
         value: 'paid',
         name: this.$t('statuses.paid'),
       }, {
+        value: 'written_off',
+        name: this.$t('statuses.written_off'),
+      }, {
         value: 'cancelled',
         name: this.$t('statuses.cancelled'),
       }];

@@ -4,6 +4,7 @@
         "booked": "signé",
         "sent": "envoyé",
         "paid": "payé",
+        "written_off": "passé en pertes",
         "cancelled": "annulé"
     }
 }

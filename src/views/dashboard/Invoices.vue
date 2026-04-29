@@ -254,7 +254,7 @@ export default {
 
       // Filter by paid status if enabled
       if (this.hidePaidInvoices) {
-        result = result.filter(invoice => invoice.status !== 'paid');
+        result = result.filter(invoice => invoice.status !== 'paid' && invoice.status !== 'written_off');
       }
 
       // Filter by search query (client name)

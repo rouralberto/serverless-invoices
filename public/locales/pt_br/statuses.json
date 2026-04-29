@@ -4,6 +4,7 @@
     "booked": "registrada",
     "sent": "enviada",
     "paid": "paga",
+    "written_off": "baixada",
     "cancelled": "cancelada"
   }
 }

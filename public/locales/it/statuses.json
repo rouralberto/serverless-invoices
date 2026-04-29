@@ -4,6 +4,7 @@
     "booked": "prenotata",
     "sent": "mandata",
     "paid": "pagata",
+    "written_off": "inesigibile",
     "cancelled": "cancellata"
   }
 }

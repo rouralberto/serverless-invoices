@@ -4,6 +4,7 @@
     "booked": "reservado",
     "sent": "enviado",
     "paid": "pagado",
+    "written_off": "condonado",
     "cancelled": "cancelado"
   }
 }

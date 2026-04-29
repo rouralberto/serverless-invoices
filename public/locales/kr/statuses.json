@@ -4,6 +4,7 @@
     "booked": "예약됨",
     "sent": "발송됨",
     "paid": "결제됨",
+    "written_off": "대손처리",
     "cancelled": "취소됨"
   }
 }

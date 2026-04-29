@@ -4,6 +4,7 @@
     "booked": "kinnitatud",
     "sent": "saadetud",
     "paid": "makstud",
+    "written_off": "maha kantud",
     "cancelled": "tühistatud"
   }
 }

@@ -4,6 +4,7 @@
     "booked": "booked",
     "sent": "sent",
     "paid": "paid",
+    "written_off": "written-off",
     "cancelled": "cancelled"
   }
 }
