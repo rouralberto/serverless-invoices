@@ -135,6 +135,12 @@
                             <span class="font-weight-medium">{{ formatCurrency(filteredInvoicesTotal) }}</span>
                         </span>
                     </div>
+                    <button v-if="searchQuery && filteredInvoices.length"
+                            class="btn btn-outline-secondary btn-sm ml-2 d-flex align-items-center"
+                            type="button"
+                            @click="copyFilteredInvoices">
+                        <i class="material-icons md-18 mr-1">{{ copyIcon }}</i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -218,6 +224,7 @@ export default {
       hidePaidInvoices: this.loadHidePaidInvoices(),
       showFySummary: this.loadShowFySummary(),
       searchQuery: '',
+      copiedToClipboard: false,
       monthOptions: [
         { value: 1, text: 'January' },
         { value: 2, text: 'February' },
@@ -303,8 +310,38 @@ export default {
         }))
         .sort((a, b) => b.totalInvoiced - a.totalInvoiced);
     },
+    copyIcon() {
+      return this.copiedToClipboard ? 'check' : 'content_copy';
+    },
   },
   methods: {
+    copyFilteredInvoices() {
+      const data = this.filteredInvoices.map(invoice => ({
+        number: invoice.number,
+        client_name: invoice.client_name || (invoice.client && invoice.client.company_name) || '',
+        issued_at: invoice.issued_at,
+        amount: invoice.total,
+        status: invoice.status,
+        lines: (invoice.rows || []).map(row => ({
+          item: row.item,
+          quantity: row.quantity,
+          price: row.price,
+          gst: row.taxes ? row.taxes.reduce((sum, t) => sum + (row.quantity * row.price * t.value / 100), 0) : 0,
+          sum: row.quantity * row.price + (row.taxes ? row.taxes.reduce((s, t) => s + (row.quantity * row.price * t.value / 100), 0) : 0),
+        })),
+      }));
+      const text = JSON.stringify(data, null, 2);
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      this.copiedToClipboard = true;
+      setTimeout(() => { this.copiedToClipboard = false; }, 2000);
+    },
     createNewInvoice() {
       this.$store.dispatch('invoices/createNewInvoice')
         .then(id => this.$router.push({ name: 'invoice', params: { id } }));
