@@ -325,6 +325,7 @@ export default {
         lines: (invoice.rows || []).map(row => ({
           item: row.item,
           quantity: row.quantity,
+          unit: row.unit,
           price: row.price,
           gst: row.taxes ? row.taxes.reduce((sum, t) => sum + (row.quantity * row.price * t.value / 100), 0) : 0,
           sum: row.quantity * row.price + (row.taxes ? row.taxes.reduce((s, t) => s + (row.quantity * row.price * t.value / 100), 0) : 0),
