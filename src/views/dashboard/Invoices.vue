@@ -29,13 +29,17 @@
                       Customer Ranking
                     </button>
                     <button class="btn btn-sm btn-outline-dark"
-                            :class="{ 'mr-3': !isStorageLocal }"
                             @click="createNewInvoice">{{ $t('new_invoice') }}
                     </button>
-                    <b-dropdown variant="link" size="sm" no-caret right v-if="isStorageLocal">
+                    <b-dropdown variant="link" size="sm" no-caret right>
                         <template slot="button-content">
                             <i class="material-icons">more_vert</i>
                         </template>
+
+                        <b-dropdown-item @click="openClientsListModal">{{ $t('manage_customers') }}</b-dropdown-item>
+
+                        <template v-if="isStorageLocal">
+                        <hr/>
 
                         <div class="dropdown-item-text px-3 pb-3">
                             <label class="form-label mb-2 text-muted small">Financial Year Start</label>
@@ -83,6 +87,7 @@
                         <b-dropdown-item @click="openImportModal">{{ $t('import') }}</b-dropdown-item>
                         <li role="presentation"><span class="dropdown-item">—</span></li>
                         <b-dropdown-item @click="saveJson">Save in S3</b-dropdown-item>
+                        </template>
                     </b-dropdown>
                 </div>
             </div>
@@ -150,6 +155,16 @@
             </div>
         </div>
 
+        <!-- Manage Customers Modal -->
+        <b-modal v-model="isClientsListModalOpen"
+                 centered
+                 hide-footer
+                 :title="$t('manage_customers')"
+                 size="lg"
+                 content-class="bg-base dp--24">
+            <ClientsList/>
+        </b-modal>
+
         <!-- Customer Ranking Modal -->
         <b-modal v-model="isCustomerRankingModalOpen"
                  centered
@@ -203,6 +218,7 @@
 import { BDropdown, BDropdownItem, BModal, VBTooltip } from 'bootstrap-vue';
 import { mapGetters } from 'vuex';
 import InvoicesList from '@/components/invoices/InvoicesList';
+import ClientsList from '@/components/clients/ClientsList';
 import config from '@/config/app.config';
 
 export default {
@@ -210,6 +226,7 @@ export default {
   i18nOptions: { namespaces: 'invoices' },
   components: {
     InvoicesList,
+    ClientsList,
     BDropdown,
     BDropdownItem,
     BModal,
@@ -219,6 +236,7 @@ export default {
   },
   data() {
     return {
+      isClientsListModalOpen: false,
       isCustomerRankingModalOpen: false,
       selectedFyStartMonth: this.loadFyStartMonth(),
       hidePaidInvoices: this.loadHidePaidInvoices(),
@@ -355,6 +373,9 @@ export default {
     },
     openImportModal() {
       this.$store.commit('data/isImportModalOpen', true);
+    },
+    openClientsListModal() {
+      this.isClientsListModalOpen = true;
     },
     openCustomerRankingModal() {
       this.isCustomerRankingModalOpen = true;

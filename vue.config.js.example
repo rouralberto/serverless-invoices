@@ -1,6 +1,20 @@
 module.exports = {
   devServer: {
+    host: '0.0.0.0',
+    port: 8080,
     disableHostCheck: true,
+    public: process.env.DEV_SERVER_PUBLIC || 'https://invoices.docker/',
+    sockHost: process.env.DEV_SERVER_SOCK_HOST || 'invoices.docker',
+    sockPort: process.env.DEV_SERVER_SOCK_PORT || 443,
+    sockPath: '/sockjs-node',
+    hot: false,
+    watchOptions: {
+      poll: 1000,
+      aggregateTimeout: 300,
+    },
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
   },
   publicPath: '/',
   transpileDependencies: [

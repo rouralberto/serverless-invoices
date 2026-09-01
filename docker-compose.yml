@@ -28,6 +28,8 @@ services:
       - ./package-lock.json:/app/package-lock.json
       - ./vue.config.js.example:/app/vue.config.js
     environment:
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
       VIRTUAL_HOST: invoices.docker # Assuming a reverse proxy is in place in the "default" network
       VIRTUAL_PORT: "8080"
       VUE_APP_AWS_REGION: "eu-south-2"

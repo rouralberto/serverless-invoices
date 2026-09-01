@@ -1,0 +1,15 @@
+{
+  "title": "Manage Customers",
+  "loading": "Loading",
+  "company_name": "Company name",
+  "email": "Email",
+  "city": "City",
+  "add_client": "Add customer",
+  "search_placeholder": "Search customers...",
+  "delete_modal": {
+    "title": "Delete customer",
+    "ok_title": "Delete",
+    "cancel_title": "Dismiss"
+  },
+  "notification_deleted": "Customer deleted"
+}
