@@ -16,13 +16,7 @@
                    v-if="!isStorageWordpress">
                 {{ $t('what_about_my_data') }}
             </small>
-            <small class="pl-2">
-                {{ $t('made_with') }}
-                <i class="material-icons material-icons-round md-14 align-text-bottom">favorite</i>
-                {{ $t('by') }}
-                <a href="https://mokuapp.io/" class="text-secondary" target="_blank">Moku</a>.
-            </small>
-            <a href="https://github.com/mokuappio/serverless-invoices"
+            <a href="https://github.com/rouralberto/serverless-invoices"
                class="btn btn-sm btn--icon ml-0 ml-md-2"
                target="_blank"
                v-if="!isStorageWordpress">

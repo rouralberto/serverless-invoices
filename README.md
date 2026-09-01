@@ -1,111 +1,136 @@
-<a href="https://www.producthunt.com/posts/serverless-invoices?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-serverless-invoices" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=287626&theme=light&period=daily" alt="Serverless Invoices - Open source, serverless invoice generator | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+# Serverless Invoices
 
-# Serverless Invoices by Moku
+A free, open-source invoicing tool for freelancers and small businesses.
 
-Serverless Invoices is a free invoicing tool for freelancers and small businesses.
+Data is stored in your browser — no server required. Run it locally or host it yourself.
 
-It is open-source and easily extendable. You can use it as a starter kit for more complex systems. Implement your own features, localization, styling
- or integrate with various other systems and API-s.
- 
-Run it locally or host it yourself.
- 
-You can always use the latest free version at [invoices.elevate.ee](https://invoices.elevate.ee)
+Built with [Vue.js](https://vuejs.org/) and [Bootstrap](https://getbootstrap.com/).
 
-Built with [Vue.js](https://vuejs.org/) and [Bootstrap](https://getbootstrap.com/)
+> Originally created by [Moku](https://github.com/mokuappio/serverless-invoices). This fork is independently maintained.
 
 ## Features
-- Truly serverless - data stored in your browser only, no network requests
-- No hosting required - works locally
-- Invoices
+
+- **Truly serverless** — data stored in your browser only, no network requests
+- **No hosting required** — works locally
+- **Invoices**
   - Create & manage invoices
   - Track invoices by status and due date
-  - Multiple custom taxes
+  - Multiple custom taxes, late fees
   - Print to PDF
-  - Customizable logo and template, CSS
-- Bank accounts
-- Clients
+  - Customizable logo and template (CSS)
+  - Duplicate invoices
+  - Written-off status tracking
+- **Bank accounts**
+- **Clients**
   - Create & manage clients
   - Custom fields
-- Company details
+  - Client search and ranking
+- **Company details**
   - Edit default company details
   - Custom fields
   - Default taxes
-- Export & import json data
-- Dark and light mode!
-- Multilingual
-- PWA support 
-- Ready-to-go backend adapters
-  - [Browser Storage](https://invoices.elevate.ee)
-  - [Wordpress](https://wordpress.org/plugins/beautiful-custom-invoices/)
-  - Woocommerce (coming soon)
-  - Google Drive (coming soon)
+- **Dashboard**
+  - Quick totals overview
+  - Monthly summaries
+  - Financial year summaries
+  - Customer rankings
+- **S3 backup** — automatic JSON backup to AWS S3
+- **Export & import** JSON data
+- **Dark and light mode**
+- **PWA support**
+- **Backend adapters**
+  - Browser Storage (default)
+  - WordPress
   - Custom HTTP API
 
-## Project setup
-Requires `node 16.18`
+## Requirements
 
-```
+- Node 16.18+
+- Docker (optional, for containerized setup)
+
+## Project Setup
+
+### 1. Install dependencies
+
+```bash
 npm install
 ```
 
-### Create app config
-Create an app.config.js which can be edited for custom settings.
-```
+### 2. Create app config
+
+```bash
 cp src/config/app.config.example.js src/config/app.config.js
 ```
 
-### Compiles and hot-reloads for development
-```
+### 3. Development
+
+```bash
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
+### 4. Production build
+
+```bash
 npm run build
 ```
 
-### Lints and fixes files
-```
+### 5. Lint
+
+```bash
 npm run lint
 ```
 
 ## Run with Docker
 
-It is necessary to install Docker before running the following commands.
+### Quick start (production build)
 
-```
-git clone https://github.com/mokuappio/serverless-invoices.git
-cd serverless-invoices.git
-docker build . -t mokuappio/serverless-invoices
-docker run -p 80:8080 -d --rm mokuappio/serverless-invoices
+```bash
+git clone https://github.com/rouralberto/serverless-invoices.git
+cd serverless-invoices
+docker build . -t serverless-invoices
+docker run -p 80:8080 -d --rm serverless-invoices
 ```
 
-It is possible to add an alias in your .bashrc/.zshrc file to launch the app on the fly.
+You can add a shell alias for quick access:
 
-```
-echo "alias serverless-invoices='docker run -p 80:8080 -d --rm mokuappio/serverless-invoices'" >> ~/.zshrc
+```bash
+echo "alias serverless-invoices='docker run -p 80:8080 -d --rm serverless-invoices'" >> ~/.zshrc
 source ~/.zshrc
-serverless-invoices
 ```
 
-## Topics
-- invoices management
-- invoicing solution
-- invoice maker
-- invoice generator 
+### Development with Docker Compose
 
+The included `docker-compose.yml` sets up a dev environment with hot reload behind a reverse proxy.
 
-## Affiliates and sponsors
-<a href="https://www.zone.ee/en/" target="_blank"><img src="https://www.zone.ee/wp-content/themes/zone-theme/img/zone_ee.svg" alt="Zone - Domains and web hosting" width="150"/></a>
+1. Copy and adjust the Vue config:
+   ```bash
+   cp vue.config.js.example vue.config.js
+   ```
 
-**ZONE** offers fast and secure web hosting, spam free email, cheap domains and quality support.
+2. Create a `docker-compose.override.yml` for your local environment variables (AWS credentials, etc.). See `.env.example` for available variables.
 
-Get **50%** off your first year with the code **ELEVATE**
- - [Get your web, email and domain](https://my.zone.eu/en/domain-search#/?campaign=ELEVATE)
- - Already have a domain? [Get only web and email](https://my.zone.eu/en/zwebadmin/webhosting/order?campaign=ELEVATE)
+3. Start:
+   ```bash
+   docker compose up
+   ```
 
-<a href="https://mokuapp.io/" target="_blank"><img src="https://user-images.githubusercontent.com/5262399/170223530-0634d5c4-56d8-425e-846c-09f352f7b00c.png" alt="Moku - Time tracking, task management and automated invoicing" width="150"/></a>
+## Environment Variables
 
-**MOKU** offers simple time tracking, task management and automated invoicing for ambitious dev teams and freelancers.
- - [Get your free trial](https://mokuapp.io/)
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `VUE_APP_AWS_REGION` | AWS region for S3 backup | — |
+| `VUE_APP_AWS_ACCESS_KEY_ID` | AWS access key | — |
+| `VUE_APP_AWS_SECRET_ACCESS_KEY` | AWS secret key | — |
+| `VUE_APP_BUCKET_NAME` | S3 bucket name | — |
 
+## Configuration Files
+
+| File | Created from | Purpose |
+|------|-------------|---------|
+| `src/config/app.config.js` | `app.config.example.js` | Storage adapter config |
+| `vue.config.js` | `vue.config.js.example` | Dev server & PWA config |
+| `docker-compose.override.yml` | — | Local Docker overrides |
+
+## License
+
+MIT — see [LICENSE](LICENSE).
