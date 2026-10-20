@@ -81,6 +81,11 @@
     },
     "notification_deleted": "고객이 삭제되었습니다"
   },
+  "common": {
+    "close": "닫기",
+    "ok": "확인",
+    "cancel": "취소"
+  },
   "customizations-modal": {
     "title": "당신의 송장을 자유롭게 제작하세요",
     "textarea_label": "사용자 지정 CSS를 삽입하세요",
@@ -287,6 +292,33 @@
     "lights-on": "밝은 배경으로 보기",
     "lights-off": "어두운 배경으로 보기",
     "title": "당신의 모든 정보는 서버가 아니라 당신의 브라우저에 저장되어있습니다. \n 이 응용 프로그램은 서버리스이며 오직 당신만이 당신의 정보에 접근할 수 있습니다.",
-    "what_about_my_data": "제 정보는 어떻게 보호받나요? "
+    "what_about_my_data": "제 정보는 어떻게 보호받나요? ",
+    "github_alt": "GitHub의 Serverless Invoices"
+  },
+  "validation": {
+    "required": "{{field}}은(는) 필수입니다",
+    "fields": {
+      "currency": "통화",
+      "issued_at": "발행일",
+      "due_at": "만기일",
+      "number": "번호",
+      "client": "고객",
+      "client_name": "고객명",
+      "address": "주소",
+      "postal_code": "우편번호",
+      "city": "도시",
+      "client_email": "고객 이메일",
+      "country": "국가",
+      "name": "이름",
+      "website": "웹사이트",
+      "your_email": "내 이메일",
+      "your_phone": "내 전화번호",
+      "bank_name": "은행명",
+      "bank_account": "은행 계좌 정보",
+      "item": "품목",
+      "quantity": "수량",
+      "price": "가격",
+      "unit": "단위"
+    }
   }
 }

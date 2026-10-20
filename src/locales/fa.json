@@ -81,10 +81,15 @@
     },
     "notification_deleted": "مشتری حذف شد"
   },
+  "common": {
+    "close": "بستن",
+    "ok": "تأیید",
+    "cancel": "انصراف"
+  },
   "customizations-modal": {
-    "title": "Customize your invoices",
-    "textarea_label": "Insert your custom CSS",
-    "updated": "Updated"
+    "title": "سفارشی‌سازی فاکتورها",
+    "textarea_label": "CSS سفارشی خود را وارد کنید",
+    "updated": "به‌روزرسانی شد"
   },
   "empty-state": {
     "content": "هنوز چیزی در اینجا نیست"
@@ -125,10 +130,10 @@
   "invoice-controls": {
     "back": "بازگشت",
     "book": "کتاب",
-    "design_and_layout": "Design & layout",
-    "compact": "Compact",
-    "comfortable": "Comfortable",
-    "customize": "Customize",
+    "design_and_layout": "طراحی و چیدمان",
+    "compact": "فشرده",
+    "comfortable": "گسترده",
+    "customize": "سفارشی‌سازی",
     "download_pdf": "بارگیری PDF",
     "delete": "حذف",
     "delete_modal": {
@@ -287,6 +292,33 @@
     "lights-on": "چراغ روشن است",
     "lights-off": "چراغ خاموش",
     "title": "تمام داده های شما در مرورگر شما و نه در هر سرور ذخیره می شود.\n                                   این برنامه واقعاً بدون سرور است و فقط شما به داده های خود دسترسی دارید.",
-    "what_about_my_data": "در مورد داده های من چطور؟"
+    "what_about_my_data": "در مورد داده های من چطور؟",
+    "github_alt": "Serverless Invoices در GitHub"
+  },
+  "validation": {
+    "required": "{{field}} الزامی است",
+    "fields": {
+      "currency": "واحد پول",
+      "issued_at": "تاریخ صدور",
+      "due_at": "تاریخ سررسید",
+      "number": "شماره",
+      "client": "مشتری",
+      "client_name": "نام مشتری",
+      "address": "آدرس",
+      "postal_code": "کد پستی",
+      "city": "شهر",
+      "client_email": "ایمیل مشتری",
+      "country": "کشور",
+      "name": "نام",
+      "website": "وب‌سایت",
+      "your_email": "ایمیل شما",
+      "your_phone": "تلفن شما",
+      "bank_name": "نام بانک",
+      "bank_account": "مشخصات حساب بانکی",
+      "item": "آیتم",
+      "quantity": "تعداد",
+      "price": "قیمت",
+      "unit": "واحد"
+    }
   }
 }

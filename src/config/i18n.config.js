@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import dayjs from 'dayjs/esm';
 
 export const LANGUAGES = [
   { name: 'English', code: 'en' },
@@ -21,6 +22,20 @@ const BCP47 = { pt_br: 'pt-BR', kr: 'ko' };
 
 // One file per language, each with a section per namespace (component).
 const bundles = import.meta.glob('../locales/*.json', { import: 'default' });
+
+// Month names in formatted dates (English is built into dayjs). The ESM builds share one dayjs instance.
+const dayjsLocales = {
+  fr: () => import('dayjs/esm/locale/fr'),
+  it: () => import('dayjs/esm/locale/it'),
+  et: () => import('dayjs/esm/locale/et'),
+  fa: () => import('dayjs/esm/locale/fa'),
+  es: () => import('dayjs/esm/locale/es'),
+  bn: () => import('dayjs/esm/locale/bn'),
+  de: () => import('dayjs/esm/locale/de'),
+  pt_br: () => import('dayjs/esm/locale/pt-br'),
+  id: () => import('dayjs/esm/locale/id'),
+  kr: () => import('dayjs/esm/locale/ko'),
+};
 
 /**
  * Locale tag for Intl APIs (dates, relative times, month names).
@@ -62,6 +77,7 @@ export async function setLanguage(code) {
   if (!i18next.hasResourceBundle(code, 'invoices')) {
     await loadBundle(code);
   }
+  dayjs.locale(dayjsLocales[code] ? (await dayjsLocales[code]()).default : 'en');
   await i18next.changeLanguage(code);
   document.documentElement.lang = intlLocale(code);
   try {

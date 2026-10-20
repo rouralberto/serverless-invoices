@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs from 'dayjs/esm';
 import i18next from 'i18next';
 
 export function uuidv4() {
@@ -33,9 +33,9 @@ export function validate(requiredFields, input) {
   return { errors };
 }
 
-export function validateField(input, field, label) {
+export function validateField(input, field, labelKey) {
   if (!Object.hasOwn(input, field) || input[field] === null || input[field].length === 0) {
-    return [`${label} is required`];
+    return [i18next.t('validation:required', { field: i18next.t(`validation:fields.${labelKey}`) })];
   }
   return null;
 }

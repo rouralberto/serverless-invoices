@@ -81,6 +81,11 @@
     },
     "notification_deleted": "Client supprimé"
   },
+  "common": {
+    "close": "Fermer",
+    "ok": "OK",
+    "cancel": "Annuler"
+  },
   "customizations-modal": {
     "title": "Customiser vos factures",
     "textarea_label": "Ajouter votre CSS customisée",
@@ -114,8 +119,8 @@
     "postal_code": "Code postal",
     "city": "Ville",
     "county": "Province/Région",
-    "country": "Country",
-    "your_email": "Your email"
+    "country": "Pays",
+    "your_email": "Votre e-mail"
   },
   "invoice-contact-details": {
     "add_website": "Ajouter un site web",
@@ -124,10 +129,10 @@
   },
   "invoice-controls": {
     "back": "Retour",
-    "book": "Book",
+    "book": "Comptabiliser",
     "design_and_layout": "Apparence",
     "compact": "Compacte",
-    "comfortable": "Comfortable",
+    "comfortable": "Confortable",
     "customize": "Customise",
     "download_pdf": "Télécharger PDF",
     "delete": "Supprimer",
@@ -287,6 +292,33 @@
     "lights-on": "Mode clair",
     "lights-off": "Mode sombre",
     "title": "Toutes vos données sont sauvées dans votre naviguateur et sur aucun serveur.\n Cette application est réellement serverless et vous avez seulement accès à vos propres données.",
-    "what_about_my_data": "Qu'en est-il de mes données? "
+    "what_about_my_data": "Qu'en est-il de mes données? ",
+    "github_alt": "Serverless Invoices sur GitHub"
+  },
+  "validation": {
+    "required": "{{field}} est obligatoire",
+    "fields": {
+      "currency": "Devise",
+      "issued_at": "Date d'émission",
+      "due_at": "Date d'échéance",
+      "number": "Numéro",
+      "client": "Client",
+      "client_name": "Nom du client",
+      "address": "Adresse",
+      "postal_code": "Code postal",
+      "city": "Ville",
+      "client_email": "E-mail du client",
+      "country": "Pays",
+      "name": "Nom",
+      "website": "Site web",
+      "your_email": "Votre e-mail",
+      "your_phone": "Votre téléphone",
+      "bank_name": "Nom de la banque",
+      "bank_account": "Coordonnées bancaires",
+      "item": "Article",
+      "quantity": "Quantité",
+      "price": "Prix",
+      "unit": "Unité"
+    }
   }
 }

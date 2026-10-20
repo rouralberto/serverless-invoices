@@ -15,7 +15,7 @@
             <div class="modal-content" :class="contentClass">
                 <div v-if="!noHeader" class="modal-header">
                     <h5 class="modal-title">{{ title }}</h5>
-                    <button type="button" class="btn-close" aria-label="Close" @click="close"></button>
+                    <button type="button" class="btn-close" :aria-label="$t('common:close')" @click="close"></button>
                 </div>
                 <div class="modal-body">
                     <slot/>

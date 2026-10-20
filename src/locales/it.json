@@ -81,6 +81,11 @@
     },
     "notification_deleted": "Cliente eliminato"
   },
+  "common": {
+    "close": "Chiudi",
+    "ok": "OK",
+    "cancel": "Annulla"
+  },
   "customizations-modal": {
     "title": "Adatta il tuo modello di fattura",
     "textarea_label": "Aggiungi il tuo foglio di stile",
@@ -287,6 +292,33 @@
     "lights-on": "Tema chiaro",
     "lights-off": "Tema scuro",
     "title": "Tutti i tuoi dati sono salvati nel tuo browser e in nessun server esterno.\n Questo programma è interamente realizzato senza server, e solo tu hai accesso alle tue Fatture.",
-    "what_about_my_data": "Dove sono i miei dati? "
+    "what_about_my_data": "Dove sono i miei dati? ",
+    "github_alt": "Serverless Invoices su GitHub"
+  },
+  "validation": {
+    "required": "{{field}} è obbligatorio",
+    "fields": {
+      "currency": "Valuta",
+      "issued_at": "Data di emissione",
+      "due_at": "Data di scadenza",
+      "number": "Numero",
+      "client": "Cliente",
+      "client_name": "Nome del cliente",
+      "address": "Indirizzo",
+      "postal_code": "CAP",
+      "city": "Città",
+      "client_email": "Email del cliente",
+      "country": "Paese",
+      "name": "Nome",
+      "website": "Sito web",
+      "your_email": "La tua email",
+      "your_phone": "Il tuo telefono",
+      "bank_name": "Nome della banca",
+      "bank_account": "Coordinate bancarie",
+      "item": "Articolo",
+      "quantity": "Quantità",
+      "price": "Prezzo",
+      "unit": "Unità"
+    }
   }
 }

@@ -81,10 +81,15 @@
     },
     "notification_deleted": "গ্রাহক মুছে ফেলা হয়েছে"
   },
+  "common": {
+    "close": "বন্ধ করুন",
+    "ok": "ঠিক আছে",
+    "cancel": "বাতিল"
+  },
   "customizations-modal": {
-    "title": "Customize your invoices",
-    "textarea_label": "Insert your custom CSS",
-    "updated": "Updated"
+    "title": "আপনার চালান কাস্টমাইজ করুন",
+    "textarea_label": "আপনার কাস্টম CSS লিখুন",
+    "updated": "আপডেট করা হয়েছে"
   },
   "empty-state": {
     "content": "এখানে কিছুই নাই এখনও"
@@ -125,10 +130,10 @@
   "invoice-controls": {
     "back": "ব্যাক",
     "book": "বুক",
-    "design_and_layout": "Design & layout",
-    "compact": "Compact",
-    "comfortable": "Comfortable",
-    "customize": "Customize",
+    "design_and_layout": "ডিজাইন ও লেআউট",
+    "compact": "কমপ্যাক্ট",
+    "comfortable": "প্রশস্ত",
+    "customize": "কাস্টমাইজ",
     "download_pdf": "ডাউনলোড পিডিএফ",
     "delete": "ডিলিট",
     "delete_modal": {
@@ -287,6 +292,33 @@
     "lights-on": "লাইটস অন",
     "lights-off": "লাইটস অফ",
     "title": "আপনার সমস্ত ডেটা কোনও সার্ভারে নয় আপনার ব্রাউজারে সংরক্ষণ করা হয়েছে। \n                                  এই অ্যাপ্লিকেশনটি সত্যিই সার্ভারহীন এবং কেবলমাত্র আপনি আপনার ডেটার অ্যাক্সেস পাবেন",
-    "what_about_my_data": "আমার তথ্য সম্পর্কে কি?"
+    "what_about_my_data": "আমার তথ্য সম্পর্কে কি?",
+    "github_alt": "GitHub-এ Serverless Invoices"
+  },
+  "validation": {
+    "required": "{{field}} আবশ্যক",
+    "fields": {
+      "currency": "মুদ্রা",
+      "issued_at": "ইস্যুর তারিখ",
+      "due_at": "নির্ধারিত তারিখ",
+      "number": "নম্বর",
+      "client": "গ্রাহক",
+      "client_name": "গ্রাহকের নাম",
+      "address": "ঠিকানা",
+      "postal_code": "পোস্টাল কোড",
+      "city": "শহর",
+      "client_email": "গ্রাহকের ইমেইল",
+      "country": "দেশ",
+      "name": "নাম",
+      "website": "ওয়েবসাইট",
+      "your_email": "আপনার ইমেইল",
+      "your_phone": "আপনার ফোন",
+      "bank_name": "ব্যাংকের নাম",
+      "bank_account": "ব্যাংক অ্যাকাউন্টের বিবরণ",
+      "item": "আইটেম",
+      "quantity": "পরিমাণ",
+      "price": "মূল্য",
+      "unit": "একক"
+    }
   }
 }

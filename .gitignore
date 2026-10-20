@@ -21,6 +21,5 @@ yarn-error.log*
 *.sw?
 
 public/.htaccess
-vue.config.js
 
 docker-compose.override.yml

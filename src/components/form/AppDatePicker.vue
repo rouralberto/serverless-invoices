@@ -1,6 +1,6 @@
 <template>
     <span class="date-picker">
-        <span class="editable__item" @click="open">{{ formatDate(value, displayFormat, 'YYYY-MM-DD') }}</span>
+        <span class="editable__item" @click="open">{{ displayValue }}</span>
         <input ref="input"
                type="date"
                class="date-picker__input"
@@ -31,8 +31,13 @@ export default {
     displayFormat: { default: 'D. MMM YYYY' },
   },
   emits: ['change'],
+  computed: {
+    displayValue() {
+      // Reading the language makes this re-render when it changes (month names are localised).
+      return this.$i18next.language && formatDate(this.value, this.displayFormat, 'YYYY-MM-DD');
+    },
+  },
   methods: {
-    formatDate,
     open() {
       const { input } = this.$refs;
       try {

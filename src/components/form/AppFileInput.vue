@@ -14,7 +14,7 @@ import { uuidv4 } from '@/utils/helpers';
 export default {
   props: {
     buttonText: {
-      default: 'Select file',
+      default: '',
     },
     outputType: {
       default: 'text',

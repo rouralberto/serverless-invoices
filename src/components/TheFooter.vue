@@ -18,10 +18,10 @@
                class="btn btn-sm btn--icon ms-0 ms-md-2"
                target="_blank">
                 <img src="@/assets/img/github.png"
-                     alt="Serverless Invoices Github"
+                     :alt="t('github_alt')"
                      v-if="theme === 'dark'">
                 <img src="@/assets/img/github-dark.png"
-                     alt="Serverless Invoices Github"
+                     :alt="t('github_alt')"
                      v-else>
             </a>
         </div>
