@@ -3,9 +3,11 @@
         <div class="container app__content">
             <div class="row justify-content-center">
                 <div class="d-flex flex-column justify-content-between col-12 min-vh-100 pt-5 pb-2">
-                    <transition name="fade" mode="out-in">
-                        <router-view/>
-                    </transition>
+                    <router-view v-slot="{ Component }">
+                        <transition name="fade" mode="out-in">
+                            <component :is="Component"/>
+                        </transition>
+                    </router-view>
                     <TheFooter/>
                 </div>
             </div>
@@ -19,19 +21,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import ClientModal from '@/components/clients/ClientModal';
-import BankAccountModal from '@/components/bank-accounts/BankAccountModal';
-import { VBTooltip } from 'bootstrap-vue';
-import TeamModal from '@/components/team/TeamModal';
-import TheFooter from '@/components/TheFooter';
-import CustomizationsModal from '@/components/invoices/CustomizationsModal';
-import ImportModal from '../../components/ImportModal';
+import { mapState } from 'pinia';
+import ClientModal from '@/components/clients/ClientModal.vue';
+import BankAccountModal from '@/components/bank-accounts/BankAccountModal.vue';
+import TeamModal from '@/components/team/TeamModal.vue';
+import TheFooter from '@/components/TheFooter.vue';
+import CustomizationsModal from '@/components/invoices/CustomizationsModal.vue';
+import ImportModal from '../../components/ImportModal.vue';
+import { useTeamsStore } from '@/store/teams';
 
 export default {
-  directives: {
-    'b-tooltip': VBTooltip,
-  },
   components: {
     TheFooter,
     TeamModal,
@@ -41,9 +40,7 @@ export default {
     CustomizationsModal,
   },
   computed: {
-    ...mapGetters({
-      team: 'teams/team',
-    }),
+    ...mapState(useTeamsStore, ['team']),
   },
 };
 </script>

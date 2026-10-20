@@ -2,17 +2,17 @@
     <div>
         <div class="row">
             <div class="col-12 d-flex justify-content-between">
-                <h4>{{ $t('title') }}</h4>
+                <h4>{{ t('title') }}</h4>
                 <div v-if="team">
                     <button class="btn btn-sm btn-primary"
-                            @click="done">{{ $t('done') }}
+                            @click="done">{{ t('done') }}
                     </button>
                 </div>
             </div>
         </div>
         <div class="row">
-            <b-tabs v-if="team" nav-class="nav-tabs--simple mb-4 ml-n3" active-tab-class="active" class="col-12">
-                <b-tab :title="$t('tabs.general')">
+            <BTabs v-if="team" nav-class="nav-tabs--simple mb-4 ms-n3" class="col-12">
+                <BTab :title="t('tabs.general')">
                     <div class="row mb-2">
                         <div class="col-12">
                             <label>Logo</label>
@@ -21,81 +21,88 @@
                     </div>
                     <div class="row">
                         <AppInput :value="team.company_name" @change="updateProp({ company_name: $event })"
-                                  :label="$t('general.company_name')" field="company_name" :errors="errors"
+                                  :label="t('general.company_name')" field="company_name" :errors="errors"
                                   class="col-12"/>
                         <AppInput :value="team.contact_email" @change="updateProp({ contact_email: $event })"
-                                  :label="$t('general.contact_email')" field="contact_email" :errors="errors"
+                                  :label="t('general.contact_email')" field="contact_email" :errors="errors"
                                   class="col-12"/>
                         <AppInput :value="team.contact_phone" @change="updateProp({ contact_phone: $event })"
-                                  :label="$t('general.contact_phone')" field="contact_phone" :errors="errors"
+                                  :label="t('general.contact_phone')" field="contact_phone" :errors="errors"
                                   class="col-12"/>
                         <AppInput :value="team.website" @change="updateProp({ website: $event })"
-                                  :label="$t('general.website')" field="website" :errors="errors" class="col-12"/>
+                                  :label="t('general.website')" field="website" :errors="errors" class="col-12"/>
                     </div>
 
                     <TeamFields class="row" :team="team"/>
-                </b-tab>
+                </BTab>
 
-                <b-tab :title="$t('tabs.invoicing')">
+                <BTab :title="t('tabs.invoicing')">
                     <div class="row">
                         <AppInput :value="team.invoice_late_fee" @change="updateProp({ invoice_late_fee: $event })"
                                   type="number"
-                                  :label="$t('invoicing.invoice_late_fee')" field="invoice_late_fee" :errors="errors"
+                                  :label="t('invoicing.invoice_late_fee')" field="invoice_late_fee" :errors="errors"
                                   class="col-12"/>
                         <AppInput :value="team.invoice_due_days" @change="updateProp({ invoice_due_days: $event })"
                                   type="number"
-                                  :label="$t('invoicing.invoice_due_days')" field="invoice_due_days" :errors="errors"
+                                  :label="t('invoicing.invoice_due_days')" field="invoice_due_days" :errors="errors"
                                   class="col-sm-7"/>
                         <AppInput :value="team.currency" @change="updateProp({ currency: $event })"
-                                  :label="$t('invoicing.currency')" field="currency" :errors="errors" class="col-sm-5"/>
+                                  :label="t('invoicing.currency')" field="currency" :errors="errors" class="col-sm-5"/>
                     </div>
-                </b-tab>
+                </BTab>
 
-                <b-tab :title="$t('tabs.address')">
+                <BTab :title="t('tabs.address')">
                     <div class="row">
                         <AppInput :value="team.company_address" @change="updateProp({ company_address: $event })"
-                                  :label="$t('address.company_address')" field="company_address" :errors="errors"
+                                  :label="t('address.company_address')" field="company_address" :errors="errors"
                                   class="col-12"/>
                         <AppInput :value="team.company_postal_code"
                                   @change="updateProp({ company_postal_code: $event })"
-                                  :label="$t('address.company_postal_code')" field="company_postal_code"
+                                  :label="t('address.company_postal_code')" field="company_postal_code"
                                   :errors="errors"
                                   class="col-sm-5"/>
                         <AppInput :value="team.company_city" @change="updateProp({ company_city: $event })"
-                                  :label="$t('address.company_city')" field="company_city" :errors="errors"
+                                  :label="t('address.company_city')" field="company_city" :errors="errors"
                                   class="col-sm-7"/>
                         <AppInput :value="team.company_county" @change="updateProp({ company_county: $event })"
-                                  :label="$t('address.company_county')" field="company_county" :errors="errors"
+                                  :label="t('address.company_county')" field="company_county" :errors="errors"
                                   class="col-sm-6"/>
                         <AppInput :value="team.company_country" @change="updateProp({ company_country: $event })"
-                                  :label="$t('address.company_country')" field="company_country" :errors="errors"
+                                  :label="t('address.company_country')" field="company_country" :errors="errors"
                                   class="col-sm-6"/>
                     </div>
-                </b-tab>
+                </BTab>
 
-                <b-tab :title="$t('tabs.taxes')">
+                <BTab :title="t('tabs.taxes')">
                     <TeamTaxes @changed="taxesChanged = true"/>
-                </b-tab>
-            </b-tabs>
+                </BTab>
+            </BTabs>
         </div>
 
-        <div v-if="!team">{{ $t('loading') }}</div>
+        <div v-if="!team">{{ t('loading') }}</div>
     </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapState, mapStores } from 'pinia';
 import {
   BTab, BTabs,
-} from 'bootstrap-vue';
+} from 'bootstrap-vue-next';
+import { useTranslation } from 'i18next-vue';
 import NotificationService from '@/services/notification.service';
-import AppInput from '@/components/form/AppInput';
+import ConfirmService from '@/services/confirm.service';
+import AppInput from '@/components/form/AppInput.vue';
 import Errors from '@/utils/errors';
-import TeamFields from '@/components/team/TeamFields';
-import TeamLogo from '@/components/team/TeamLogo';
-import TeamTaxes from '@/components/team/TeamTaxes';
+import TeamFields from '@/components/team/TeamFields.vue';
+import TeamLogo from '@/components/team/TeamLogo.vue';
+import TeamTaxes from '@/components/team/TeamTaxes.vue';
+import { useInvoiceRowsStore } from '@/store/invoice-rows';
+import { useTeamsStore } from '@/store/teams';
 
 export default {
-  i18nOptions: { namespaces: 'team-form' },
+  setup() {
+    return useTranslation('team-form');
+  },
+  emits: ['done'],
   components: {
     TeamLogo,
     TeamFields,
@@ -112,17 +119,16 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      team: 'teams/team',
-    }),
+    ...mapStores(useTeamsStore, useInvoiceRowsStore),
+    ...mapState(useTeamsStore, ['team']),
   },
   methods: {
     updateProp(props) {
       this.errors.clear();
 
-      this.$store.dispatch('teams/updateTeam', props)
+      this.teamsStore.updateTeam(props)
         .then(() => {
-          NotificationService.success(this.$t('updated'));
+          NotificationService.success(this.t('updated'));
         })
         .catch(err => this.errors.set(err.errors));
     },
@@ -133,16 +139,16 @@ export default {
       this.$emit('done');
     },
     async promptUpdateInvoiceRowTaxes() {
-      const confirmed = await this.$bvModal.msgBoxConfirm(this.$t('tax_modal.title'), {
-        okTitle: this.$t('tax_modal.ok_title'),
+      const confirmed = await ConfirmService.confirm(this.t('tax_modal.title'), {
+        okTitle: this.t('tax_modal.ok_title'),
         okVariant: 'primary',
-        cancelTitle: this.$t('tax_modal.cancel_title'),
+        cancelTitle: this.t('tax_modal.cancel_title'),
         cancelVariant: 'btn-link',
         contentClass: 'bg-base dp--24',
       });
       if (confirmed) {
-        await this.$store.dispatch('invoiceRows/overwriteTaxes');
-        NotificationService.success(this.$t('tax_modal.taxes_updated'));
+        this.invoiceRowsStore.overwriteTaxes();
+        NotificationService.success(this.t('tax_modal.taxes_updated'));
       }
     },
   },

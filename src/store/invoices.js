@@ -1,72 +1,85 @@
+import { defineStore } from 'pinia';
+import { useRepo } from 'pinia-orm';
+import dayjs from 'dayjs';
 import InvoiceService from '@/services/invoice.service';
 import Invoice from '@/store/models/invoice';
+import InvoiceRow from '@/store/models/invoice-row';
+import InvoiceRowTax from '@/store/models/invoice-row-tax';
+import InvoiceClientField from '@/store/models/invoice-client-field';
+import InvoiceTeamField from '@/store/models/invoice-team-field';
+import { useClientsStore } from '@/store/clients';
+import { useInvoiceClientFieldsStore } from '@/store/invoice-client-fields';
+import { useInvoiceRowsStore } from '@/store/invoice-rows';
+import { useInvoiceTeamFieldsStore } from '@/store/invoice-team-fields';
+import { useTeamsStore } from '@/store/teams';
+import {
+  createNew, persisted, replaceAll, updateRecord,
+} from '@/store/orm';
 import { generateInvoiceNumber, pick } from '@/utils/helpers';
-import dayjs from 'dayjs';
 import Errors from '@/utils/errors';
 
+const repo = () => useRepo(Invoice);
+
+const withRows = query => query
+  .with('taxes')
+  .orderBy('order', 'asc');
+
 function getInvoice(invoiceId) {
-  return Invoice.query()
-    .with(['client', 'client_fields', 'team_fields', 'rows.taxes'])
-    .with('rows', query => query.orderBy('order', 'asc'))
+  return repo().query()
+    .with('client')
+    .with('client_fields')
+    .with('team_fields')
+    .with('rows', withRows)
     .find(invoiceId);
 }
 
-export default {
-  namespaced: true,
-  state: {
+export const useInvoicesStore = defineStore('invoices', {
+  state: () => ({
     errors: new Errors(),
     invoiceId: null,
     isCustomizationsModalOpen: false,
-  },
-  mutations: {
-    invoiceId(state, invoiceId) {
-      state.invoiceId = invoiceId;
-    },
-    isCustomizationsModalOpen(state, isCustomizationsModalOpen) {
-      state.isCustomizationsModalOpen = isCustomizationsModalOpen;
-    },
-    setErrors(state, errors) {
-      state.errors.set(errors);
-    },
-    clearErrors(state) {
-      state.errors.clear();
-    },
-  },
+  }),
   actions: {
-    init({ dispatch }) {
-      dispatch('getInvoices');
+    setErrors(errors) {
+      this.errors.set(errors);
+    },
+    clearErrors() {
+      this.errors.clear();
+    },
+    init() {
+      this.getInvoices();
     },
     terminate() {
-      return Invoice.deleteAll();
+      [InvoiceRowTax, InvoiceRow, InvoiceClientField, InvoiceTeamField]
+        .forEach(model => useRepo(model).flush());
+      return repo().flush();
     },
     async getInvoices() {
       const invoices = await InvoiceService.getInvoices();
-      await Invoice.create({ data: invoices });
+      replaceAll(repo(), invoices);
       return invoices;
     },
-    async getInvoice({ commit }, invoiceId) {
+    async getInvoice(invoiceId) {
       const invoice = await InvoiceService.getInvoice(invoiceId);
-      await Invoice.insert({ data: invoice });
-      commit('invoiceId', invoiceId);
+      repo().save(persisted(invoice));
+      this.invoiceId = invoiceId;
       return invoice;
     },
-    async createNewInvoice({ dispatch }) {
-      const invoice = await Invoice.createNew();
+    async createNewInvoice() {
+      const invoice = createNew(repo());
       await InvoiceService.createInvoice(invoice);
-      await dispatch('prefillInvoice', {
+      await this.prefillInvoice({
         invoiceId: invoice.id,
       });
-      await dispatch('prefillTeam', {
+      await this.prefillTeam({
         invoiceId: invoice.id,
       });
       return invoice.id;
     },
-    async duplicateInvoice({ dispatch }, originalInvoiceId) {
-      const invoiceId = await dispatch('createNewInvoice');
+    async duplicateInvoice(originalInvoiceId) {
+      const invoiceId = await this.createNewInvoice();
 
       const {
-        $id,
-        $isDirty,
         $isNew,
         id,
         number,
@@ -76,41 +89,32 @@ export default {
         issued_at,
         updated_at,
         ...invoiceProps
-      } = await getInvoice(originalInvoiceId);
+      } = getInvoice(originalInvoiceId);
 
-      await dispatch('updateInvoice', { invoiceId, props: invoiceProps });
+      await this.updateInvoice({ invoiceId, props: invoiceProps });
 
+      const invoiceRows = useInvoiceRowsStore();
       for (let i = 0; i < invoiceProps.rows.length; i++) {
         const {
-          $id: _$id,
-          $isDirty: $_isDirty,
-          $isNew: $_isNew,
           id: _id,
           invoice_id,
+          taxes,
           ...props
         } = invoiceProps.rows[i];
 
-        dispatch(
-          'invoiceRows/updateInvoiceRow',
-          {
-            props,
-            /* eslint-disable no-await-in-loop */
-            id: await dispatch('invoiceRows/addRow', invoiceId, { root: true }),
-            invoiceId,
-          },
-          { root: true },
-        );
+        invoiceRows.updateInvoiceRow({
+          props,
+          id: invoiceRows.addRow(invoiceId),
+          invoiceId,
+        });
       }
 
       return invoiceId;
     },
-    invoiceProps(store, payload) {
-      return Invoice.update({
-        where: payload.invoiceId,
-        data: payload.props,
-      });
+    invoiceProps(payload) {
+      return updateRecord(repo(), payload.invoiceId, payload.props);
     },
-    async updateClient({ dispatch }, payload) {
+    updateClient(payload) {
       const clientProps = pick(payload.props, {
         bank_account_id: 'bank_account_id',
         client_name: 'company_name',
@@ -125,13 +129,13 @@ export default {
       const invoice = getInvoice(payload.invoiceId);
 
       if (Object.keys(clientProps).length > 0 && invoice.client_id) {
-        dispatch('clients/updateClient', {
+        useClientsStore().updateClient({
           props: clientProps,
           clientId: invoice.client_id,
-        }, { root: true });
+        });
       }
     },
-    async updateTeam({ dispatch }, payload) {
+    updateTeam(payload) {
       const teamProps = pick(payload.props, {
         late_fee: 'invoice_late_fee',
         from_name: 'company_name',
@@ -152,49 +156,50 @@ export default {
       }
 
       if (Object.keys(teamProps).length > 0) {
-        dispatch('teams/updateTeam', teamProps, { root: true });
+        useTeamsStore().updateTeam(teamProps);
       }
     },
-    async updateInvoice({ dispatch, commit }, payload) {
+    async updateInvoice(payload) {
       if (payload.props) {
-        await dispatch('invoiceProps', payload);
+        this.invoiceProps(payload);
       }
 
-      commit('clearErrors');
+      this.clearErrors();
       return InvoiceService.updateInvoice(getInvoice(payload.invoiceId))
-        .catch(err => commit('setErrors', err.errors));
+        .catch(err => this.setErrors(err.errors));
     },
-    async deleteInvoice(store, invoice) {
+    async deleteInvoice(invoice) {
       const res = await InvoiceService.deleteInvoice(invoice.id);
-      await Invoice.delete(invoice.id);
+      repo().destroy(invoice.id);
       return res;
     },
-    async bookInvoice({ getters, commit, dispatch }) {
-      commit('clearErrors');
+    async bookInvoice() {
+      this.clearErrors();
 
       try {
-        await InvoiceService.bookInvoice(getters.invoice);
-        return dispatch('getInvoice', getters.invoice.id);
+        await InvoiceService.bookInvoice(this.invoice);
+        return this.getInvoice(this.invoice.id);
       } catch (err) {
-        commit('setErrors', err.errors);
+        this.setErrors(err.errors);
       }
     },
-    prefillClient({ dispatch, rootGetters }, payload) {
+    prefillClient(payload) {
       const client = payload.client;
-      dispatch('invoiceClientFields/removeInvoiceClientFields', payload.invoiceId, { root: true });
+      const invoiceClientFields = useInvoiceClientFieldsStore();
+      invoiceClientFields.removeInvoiceClientFields(payload.invoiceId);
 
       client.fields.forEach((field) => {
-        dispatch('invoiceClientFields/addInvoiceClientField', {
+        invoiceClientFields.addInvoiceClientField({
           invoiceId: payload.invoiceId,
           props: {
             label: field.label,
             value: field.value,
             client_field_id: field.id,
           },
-        }, { root: true });
+        });
       });
 
-      return dispatch('updateInvoice', {
+      return this.updateInvoice({
         invoiceId: payload.invoiceId,
         props: {
           client_id: client.id,
@@ -205,14 +210,14 @@ export default {
           client_county: client.company_county,
           client_country: client.company_country,
           client_email: client.invoice_email,
-          currency: client.currency || rootGetters['teams/team'].currency || 'USD',
+          currency: client.currency || useTeamsStore().team.currency || 'USD',
           bank_name: client.bank_account ? client.bank_account.bank_name : null,
           bank_account_no: client.bank_account ? client.bank_account.account_no : null,
         },
       });
     },
-    prefillInvoice({ dispatch, getters, rootGetters }, payload) {
-      const team = rootGetters['teams/team'];
+    prefillInvoice(payload) {
+      const team = useTeamsStore().team;
 
       const props = {
         issued_at: dayjs()
@@ -220,29 +225,30 @@ export default {
         due_at: dayjs()
           .add(team.invoice_due_days || 14, 'days')
           .format('YYYY-MM-DD'),
-        number: generateInvoiceNumber(getters.all),
+        number: generateInvoiceNumber(this.all),
         late_fee: team.invoice_late_fee || 0.5,
         currency: team.currency || 'USD',
       };
 
-      return dispatch('updateInvoice', {
+      return this.updateInvoice({
         invoiceId: payload.invoiceId,
         props,
       });
     },
-    prefillTeam({ dispatch, rootGetters }, payload) {
-      const team = rootGetters['teams/team'];
-      dispatch('invoiceTeamFields/removeInvoiceTeamFields', payload.invoiceId, { root: true });
+    prefillTeam(payload) {
+      const team = useTeamsStore().team;
+      const invoiceTeamFields = useInvoiceTeamFieldsStore();
+      invoiceTeamFields.removeInvoiceTeamFields(payload.invoiceId);
 
       team.fields.forEach((field) => {
-        dispatch('invoiceTeamFields/addInvoiceTeamField', {
+        invoiceTeamFields.addInvoiceTeamField({
           invoiceId: payload.invoiceId,
           props: {
             label: field.label,
             value: field.value,
             team_field_id: field.id,
           },
-        }, { root: true });
+        });
       });
 
       const props = {
@@ -257,7 +263,7 @@ export default {
         from_phone: team.contact_phone,
       };
 
-      return dispatch('updateInvoice', {
+      return this.updateInvoice({
         invoiceId: payload.invoiceId,
         props,
       });
@@ -268,13 +274,13 @@ export default {
       return getInvoice(state.invoiceId);
     },
     all() {
-      return Invoice.query()
+      return repo().query()
         .where('$isNew', false)
-        .with(['client', 'rows.taxes'])
-        .with('rows', query => query.orderBy('order', 'asc')) // TODO: do we need this?
+        .with('client')
+        .with('rows', withRows) // TODO: do we need this?
         .orderBy('issued_at', 'desc')
         .orderBy('number', 'desc')
         .get();
     },
   },
-};
+});

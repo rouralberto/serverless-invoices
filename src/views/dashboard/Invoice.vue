@@ -6,9 +6,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import InvoiceForm from '@/components/invoices/InvoiceForm';
-import InvoiceControls from '@/components/invoices/InvoiceControls';
+import { mapState } from 'pinia';
+import InvoiceForm from '@/components/invoices/InvoiceForm.vue';
+import InvoiceControls from '@/components/invoices/InvoiceControls.vue';
+import { useTeamsStore } from '@/store/teams';
 
 export default {
   name: 'invoice',
@@ -17,9 +18,7 @@ export default {
     InvoiceForm,
   },
   computed: {
-    ...mapGetters({
-      team: 'teams/team',
-    }),
+    ...mapState(useTeamsStore, ['team']),
   },
 };
 </script>

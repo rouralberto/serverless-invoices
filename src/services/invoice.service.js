@@ -1,4 +1,4 @@
-import { validate } from '@/utils/helpers';
+import { toStorable, validate } from '@/utils/helpers';
 import data from '@/services/data.service';
 
 class InvoiceService {
@@ -11,9 +11,10 @@ class InvoiceService {
   }
 
   async createInvoice(invoice) {
-    delete invoice.client;
+    const record = toStorable(invoice);
+    delete record.client;
 
-    return data.post('invoices', invoice);
+    return data.post('invoices', record);
   }
 
   async updateInvoice(invoice) {
@@ -72,8 +73,7 @@ class InvoiceService {
       return Promise.reject(res);
     }
 
-    invoice.status = 'booked';
-    return this.updateInvoice(invoice);
+    return this.updateInvoice({ ...invoice, status: 'booked' });
   }
 }
 

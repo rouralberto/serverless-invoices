@@ -1,98 +1,94 @@
+import { defineStore } from 'pinia';
+import { useRepo } from 'pinia-orm';
 import InvoiceRow from '@/store/models/invoice-row';
 import InvoiceRowTax from '@/store/models/invoice-row-tax';
-import { flatten, uniqBy } from 'lodash';
+import { useInvoicesStore } from '@/store/invoices';
+import { useTaxesStore } from '@/store/taxes';
+import { updateRecord } from '@/store/orm';
+
+const repo = () => useRepo(InvoiceRow);
+const taxRepo = () => useRepo(InvoiceRowTax);
 
 function addTaxes(taxes, row) {
-  taxes.forEach((tax) => {
-    const rowTax = new InvoiceRowTax();
-    rowTax.label = tax.label;
-    rowTax.value = tax.value;
-    rowTax.row_id = row.id;
-    rowTax.$save();
-  });
+  taxRepo().save(taxes.map(tax => ({
+    label: tax.label,
+    value: tax.value,
+    row_id: row.id,
+  })));
 }
 
-export default {
-  namespaced: true,
-  state: {},
-  mutations: {},
+export const useInvoiceRowsStore = defineStore('invoiceRows', {
   actions: {
     init() {
     },
     terminate() {
     },
-    invoiceRowProps(store, payload) {
-      return InvoiceRow.update({
-        where: payload.id,
-        data: payload.props,
+    invoiceRowProps(payload) {
+      return updateRecord(repo(), payload.id, payload.props);
+    },
+    updateInvoiceRow(payload) {
+      this.invoiceRowProps(payload);
+      return useInvoicesStore().updateInvoice({
+        invoiceId: payload.invoiceId,
       });
     },
-    async updateInvoiceRow({ dispatch }, payload) {
-      await dispatch('invoiceRowProps', payload);
-      return dispatch('invoices/updateInvoice', {
-        invoiceId: payload.invoiceId,
-      }, { root: true });
-    },
-    async addRow({ getters, rootGetters }, invoiceId) {
-      const invoice = rootGetters['invoices/invoice'];
-      const row = await InvoiceRow.createNew();
-      const rowCount = InvoiceRow.query().where('invoice_id', invoiceId).count();
-      await row.$update({
+    addRow(invoiceId) {
+      const invoice = useInvoicesStore().invoice;
+      const rowCount = repo().where('invoice_id', invoiceId).get().length;
+      const row = repo().save({
         invoice_id: invoiceId,
         order: rowCount,
       });
 
       let client = null;
-      if (invoice && invoice.hasOwnProperty('client')) {
+      if (invoice && invoice.client) {
         client = invoice.client;
       }
 
       if ((client && client.has_tax) || !client) {
-        const taxes = getters.taxes.length > 0
-          ? getters.taxes
-          : rootGetters['taxes/allWithLabels'];
+        const taxes = this.taxes.length > 0
+          ? this.taxes
+          : useTaxesStore().allWithLabels;
         addTaxes(taxes, row);
       }
 
       return row.id;
     },
-    overwriteTaxes({ rootGetters, rootState }) {
-      const taxes = rootGetters['taxes/allWithLabels'];
-      const rows = InvoiceRow.query()
-        .where('invoice_id', rootState.invoices.invoiceId)
+    overwriteTaxes() {
+      const taxes = useTaxesStore().allWithLabels;
+      const rows = repo()
+        .where('invoice_id', useInvoicesStore().invoiceId)
         .get();
 
       rows.forEach((row) => {
-        InvoiceRowTax.delete(tax => tax.row_id === row.id)
-          .then(() => addTaxes(taxes, row));
+        taxRepo().where('row_id', row.id).delete();
+        addTaxes(taxes, row);
       });
     },
-    async removeRow(store, rowId) {
-      await InvoiceRow.delete(rowId);
+    removeRow(rowId) {
+      repo().destroy(rowId);
     },
-    async updateInvoiceRowTax({ dispatch }, payload) {
-      await InvoiceRowTax.update({
-        where: payload.taxId,
-        data: payload.props,
-      });
-      return dispatch('invoices/updateInvoice', {
+    updateInvoiceRowTax(payload) {
+      updateRecord(taxRepo(), payload.taxId, payload.props);
+      return useInvoicesStore().updateInvoice({
         invoiceId: payload.invoiceId,
-      }, { root: true });
+      });
     },
   },
   getters: {
-    taxes(state, getters, rootState, rootGetters) {
-      const invoice = rootGetters['invoices/invoice'];
+    taxes() {
+      const invoice = useInvoicesStore().invoice;
 
       if (!invoice || !Array.isArray(invoice.rows)) {
         return [];
       }
 
-      let taxes = invoice.rows.map(row => row.taxes);
-      taxes = flatten(taxes);
-      taxes = uniqBy(taxes, 'label');
-      taxes = taxes.filter(tax => !!tax.label);
-      return taxes;
+      const taxesByLabel = new Map();
+      invoice.rows
+        .flatMap(row => row.taxes)
+        .filter(tax => !!tax.label && !taxesByLabel.has(tax.label))
+        .forEach(tax => taxesByLabel.set(tax.label, tax));
+      return [...taxesByLabel.values()];
     },
   },
-};
+});

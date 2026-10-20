@@ -2,24 +2,24 @@
     <div>
         <strong>
             <AppEditable :value="invoice.bank_name"
-                         v-b-modal.bank_account_no
+                         @click="isModalOpen = true"
                          :errors="errors"
                          :disabled="true"
                          field="bank_name"
-                         :placeholder="$t('bank_name')"
+                         :placeholder="t('bank_name')"
                          class="break-line"/>
         </strong>
         <AppEditable :value="invoice.bank_account_no"
-                     v-b-modal.bank_account_no
+                     @click="isModalOpen = true"
                      :errors="errors"
                      :disabled="true"
                      field="bank_account_no"
-                     :placeholder="$t('bank_account_no')"
+                     :placeholder="t('bank_account_no')"
                      class="break-line"/>
-        <BModal id="bank_account_no"
+        <BModal v-model="isModalOpen"
                 centered
-                :title="$t('bank_account_modal_title')"
-                hide-footer
+                :title="t('bank_account_modal_title')"
+                no-footer
                 size="lg"
                 content-class="bg-base dp--24">
            <BankAccountsList @select="accountSelected"/>
@@ -27,20 +27,26 @@
     </div>
 </template>
 <script>
-import { BModal, VBModal } from 'bootstrap-vue';
-import BankAccountsList from '@/components/bank-accounts/BankAccountsList';
-import AppEditable from '@/components/form/AppEditable';
+import { BModal } from 'bootstrap-vue-next';
+import { useTranslation } from 'i18next-vue';
+import BankAccountsList from '@/components/bank-accounts/BankAccountsList.vue';
+import AppEditable from '@/components/form/AppEditable.vue';
 
 export default {
-  i18nOptions: { namespaces: 'invoice-bank-details' },
+  setup() {
+    return useTranslation('invoice-bank-details');
+  },
   props: ['invoice', 'errors'],
+  emits: ['update'],
   components: {
     AppEditable,
     BModal,
     BankAccountsList,
   },
-  directives: {
-    'b-modal': VBModal,
+  data() {
+    return {
+      isModalOpen: false,
+    };
   },
   methods: {
     accountSelected(account) {
@@ -49,7 +55,7 @@ export default {
         bank_name: account.bank_name,
         bank_account_id: account.id,
       });
-      this.$bvModal.hide('bank_account_no');
+      this.isModalOpen = false;
     },
   },
 };

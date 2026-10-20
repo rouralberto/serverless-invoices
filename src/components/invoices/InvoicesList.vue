@@ -1,15 +1,15 @@
 <template>
     <div class="table-responsive">
-        <div v-if="!displayInvoices" class="col-12">{{ $t('loading') }}</div>
+        <div v-if="!displayInvoices" class="col-12">{{ t('loading') }}</div>
         <table class="table table--card table-hover" v-else-if="displayInvoices && displayInvoices.length > 0">
             <thead>
             <tr>
-                <th>{{ $t('invoice_number') }}</th>
-                <th>{{ $t('client') }}</th>
-                <th>{{ $t('issued_at') }}</th>
-                <th>{{ $t('total') }}</th>
-                <th class="text-right">{{ $t('status') }}</th>
-                <th class="text-right">
+                <th>{{ t('invoice_number') }}</th>
+                <th>{{ t('client') }}</th>
+                <th>{{ t('issued_at') }}</th>
+                <th>{{ t('total') }}</th>
+                <th class="text-end">{{ t('status') }}</th>
+                <th class="text-end">
                   <i class="pointer material-icons material-icons-round md-18">
                     handyman
                   </i>
@@ -25,31 +25,31 @@
                   {{ invoice.client ? invoice.client.company_name : '' }}
                 </td>
                 <td class="pointer" @click="openInvoice(invoice)">
-                  {{ invoice.issued_at | date('D MMM YYYY', 'YYYY-MM-DD') }}
+                  {{ formatDate(invoice.issued_at, 'D MMM YYYY', 'YYYY-MM-DD') }}
                 </td>
                 <td class="pointer" @click="openInvoice(invoice)">
-                    {{ invoice.subTotal | currency }}
+                    {{ formatCurrency(invoice.subTotal) }}
                     <span v-if="getClientTotal(invoice.client_id) > 0" class="text-secondary">
-                      / {{ getClientTotal(invoice.client_id) | currency }}
+                      / {{ formatCurrency(getClientTotal(invoice.client_id)) }}
                     </span>
                     <small class="text-secondary" v-if="invoice.taxTotal">
-                      <br>({{ invoice.taxTotal | currency }} tax)
+                      <br>({{ formatCurrency(invoice.taxTotal) }} tax)
                     </small>
                 </td>
-                <td class="pointer text-right text-capitalize" @click="openInvoice(invoice)">
-                    <i class="material-icons material-icons-round md-18 mr-2 text-danger"
+                <td class="pointer text-end text-capitalize" @click="openInvoice(invoice)">
+                    <i class="material-icons material-icons-round md-18 me-2 text-danger"
                        v-if="isOverDue(invoice)"
                        v-b-tooltip.hover title="Overdue">warning</i>
-                    <i class="material-icons material-icons-round md-18 mr-2 text-warning"
+                    <i class="material-icons material-icons-round md-18 me-2 text-warning"
                        v-else-if="invoice.status === 'draft'">edit_note</i>
-                    <i class="material-icons material-icons-round md-18 mr-2 text-success"
+                    <i class="material-icons material-icons-round md-18 me-2 text-success"
                        v-else-if="invoice.status === 'paid'">done</i>
-                    <i class="material-icons material-icons-round md-18 mr-2 text-muted"
+                    <i class="material-icons material-icons-round md-18 me-2 text-muted"
                        v-else-if="invoice.status === 'written_off'"
                        v-b-tooltip.hover title="Written-Off">money_off</i>
-                    {{ $t(`statuses.${invoice.status}`) }}
+                    {{ t(`statuses.${invoice.status}`) }}
                 </td>
-              <td class="text-right">
+              <td class="text-end">
                 <i class="pointer material-icons material-icons-round md-18"
                    v-b-tooltip.hover title="Duplicate Invoice"
                    @click="duplicateInvoice(invoice.id)">
@@ -63,15 +63,19 @@
     </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
-import { formatDate } from '@/filters/date.filter';
-import EmptyState from '@/components/EmptyState';
-import { formatCurrency } from '@/filters/currency.filter';
+import { mapState, mapStores } from 'pinia';
+import { vBTooltip } from 'bootstrap-vue-next';
+import { useTranslation } from 'i18next-vue';
 import dayjs from 'dayjs';
-import { VBTooltip } from 'bootstrap-vue';
+import { formatDate } from '@/filters/date.filter';
+import EmptyState from '@/components/EmptyState.vue';
+import { formatCurrency } from '@/filters/currency.filter';
+import { useInvoicesStore } from '@/store/invoices';
 
 export default {
-  i18nOptions: { namespaces: ['invoices-list', 'statuses'] },
+  setup() {
+    return useTranslation(['invoices-list', 'statuses']);
+  },
   props: {
     invoices: {
       type: Array,
@@ -81,28 +85,25 @@ export default {
   components: {
     EmptyState,
   },
-  filters: {
-    date: formatDate,
-    currency: formatCurrency,
-  },
   directives: {
-    'b-tooltip': VBTooltip,
+    'b-tooltip': vBTooltip,
   },
   computed: {
-    ...mapGetters({
-      allInvoices: 'invoices/all',
-    }),
+    ...mapStores(useInvoicesStore),
+    ...mapState(useInvoicesStore, { allInvoices: 'all' }),
     displayInvoices() {
       // Use prop if provided, otherwise fallback to store
       return this.invoices || this.allInvoices;
     },
   },
   mounted() {
-    this.$store.dispatch('invoices/getInvoices');
+    this.invoicesStore.getInvoices();
   },
   methods: {
+    formatDate,
+    formatCurrency,
     openInvoice(invoice) {
-      this.$store.commit('invoices/invoiceId', invoice.id);
+      this.invoicesStore.invoiceId = invoice.id;
       this.$router.push({
         name: 'invoice',
         params: { id: invoice.id },
@@ -110,7 +111,7 @@ export default {
     },
     isOverDue: invoice => invoice.status === 'sent' && invoice.due_at < dayjs().format(),
     duplicateInvoice(invoiceId) {
-      this.$store.dispatch('invoices/duplicateInvoice', invoiceId)
+      this.invoicesStore.duplicateInvoice(invoiceId)
         .then(id => this.$router.push({ name: 'invoice', params: { id } }));
     },
     getClientTotal(clientId) {

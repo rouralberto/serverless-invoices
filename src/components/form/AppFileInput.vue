@@ -1,7 +1,7 @@
 <template>
     <div>
         <label :for="inputRef" class="btn btn-secondary pointer mb-0">
-            <i class="material-icons md-18 mr-2 va-tt">cloud_upload</i>{{ buttonText }}
+            <i class="material-icons md-18 me-2 va-tt">cloud_upload</i>{{ buttonText }}
         </label>
         <input v-if="ready" class="d-none" :accept="accept" type="file" :id="inputRef" :ref="inputRef"
                @change="handleFileUpload()"/>
@@ -21,6 +21,7 @@ export default {
     },
     accept: {},
   },
+  emits: ['selected'],
   data() {
     return {
       inputRef: uuidv4(),

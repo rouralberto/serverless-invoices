@@ -1,6 +1,5 @@
 /* eslint-disable */
 import dayjs from 'dayjs';
-import AWS from 'aws-sdk';
 
 export function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -26,7 +25,7 @@ export function range(end, start = 0, step = 1) {
  */
 export function pick(obj, map) {
   const pickedKeys = Object.keys(obj)
-    .filter(field => map.hasOwnProperty(field));
+    .filter(field => Object.hasOwn(map, field));
   const objSubset = {};
   pickedKeys.forEach((key) => {
     objSubset[map[key]] = obj[key];
@@ -60,16 +59,37 @@ export function validate(requiredFields, input) {
 }
 
 export function validateField(input, field, label) {
-  if (!input.hasOwnProperty(field) || input[field] === null || input[field].length === 0) {
+  if (!Object.hasOwn(input, field) || input[field] === null || input[field].length === 0) {
     return [`${label} is required`];
   }
   return null;
 }
 
-export function removeVuexORMFlags(obj) {
-  delete obj.$id;
-  delete obj.$isNew;
-  delete obj.$isDirty;
+const ORM_FLAGS = ['$id', '$isNew', '$isDirty'];
+
+/**
+ * Removes ORM bookkeeping flags at any depth. Data saved by the old Vuex ORM
+ * still carries them on nested records, and `$isDirty` would shadow the
+ * pinia-orm model method of the same name.
+ */
+export function stripOrmFlags(value) {
+  if (Array.isArray(value)) {
+    return value.map(stripOrmFlags);
+  }
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.entries(value)
+      .filter(([key]) => !ORM_FLAGS.includes(key))
+      .map(([key, val]) => [key, stripOrmFlags(val)]));
+  }
+  return value;
+}
+
+/**
+ * Returns a plain copy of a model that is safe to persist: no reactive proxies
+ * (IndexedDB can't clone them) and no ORM bookkeeping flags.
+ */
+export function toStorable(obj) {
+  return stripOrmFlags(JSON.parse(JSON.stringify(obj)));
 }
 
 export function generateInvoiceNumber(invoices) {
@@ -102,21 +122,23 @@ export async function storeInBucket (data, filename, type) {
   const timestamp = new Date().toISOString();
   const filenameWithTimestamp = `${timestamp}-${filename}`;
 
-  const awsOptions = {
-    region: process.env.VUE_APP_AWS_REGION,
-    accessKeyId: process.env.VUE_APP_AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.VUE_APP_AWS_SECRET_ACCESS_KEY,
-  };
-
-  const s3 = new AWS.S3(awsOptions);
-
   try {
-    await s3.putObject({
-      Bucket: process.env.VUE_APP_BUCKET_NAME,
+    // The S3 SDK is large and only needed for backups, so load it on demand.
+    const { S3Client, PutObjectCommand } = await import('@aws-sdk/client-s3');
+    const s3 = new S3Client({
+      region: import.meta.env.VUE_APP_AWS_REGION,
+      credentials: {
+        accessKeyId: import.meta.env.VUE_APP_AWS_ACCESS_KEY_ID,
+        secretAccessKey: import.meta.env.VUE_APP_AWS_SECRET_ACCESS_KEY,
+      },
+    });
+
+    await s3.send(new PutObjectCommand({
+      Bucket: import.meta.env.VUE_APP_BUCKET_NAME,
       Key: `serverless-invoices/${filenameWithTimestamp}`,
       Body: data,
       ContentType: type
-    }).promise();
+    }));
 
     alert('Backup successfully saved!');
     return filenameWithTimestamp;

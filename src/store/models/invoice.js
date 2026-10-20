@@ -1,17 +1,17 @@
-import { Model } from '@vuex-orm/core';
-import { uuidv4 } from '@/utils/helpers';
+import { Model } from 'pinia-orm';
 import Client from '@/store/models/client';
 import InvoiceRow from '@/store/models/invoice-row';
 import InvoiceClientField from '@/store/models/invoice-client-field';
 import InvoiceTeamField from '@/store/models/invoice-team-field';
 
 export default class Invoice extends Model {
-  // This is the name used as module name of the Vuex Store.
   static entity = 'invoices';
 
   static fields() {
     return {
-      id: this.attr(() => uuidv4()),
+      id: this.uid(),
+      // Set while a record is being created in a modal and hasn't been persisted yet.
+      $isNew: this.attr(false),
       number: this.attr(''),
       status: this.attr('draft'),
       issued_at: this.attr(''),
@@ -43,38 +43,28 @@ export default class Invoice extends Model {
       notes: this.attr(''),
       updated_at: this.attr(''),
       created_at: this.attr(''),
-      total: this.attr(null), // Only used in lists.
       client_fields: this.hasMany(InvoiceClientField, 'invoice_id'),
       team_fields: this.hasMany(InvoiceTeamField, 'invoice_id'),
     };
   }
 
   get subTotal() {
-    return this.rows.reduce((carr, row) => (row.quantity * row.price) + carr, 0);
+    return (this.rows || []).reduce((carr, row) => (row.quantity * row.price) + carr, 0);
   }
-
-  // eslint-disable-next-line no-empty-function
-  set subTotal(val) {}
 
   get total() {
     return this.subTotal + this.taxTotal;
   }
 
-  // eslint-disable-next-line no-empty-function
-  set total(val) {}
-
   get taxTotal() {
     return Object.values(this.taxes).reduce((carr, tax) => (tax.total + carr), 0);
   }
 
-  // eslint-disable-next-line no-empty-function
-  set taxTotal(val) {}
-
   get taxes() {
     const taxes = {};
 
-    this.rows.forEach(row => row.taxes.forEach((tax) => {
-      if (!taxes.hasOwnProperty(tax.label)) {
+    (this.rows || []).forEach(row => (row.taxes || []).forEach((tax) => {
+      if (!Object.hasOwn(taxes, tax.label)) {
         taxes[tax.label] = {
           total: 0,
           label: tax.label,
@@ -86,7 +76,4 @@ export default class Invoice extends Model {
 
     return taxes;
   }
-
-  // eslint-disable-next-line no-empty-function
-  set taxes(val) {}
 }

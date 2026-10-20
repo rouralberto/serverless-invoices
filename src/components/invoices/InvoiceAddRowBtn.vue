@@ -9,8 +9,9 @@
     </tr>
 </template>
 <script>
-import { mapGetters } from 'vuex';
-import AppError from '@/components/form/AppError';
+import { mapState, mapStores } from 'pinia';
+import AppError from '@/components/form/AppError.vue';
+import { useInvoiceRowsStore } from '@/store/invoice-rows';
 
 export default {
   props: ['invoice', 'errors'],
@@ -18,16 +19,15 @@ export default {
     AppError,
   },
   computed: {
-    ...mapGetters({
-      taxes: 'invoiceRows/taxes',
-    }),
+    ...mapStores(useInvoiceRowsStore),
+    ...mapState(useInvoiceRowsStore, ['taxes']),
     colspan() {
       return 5 + this.taxes.length;
     },
   },
   methods: {
     addRow() {
-      this.$store.dispatch('invoiceRows/addRow', this.invoice.id);
+      this.invoiceRowsStore.addRow(this.invoice.id);
     },
   },
 };

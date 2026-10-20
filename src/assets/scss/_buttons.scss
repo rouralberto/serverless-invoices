@@ -4,7 +4,7 @@
   &--icon {
     &-left {
       .btn-sm {
-        padding-left: $btn-padding-x-sm / 2;
+        padding-left: $btn-padding-x-sm * .5;
       }
     }
     img {

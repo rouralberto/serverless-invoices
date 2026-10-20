@@ -1,5 +1,4 @@
-import { Model } from '@vuex-orm/core';
-import { uuidv4 } from '@/utils/helpers';
+import { Model } from 'pinia-orm';
 import TeamField from '@/store/models/team-field';
 
 const customCSS = `
@@ -15,12 +14,11 @@ const customCSS = `
 `;
 
 export default class Team extends Model {
-  // This is the name used as module name of the Vuex Store.
   static entity = 'teams';
 
   static fields() {
     return {
-      id: this.attr(() => uuidv4()),
+      id: this.uid(),
       company_name: this.attr(''),
       company_address: this.attr(''),
       company_postal_code: this.attr(''),

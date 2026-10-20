@@ -1,55 +1,47 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import store from '@/store/store';
-import i18n from '@/config/i18n.config';
+import { createRouter, createWebHistory } from 'vue-router';
+import i18next from 'i18next';
+import { initialized } from '@/config/i18n.config';
 import config from '@/config/app.config';
-
-Vue.use(Router);
+import { useTeamsStore } from '@/store/teams';
 
 const routes = [
   {
     path: '/',
     name: 'dashboard',
-    redirect: 'invoices',
-    component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/Dashboard.vue'),
-    beforeEnter: async (to, from, next) => {
-      await store.dispatch('teams/init');
-      next();
+    redirect: { name: 'invoices' },
+    component: () => import('@/views/dashboard/Dashboard.vue'),
+    beforeEnter: async () => {
+      await useTeamsStore().init();
     },
     children: [
       {
         path: '/invoices',
         name: 'invoices',
-        component: () => import(/* webpackChunkName: "invoices" */ '@/views/dashboard/Invoices.vue'),
+        component: () => import('@/views/dashboard/Invoices.vue'),
       },
       {
         path: '/invoice/:id',
         name: 'invoice',
-        component: () => import(/* webpackChunkName: "invoice" */ '@/views/dashboard/Invoice.vue'),
+        component: () => import('@/views/dashboard/Invoice.vue'),
       },
     ],
   },
   {
     path: '/invoices/:id/print',
     name: 'invoice-print',
-    component: () => import(/* webpackChunkName: "invoice" */ '@/views/InvoicePrint.vue'),
+    component: () => import('@/views/InvoicePrint.vue'),
   },
 ];
 
-const router = new Router({
-  mode: 'history',
-  base: config.base_url,
+const router = createRouter({
+  history: createWebHistory(config.base_url),
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  if (!to.query.hasOwnProperty('lang')) {
-    i18n.initialized.then(() => {
-      to.query.lang = i18n.i18next.language;
-      next(to);
-    });
-  } else {
-    next();
+router.beforeEach(async (to) => {
+  if (!Object.hasOwn(to.query, 'lang')) {
+    await initialized;
+    return { ...to, query: { ...to.query, lang: i18next.language } };
   }
 });
 

@@ -1,73 +1,72 @@
+import { defineStore } from 'pinia';
+import { useRepo } from 'pinia-orm';
 import ClientService from '@/services/client.service';
 import Client from '@/store/models/client';
+import ClientField from '@/store/models/client-field';
+import { useClientFieldsStore } from '@/store/client-fields';
+import {
+  createNew, persisted, replaceAll, updateRecord,
+} from '@/store/orm';
+
+const repo = () => useRepo(Client);
 
 function getClientById(clientId) {
-  return Client.query()
-    .with(['bank_account', 'fields'])
+  return repo().query()
+    .with('bank_account')
+    .with('fields')
     .find(clientId);
 }
 
-export default {
-  namespaced: true,
-  state: {
+export const useClientsStore = defineStore('clients', {
+  state: () => ({
     clientId: null,
     isModalOpen: false,
-  },
-  mutations: {
-    clientId(state, clientId) {
-      state.clientId = clientId;
-    },
-    isModalOpen(state, isOpen) {
-      state.isModalOpen = isOpen;
-    },
-  },
+  }),
   actions: {
-    init({ dispatch }) {
-      return dispatch('getClients');
+    init() {
+      return this.getClients();
     },
     terminate() {
-      return Client.deleteAll();
+      useRepo(ClientField).flush();
+      return repo().flush();
     },
     async getClients() {
       const clients = await ClientService.getClients();
-      await Client.create({ data: clients });
+      replaceAll(repo(), clients);
       return clients;
     },
-    async getClient({ commit }, clientId) {
+    async getClient(clientId) {
       const client = await ClientService.getClient(clientId);
-      commit('clientId', client.id);
-      Client.insert({ data: client });
+      this.clientId = client.id;
+      repo().save(persisted(client));
     },
-    async createNewClient({ dispatch }, client) {
-      if (!client.hasOwnProperty('id')) {
-        client = new Client(client);
+    async createNewClient(client) {
+      if (!Object.hasOwn(client, 'id')) {
+        client = repo().make(client);
       }
-      await dispatch('clientFields/addAllFields', client.id, { root: true });
+      useClientFieldsStore().addAllFields(client.id);
 
-      const res = await ClientService.createClient(client);
-      await Client.insert({ data: res });
+      const res = await ClientService.createClient(getClientById(client.id) || client);
+      repo().save(persisted(res));
       return getClientById(res.id);
     },
-    clientProps(store, payload) {
-      return Client.update({
-        where: payload.clientId,
-        data: payload.props,
-      });
+    clientProps(payload) {
+      return updateRecord(repo(), payload.clientId, payload.props);
     },
-    async updateClient({ dispatch }, payload) {
+    async updateClient(payload) {
       if (payload.props) {
-        await dispatch('clientProps', payload);
+        this.clientProps(payload);
       }
       return ClientService.updateClient(getClientById(payload.clientId));
     },
-    async openNewClientModal({ commit }) {
-      const client = await Client.createNew();
-      commit('clientId', client.id);
-      commit('isModalOpen', true);
+    openNewClientModal() {
+      const client = createNew(repo());
+      this.clientId = client.id;
+      this.isModalOpen = true;
     },
-    async deleteClient(store, clientId) {
+    async deleteClient(clientId) {
       const res = await ClientService.deleteClient(clientId);
-      await Client.delete(clientId);
+      repo().destroy(clientId);
       return res;
     },
   },
@@ -76,10 +75,11 @@ export default {
       return getClientById(state.clientId);
     },
     all() {
-      return Client.query()
+      return repo().query()
         .where('$isNew', false)
-        .with(['bank_account', 'fields'])
+        .with('bank_account')
+        .with('fields')
         .get();
     },
   },
-};
+});

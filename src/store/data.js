@@ -1,60 +1,42 @@
+import { defineStore } from 'pinia';
 import localForage from 'localforage';
 import MigrationService from '@/services/migration.service';
-import { download, storeInBucket } from '../utils/helpers';
+import { useTeamsStore } from '@/store/teams';
+import { download, storeInBucket } from '@/utils/helpers';
 
-export default {
-  namespaced: true,
-  state: {
+async function getAllData() {
+  const keys = await localForage.keys();
+  const results = await Promise.all(keys.map(key => localForage.getItem(key)));
+
+  const data = {};
+  keys.forEach((key, index) => {
+    data[key] = results[index];
+  });
+  return data;
+}
+
+export const useDataStore = defineStore('data', {
+  state: () => ({
     isImportModalOpen: false,
-  },
-  mutations: {
-    isImportModalOpen(state, isOpen) {
-      state.isImportModalOpen = isOpen;
-    },
-  },
+  }),
   actions: {
     async migrate() {
       return MigrationService.migrate();
     },
     async saveJson() {
-      let results = [];
-      const keys = await localForage.keys();
-      keys.forEach((key) => {
-        results.push(localForage.getItem(key));
-      });
-      results = await Promise.all(results);
-
-      const data = {};
-      keys.forEach((key, index) => {
-        data[key] = results[index];
-      });
-
-      storeInBucket(JSON.stringify(data), 'serverless-invoices.json', 'application/json');
+      const data = await getAllData();
+      return storeInBucket(JSON.stringify(data), 'serverless-invoices.json', 'application/json');
     },
     async exportJson() {
-      let results = [];
-      const keys = await localForage.keys();
-      keys.forEach((key) => {
-        results.push(localForage.getItem(key));
-      });
-      results = await Promise.all(results);
-
-      const data = {};
-      keys.forEach((key, index) => {
-        data[key] = results[index];
-      });
-
+      const data = await getAllData();
       download(JSON.stringify(data), 'serverless-invoices.json', 'application/json');
     },
-    async importJson({ dispatch }, data) {
-      const results = [];
-      Object.keys(data).forEach((key) => {
-        results.push(localForage.setItem(key, data[key]));
-      });
-      await Promise.all(results);
-      await dispatch('teams/terminate', null, { root: true });
-      return dispatch('teams/init', null, { root: true });
+    async importJson(data) {
+      await Promise.all(Object.keys(data)
+        .map(key => localForage.setItem(key, data[key])));
+      const teams = useTeamsStore();
+      await teams.terminate();
+      return teams.init();
     },
   },
-  getters: {},
-};
+});

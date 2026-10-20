@@ -2,18 +2,36 @@
     <div id="app"
          class="min-vh-100"
          :class="$route.name">
-        <vue-progress-bar/>
-        <transition name="fade" mode="out-in">
-            <router-view/>
-        </transition>
+        <AppProgressBar/>
+        <router-view v-slot="{ Component }">
+            <transition name="fade" mode="out-in">
+                <component :is="Component"/>
+            </transition>
+        </router-view>
         <notifications position="bottom center" classes="snackbar" width="332"/>
+        <BOrchestrator/>
     </div>
 </template>
 
 <script>
+import { mapWritableState } from 'pinia';
+import { BOrchestrator, useModal } from 'bootstrap-vue-next';
+import AppProgressBar from '@/components/AppProgressBar.vue';
+import ConfirmService from '@/services/confirm.service';
+import { useThemesStore } from '@/store/themes';
 
 export default {
   name: 'app',
+  components: {
+    AppProgressBar,
+    BOrchestrator,
+  },
+  setup() {
+    ConfirmService.init(useModal());
+  },
+  computed: {
+    ...mapWritableState(useThemesStore, ['theme']),
+  },
   created() {
     this.pauseAnimationsUntilLoaded();
   },
@@ -32,7 +50,7 @@ export default {
       // local storage is used to override OS theme settings
       if (localStorage.getItem('theme')) {
         if (localStorage.getItem('theme') === 'dark') {
-          this.$store.commit('themes/theme', 'dark');
+          this.theme = 'dark';
           return document.documentElement.setAttribute('data-theme', 'dark');
         }
       } else if (!window.matchMedia) {
@@ -40,7 +58,7 @@ export default {
         return false;
       } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         // OS theme setting detected as dark
-        this.$store.commit('themes/theme', 'dark');
+        this.theme = 'dark';
         return document.documentElement.setAttribute('data-theme', 'dark');
       }
       document.documentElement.setAttribute('data-theme', this.theme || 'light');
@@ -51,7 +69,6 @@ export default {
 
 <style lang="scss">
 @import './assets/scss/variables';
-@import '../node_modules/bootstrap/scss/bootstrap';
-@import '../node_modules/bootstrap-vue/dist/bootstrap-vue.min.css';
+@import 'bootstrap/scss/bootstrap';
 @import './assets/scss/app';
 </style>

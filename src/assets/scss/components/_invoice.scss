@@ -6,7 +6,7 @@
   &-box {
     margin: auto;
     padding: 30px;
-    min-width: var(--breakpoint-md);
+    min-width: var(--bs-breakpoint-md);
     box-shadow: $box-shadow-light-1;
     font-size: 16px;
     line-height: 24px;
@@ -36,6 +36,40 @@
   size: A4;
   margin: 0;
   //-webkit-print-color-adjust: exact;
+}
+
+// Bootstrap 4's print rules, which Bootstrap 5 dropped. Kept so printed/PDF invoices
+// keep the same scale and page breaks.
+@media print {
+  *,
+  *::before,
+  *::after {
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+
+  // Bootstrap 4's $print-body-min-width (its default lg breakpoint).
+  body,
+  .container {
+    min-width: 992px !important;
+  }
 }
 
 @media print {

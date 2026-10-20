@@ -144,13 +144,21 @@ $yellow: #ffc107;
 $green: #28a745;
 $teal: #20c997;
 $cyan: #17a2b8;
+$dark: #343a40;
 $white: #fff;
 $blue-dark: #0091EA;
 
 
-@import "../../../node_modules/bootstrap/scss/functions";
-@import "../../../node_modules/bootstrap/scss/variables";
-@import "../../../node_modules/bootstrap/scss/mixins";
+// Bootstrap 4 palette, so theme colors don't shift with the Bootstrap 5 upgrade.
+$blue: #007bff;
+$green: #28a745;
+$cyan: #17a2b8;
+
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
 
 $warning: $orange;
 
@@ -185,8 +193,10 @@ $light-divider: rgba(255, 255, 255, 0.12);
 $light-highlight: rgba(255, 255, 255, 0.07);
 $light-shade: rgba(255, 255, 255, 0.03);
 
-$body-bg: var(--bg-body);
-$body-color: var(--text-primary);
+// Bootstrap 5 derives RGB channels from $body-bg/$body-color, so those must stay real colors.
+// The themed values are applied through the --bs-body-* custom properties in _utilities.scss.
+$app-body-bg: var(--bg-body);
+$app-body-color: var(--text-primary);
 
 $line-height-base: 1.25;
 
@@ -195,6 +205,7 @@ $btn-font-weight: 500;
 $card-cap-bg: transparent;
 
 $grid-gutter-width: 32px;
+$container-padding-x: $grid-gutter-width * .5;
 
 $spacer: 1rem;
 
@@ -214,9 +225,9 @@ $hr-border-color: var(--divider);
 
 $dropdown-bg: var(--dp24);
 $dropdown-border-color: transparent;
-$dropdown-color: $body-color;
-$dropdown-link-color: $body-color;
-$dropdown-link-active-color: $body-color;
+$dropdown-color: $app-body-color;
+$dropdown-link-color: $app-body-color;
+$dropdown-link-active-color: $app-body-color;
 $dropdown-link-active-bg: var(--shade);
 $dropdown-link-hover-bg: var(--shade);
 $dropdown-link-hover-color: $dropdown-link-color;
@@ -236,8 +247,8 @@ $modal-content-border-color: transparent;
 $modal-content-box-shadow-sm-up: $box-shadow-light-6;
 
 $navbar-light-color: var(--text-secondary);
-$navbar-light-hover-color: $body-color;
-$navbar-light-active-color: $body-color;
+$navbar-light-hover-color: $app-body-color;
+$navbar-light-active-color: $app-body-color;
 
 $nav-tabs-link-active-bg: var(--bg-control);
 $nav-tabs-link-active-border-color: transparent;
@@ -251,19 +262,19 @@ $navbar-nav-link-padding-x: 1rem;
 $navbar-brand-font-size: 1.75rem;
 
 $nav-pills-link-active-bg: var(--text-caption);
-$nav-pills-link-active-color: $body-color;
+$nav-pills-link-active-color: $app-body-color;
 
-$input-color: $body-color;
+$input-color: $app-body-color;
 $input-focus-color: $input-color;
 $input-border-color: var(--text-caption);
 $input-bg: var(--bg-control);
 $input-focus-bg: $input-bg;
 $input-disabled-bg: var(--text-disabled);
-$input-btn-padding-x: $grid-gutter-width / 2;
+$input-btn-padding-x: $grid-gutter-width * .5;
 $input-placeholder-color: var(--text-disabled);
 
 $input-focus-box-shadow: none;
-$input-focus-border-color: $body-color;
+$input-focus-border-color: $app-body-color;
 
 $btn-font-size-sm: $font-size-sm;
 $btn-focus-box-shadow: none;
@@ -276,11 +287,25 @@ $input-group-addon-border-color: $input-border-color;
 
 $list-group-border-color: transparent;
 $list-group-bg: var(--bg-control);
-$list-group-color: $body-color;
-$list-group-item-padding-y: $grid-gutter-width / 4;
-$list-group-item-padding-x: $grid-gutter-width / 2;
+$list-group-color: $app-body-color;
+$list-group-item-padding-y: $grid-gutter-width * .25;
+$list-group-item-padding-x: $grid-gutter-width * .5;
 
 $progress-bar-bg: var(--text-caption);
+
+// Bootstrap 5 paints table cells with the body background by default.
+$table-bg: transparent;
+
+// Keep Bootstrap 4 defaults that Bootstrap 5 changed.
+$enable-negative-margins: true;
+$link-decoration: none;
+$link-hover-decoration: underline;
+$small-font-size: 80%;
+$card-spacer-y: 1.25rem;
+$card-spacer-x: 1.25rem;
+$dropdown-item-padding-x: 1.5rem;
+$hr-opacity: 1;
+$form-check-input-border: 1px solid $gray-500;
 
 $spacers: (0: 0, 1: $spacer * .25, 2: $spacer * .5, 3: $spacer, 4: $spacer * 1.5, 5: $spacer * 3, 6: $spacer * 5);
 
@@ -297,12 +322,13 @@ $sheet-width: 360px;
 
 $tracker-width: $sheet-width * 1.5;
 
-$table-cell-padding: $grid-gutter-width / 2;
+$table-cell-padding-y: $grid-gutter-width * .5;
+$table-cell-padding-x: $grid-gutter-width * .5;
 $table-border-color: $border-color;
 $table-border-color: var(--text-caption);
 $table-hover-bg: var(--divider);
-$table-color: $body-color;
-$table-hover-color: $body-color;
+$table-color: $app-body-color;
+$table-hover-color: $app-body-color;
 
 
 $grid-breakpoints: (
@@ -313,30 +339,3 @@ $grid-breakpoints: (
         xl: 1280px,
         xxl: 1600px
 );
-
-// vue2-datepicker variables
-
-$default-color: var(--text-primary);
-$primary-color: var(--primary);
-
-$today-color: $primary-color;
-
-$disabled-color: var(--text-secondary);
-$disabled-background-color: var(--text-disabled);
-
-$calendar-active-color: var(--text-primary);
-$calendar-active-background-color: $primary-color !default;
-
-$calendar-hover-color: $default-color !default;
-$calendar-hover-background-color: $calendar-active-background-color;
-
-$calendar-in-range-color: $default-color !default;
-$calendar-in-range-background-color: $calendar-active-background-color;
-
-$time-active-color: $primary-color !default;
-$time-active-background-color: transparent !default;
-
-$time-hover-color: $default-color !default;
-$time-hover-background-color: $calendar-active-background-color;
-
-$input-border-radius: $input-border-radius;
