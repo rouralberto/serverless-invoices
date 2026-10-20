@@ -50,17 +50,14 @@ export default {
     ...mapStores(useBankAccountsStore),
     ...mapState(useBankAccountsStore, { bankAccounts: 'all' }),
   },
-  mounted() {
-    this.bankAccountsStore.getBankAccounts();
-  },
   methods: {
     createNewAccount() {
       this.bankAccountsStore.openNewBankAccountModal();
     },
     openBankAccountModal(bankAccount) {
-      this.bankAccountsStore.bankAccountId = bankAccount.id;
       this.$router.push({
         query: {
+          ...this.$route.query,
           bankAccountId: bankAccount.id,
         },
       });

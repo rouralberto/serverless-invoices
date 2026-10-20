@@ -1,0 +1,292 @@
+{
+  "bank-account-form": {
+    "title": "Conta bancária",
+    "bank_name": "Nome",
+    "account_no": "Detalhes",
+    "loading": "Carregando",
+    "done": "Concluir",
+    "create": "Criar",
+    "notification_updated": "Conta atualizada"
+  },
+  "bank-accounts-list": {
+    "loading": "Carregando",
+    "bank": "Nome da conta",
+    "bank_account_details": "Detalhes da conta",
+    "add_bank_account": "Adicionar nova conta"
+  },
+  "client-fields": {
+    "label": "Label",
+    "field": "Campo",
+    "delete_modal": {
+      "title": "Apagar campo",
+      "ok_title": "Apagar",
+      "cancel_title": "Cancelar"
+    },
+    "notification_deleted": "Apagado"
+  },
+  "client-form": {
+    "title": "Cliente",
+    "delete": "Apagar",
+    "done": "Concluir",
+    "create": "Create",
+    "loading": "Carregando",
+    "tabs": {
+      "general": "Geral",
+      "invoicing": "Faturamento",
+      "address": "Endereço"
+    },
+    "general": {
+      "company_name": "Nome do cliente",
+      "invoice_email": "Email"
+    },
+    "invoicing": {
+      "currency": "Moeda",
+      "rate": "Valor da Hora",
+      "has_tax": "Aplicar imposto",
+      "bank_account": "Conta Bancária"
+    },
+    "address": {
+      "company_address": "Endereço",
+      "company_postal_code": "Código Postal",
+      "company_city": "Cidade",
+      "company_county": "Estado",
+      "company_country": "País"
+    },
+    "delete_modal": {
+      "title": "Apagar cliente",
+      "ok_title": "Apagar",
+      "cancel_title": "Cancelar"
+    },
+    "notification_deleted": "Apagado",
+    "notification_updated": "Atualizado"
+  },
+  "client-selector": {
+    "client": "Cliente",
+    "create": "Criar",
+    "new": "novo",
+    "suggest_placeholder": "Buscar cliente"
+  },
+  "clients-list": {
+    "title": "Gerenciar clientes",
+    "loading": "Carregando",
+    "company_name": "Nome da empresa",
+    "email": "E-mail",
+    "city": "Cidade",
+    "add_client": "Adicionar cliente",
+    "search_placeholder": "Buscar clientes...",
+    "delete_modal": {
+      "title": "Excluir cliente",
+      "ok_title": "Excluir",
+      "cancel_title": "Cancelar"
+    },
+    "notification_deleted": "Cliente excluído"
+  },
+  "customizations-modal": {
+    "title": "Personalizar suas faturas",
+    "textarea_label": "Inserir CSS personalizado",
+    "updated": "Atualizado"
+  },
+  "empty-state": {
+    "content": "Nada aqui ainda"
+  },
+  "import-modal": {
+    "title": "Importar dados",
+    "warning": "Seus dados atuais serão apagados e substituídos pelos dados importados!",
+    "button_text": "Selecione o arquivo de importação",
+    "import-error": "Formato JSON inválido"
+  },
+  "invoice-bank-details": {
+    "bank_name": "Adicionar conta bancária",
+    "bank_account_no": "Detalhes da conta bancária",
+    "bank_account_modal_title": "Escolha uma conta bancária"
+  },
+  "invoice-client-details": {
+    "client_address": "Endereço",
+    "client_postal_code": "CEP",
+    "client_city": "Cidade",
+    "client_county": "Estado",
+    "client_country": "País",
+    "client_email": "Email do Cliente"
+  },
+  "invoice-company-details": {
+    "your_company_name": "Nome da sua Empresa",
+    "address": "Endereço",
+    "postal_code": "CEP",
+    "city": "Cidade",
+    "county": "Estado",
+    "country": "País",
+    "your_email": "Seu email"
+  },
+  "invoice-contact-details": {
+    "add_website": "Adicionar um site",
+    "add_email": "Adicionar um email",
+    "add_phone": "Adicionar um telefone"
+  },
+  "invoice-controls": {
+    "back": "Voltar",
+    "book": "Registrar",
+    "design_and_layout": "Aparência e Layout",
+    "compact": "Compacto",
+    "comfortable": "Confortável",
+    "customize": "Personalizado",
+    "download_pdf": "Download PDF",
+    "delete": "Apagar",
+    "delete_modal": {
+      "title": "Apagar fatura",
+      "ok_title": "Apagar",
+      "cancel_title": "Cancelar"
+    },
+    "notification_deleted": "Apagado"
+  },
+  "invoice-form": {
+    "insert_note": "Inserir nota"
+  },
+  "invoice-header": {
+    "invoice_title": "Fatura ",
+    "invoice_number": "No.",
+    "issued_at": "Emitida em: ",
+    "due_at": "Vence em:",
+    "late_fee": "Taxa de atraso:",
+    "add_late_fee": "Adicionar taxa de atraso"
+  },
+  "invoice-row": {
+    "enter_item": "Item",
+    "enter_quantity": "Quantidade",
+    "enter_unit": "Unidade",
+    "enter_price": "Valor",
+    "enter_tax": "Imposto"
+  },
+  "invoice-rows-header": {
+    "item": "Item",
+    "quantity": "Quant.",
+    "unit": "Und.",
+    "price": "Valor",
+    "sum": "Total"
+  },
+  "invoice-totals": {
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "add_currency": "Adicionar Moeda"
+  },
+  "invoices": {
+    "title": "Faturas",
+    "new_invoice": "Nova Fatura",
+    "export": "Exportar",
+    "import": "Importar",
+    "hide_paid_invoices": "Ocultar Faturas Pagas",
+    "show_fy_summary": "Mostrar Resumo do Ano Fiscal",
+    "search_client_placeholder": "Pesquisar por nome do cliente...",
+    "manage_customers": "Gerenciar clientes",
+    "customer_ranking": "Ranking de clientes",
+    "fy_start": "Início do ano fiscal",
+    "financial_year": "Ano fiscal {{start}}-{{end}}",
+    "save_in_s3": "Salvar no S3",
+    "last_backup": "Último backup: {{when}}",
+    "never": "nunca",
+    "last_backup_hint": "Use “Salvar no S3” no menu",
+    "backup_saved": "Backup salvo com sucesso!",
+    "backup_failed": "Falha ao enviar para o S3. Tente novamente.",
+    "total_invoiced": "Total faturado",
+    "total_paid": "Total pago",
+    "total_booked": "Total lançado",
+    "total_pending": "Total pendente",
+    "invoice_count_one": "{{count}} fatura",
+    "invoice_count_other": "{{count}} faturas",
+    "ranking_title": "Ranking de clientes por valor faturado",
+    "ranking_subtitle": "Principais clientes por valor total faturado",
+    "customer_count_one": "{{count}} cliente",
+    "customer_count_other": "{{count}} clientes",
+    "unknown_customer": "Cliente desconhecido",
+    "no_invoices": "Nenhuma fatura encontrada"
+  },
+  "invoices-list": {
+    "invoice_number": "No.",
+    "client": "Cliente",
+    "issued_at": "Emissão",
+    "total": "Total",
+    "status": "Status",
+    "overdue": "Vencida",
+    "duplicate": "Duplicar fatura",
+    "tax_amount": "({{amount}} de impostos)"
+  },
+  "statuses": {
+    "statuses": {
+      "draft": "rascunho",
+      "booked": "registrada",
+      "sent": "enviada",
+      "paid": "paga",
+      "written_off": "baixada",
+      "cancelled": "cancelada"
+    }
+  },
+  "team-fields": {
+    "label": "Label",
+    "field": "Campo",
+    "delete_modal": {
+      "title": "Apagar campo",
+      "ok_title": "Apagar",
+      "cancel_title": "Cancelar"
+    },
+    "notification_delete": "Apagado"
+  },
+  "team-form": {
+    "title": "Sua Empresa",
+    "done": "Concluir",
+    "updated": "Atualizado",
+    "loading": "Carregando",
+    "tabs": {
+      "general": "Geral",
+      "invoicing": "Faturamento",
+      "address": "Endereço",
+      "taxes": "Imposto"
+    },
+    "general": {
+      "company_name": "Nome da Empresa",
+      "contact_email": "Email",
+      "contact_phone": "Telefone",
+      "website": "Website",
+      "logo": "Logotipo"
+    },
+    "invoicing": {
+      "invoice_late_fee": "Taxa de atraso (%)",
+      "invoice_due_days": "Termos de pagamento, dias",
+      "currency": "Moeda Padrão"
+    },
+    "address": {
+      "company_address": "Endereço da Empresa",
+      "company_postal_code": "CEP",
+      "company_city": "Cidade",
+      "company_county": "Estado",
+      "company_country": "País"
+    },
+    "tax_modal": {
+      "title": "Substituir imposto nos itens do pedido atual?",
+      "ok_title": "Substituir",
+      "cancel_title": "Cancelar",
+      "taxes_updated": "Atualizar Imposto"
+    }
+  },
+  "team-logo": {
+    "modal_title": "Escolher logo",
+    "button_text": "Selecionar dos arquivos",
+    "logo_url": "Inserir de URL na internet",
+    "logo_url_err": "Imagem deve possuir menos de 512kb.",
+    "or": "ou"
+  },
+  "team-taxes": {
+    "label": "Label",
+    "tax": "Imposto",
+    "delete_modal": {
+      "title": "Apagar imposto",
+      "ok_title": "Apagar",
+      "cancel_title": "Cancelar"
+    },
+    "notification_deleted": "Apagado"
+  },
+  "the-footer": {
+    "lights-on": "Modo Escuro",
+    "lights-off": "Modo Claro",
+    "title": "Todos os seus dados são salvos no navegador e não no servidor.\n                                   Este aplicativo é realmente serverless e apenas você tem acesso aos seus dados.",
+    "what_about_my_data": "E sobre meus dados? "
+  }
+}

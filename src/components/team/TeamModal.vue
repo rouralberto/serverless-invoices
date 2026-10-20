@@ -1,56 +1,36 @@
 <template>
-    <BModal v-model="isOpen"
-            centered
-            no-footer
-            no-header
-            content-class="bg-base dp--24">
-        <TeamForm @done="close"/>
-    </BModal>
+    <AppModal v-model="isOpen"
+              centered
+              no-header
+              content-class="bg-base dp--24">
+        <TeamForm @done="done"/>
+    </AppModal>
 </template>
 
 <script>
 import { mapState, mapStores, mapWritableState } from 'pinia';
-import { BModal } from 'bootstrap-vue-next';
+import AppModal from '@/components/ui/AppModal.vue';
 import TeamForm from '@/components/team/TeamForm.vue';
 import { useInvoicesStore } from '@/store/invoices';
 import { useTeamsStore } from '@/store/teams';
 
 export default {
   components: {
+    AppModal,
     TeamForm,
-    BModal,
   },
   computed: {
-    ...mapStores(useTeamsStore, useInvoicesStore),
+    ...mapStores(useInvoicesStore),
     ...mapWritableState(useTeamsStore, { isOpen: 'isModalOpen' }),
-    ...mapState(useTeamsStore, ['team']),
     ...mapState(useInvoicesStore, ['invoice']),
   },
-  mounted() {
-    this.getTeam();
-  },
   methods: {
-    getTeam() {
-      this.teamsStore.getTeam();
-    },
-    async close() {
-      await this.promptUpdateInvoice();
-      this.isOpen = false;
-    },
-    async promptUpdateInvoice() {
-      if (this.$route.name === 'invoice') {
-        /* const confirmed = await ConfirmService.confirm('Update team details on invoice?', {
-          okTitle: 'Update',
-          cancelTitle: 'Dismiss',
-          cancelVariant: 'btn-link',
-          contentClass: 'bg-base dp--24',
-        });
-        if (confirmed) { */
-        this.invoicesStore.prefillTeam({
-          invoiceId: this.invoice.id,
-        });
-        /* } */
+    done() {
+      // Refresh the open invoice with the company's latest details.
+      if (this.$route.name === 'invoice' && this.invoice) {
+        this.invoicesStore.prefillTeam(this.invoice.id);
       }
+      this.isOpen = false;
     },
   },
 };

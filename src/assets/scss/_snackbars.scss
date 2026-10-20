@@ -16,3 +16,15 @@
 .vue-notification-wrapper {
   padding: 0 16px !important;
 }
+
+// Shown as a popover so toasts stay above modal dialogs (see raiseToasts). The library
+// positions the group with inline styles, so only the browser's popover box is undone here.
+.vue-notification-group[popover] {
+  inset: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  overflow: visible;
+}

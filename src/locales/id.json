@@ -1,0 +1,292 @@
+{
+  "bank-account-form": {
+    "title": "Rekening Bank",
+    "bank_name": "Nam Bank",
+    "account_no": "Detail rekening bank",
+    "loading": "Memuat",
+    "done": "Selesai",
+    "create": "Buat",
+    "notification_updated": "Diperbarui"
+  },
+  "bank-accounts-list": {
+    "loading": "Memuat",
+    "bank": "Bank",
+    "bank_account_details": "Detail rekening bank",
+    "add_bank_account": "Tambah rekening"
+  },
+  "client-fields": {
+    "label": "Label",
+    "field": "Kolom isian",
+    "delete_modal": {
+      "title": "Hapus kolom isian",
+      "ok_title": "Hapus",
+      "cancel_title": "Gugurkan"
+    },
+    "notification_deleted": "Dihapus"
+  },
+  "client-form": {
+    "title": "Pelanggan",
+    "delete": "Hapus",
+    "done": "Selesai",
+    "create": "Buat",
+    "loading": "Memuat",
+    "tabs": {
+      "general": "Umum",
+      "invoicing": "Penagihan",
+      "address": "Alamat"
+    },
+    "general": {
+      "company_name": "Nama Usaha",
+      "invoice_email": "Email"
+    },
+    "invoicing": {
+      "currency": "Mata uang",
+      "rate": "Tarif per jam",
+      "has_tax": "Terapkan Pajak",
+      "bank_account": "Rekening bank"
+    },
+    "address": {
+      "company_address": "Alamat Usaha",
+      "company_postal_code": "Kode Pos",
+      "company_city": "Kota",
+      "company_county": "Provinsi/Wilayah",
+      "company_country": "Negara"
+    },
+    "delete_modal": {
+      "title": "Hapus pelanggan",
+      "ok_title": "Hapus",
+      "cancel_title": "Gugurkan"
+    },
+    "notification_deleted": "Dihapus",
+    "notification_updated": "Diperbarui"
+  },
+  "client-selector": {
+    "client": "Pelanggan",
+    "create": "Buat",
+    "new": "baru",
+    "suggest_placeholder": "Cari pelanggan"
+  },
+  "clients-list": {
+    "title": "Kelola pelanggan",
+    "loading": "Memuat",
+    "company_name": "Nama perusahaan",
+    "email": "Email",
+    "city": "Kota",
+    "add_client": "Tambah pelanggan",
+    "search_placeholder": "Cari pelanggan...",
+    "delete_modal": {
+      "title": "Hapus pelanggan",
+      "ok_title": "Hapus",
+      "cancel_title": "Batal"
+    },
+    "notification_deleted": "Pelanggan dihapus"
+  },
+  "customizations-modal": {
+    "title": "Sesuaikan Invoice Anda",
+    "textarea_label": "Sisipkan CSS Khusus",
+    "updated": "updated"
+  },
+  "empty-state": {
+    "content": "Belum ada apa-apa di sini"
+  },
+  "import-modal": {
+    "title": "Impor data",
+    "warning": "Data Anda saat ini akan dihapus dan ditimpa dengan data yang diimpor!",
+    "button_text": "Pilih berkas untuk diimpor",
+    "import-error": "Format JSON tidak valid"
+  },
+  "invoice-bank-details": {
+    "bank_name": "Tambah rekening bank",
+    "bank_account_no": "Tambah detail bank",
+    "bank_account_modal_title": "Pilih rekening bank"
+  },
+  "invoice-client-details": {
+    "client_address": "Alamat",
+    "client_postal_code": "Kode pos",
+    "client_city": "Kota",
+    "client_county": "Provinsi/Wilayah",
+    "client_country": "Negara",
+    "client_email": "Email Pelanggan"
+  },
+  "invoice-company-details": {
+    "your_company_name": "Nama Usaha Anda",
+    "address": "Alamat",
+    "postal_code": "Kode Pos",
+    "city": "Kota",
+    "county": "Provinsi/Wilayah",
+    "country": "Negara",
+    "your_email": "Email Anda"
+  },
+  "invoice-contact-details": {
+    "add_website": "Tambah website",
+    "add_email": "Tambah Email",
+    "add_phone": "Tambah No. HP"
+  },
+  "invoice-controls": {
+    "back": "Kembali",
+    "book": "Pesan",
+    "design_and_layout": "Desain & layout",
+    "compact": "Rapat",
+    "comfortable": "Nyaman",
+    "customize": "Sesuaikan",
+    "download_pdf": "Unduh PDF",
+    "delete": "Hapus",
+    "delete_modal": {
+      "title": "Hapus invoice",
+      "ok_title": "Hapus",
+      "cancel_title": "Gugurkan"
+    },
+    "notification_deleted": "Dihapus"
+  },
+  "invoice-form": {
+    "insert_note": "Sisipkan catatan"
+  },
+  "invoice-header": {
+    "invoice_title": "Invoice ",
+    "invoice_number": "No.",
+    "issued_at": "Diterbikan pada: ",
+    "due_at": "Tenggat Pembayaran:",
+    "late_fee": "Denda Keterlambatan:",
+    "add_late_fee": "Tambah Denda Keterlambatan"
+  },
+  "invoice-row": {
+    "enter_item": "Masukkan item",
+    "enter_quantity": "Masukkan jumlah",
+    "enter_unit": "Masukkan unit/satuan",
+    "enter_price": "Masukkan harga",
+    "enter_tax": "Masukkan pajak"
+  },
+  "invoice-rows-header": {
+    "item": "Item",
+    "quantity": "Jumlah",
+    "unit": "Unit/satuan",
+    "price": "Harga",
+    "sum": "Total"
+  },
+  "invoice-totals": {
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "add_currency": "Tambah mata uang"
+  },
+  "invoices": {
+    "title": "Invoice",
+    "new_invoice": "Invoice Baru",
+    "export": "Ekspor",
+    "import": "Impor",
+    "hide_paid_invoices": "Sembunyikan Invoice yang Sudah Dibayar",
+    "show_fy_summary": "Tampilkan Ringkasan Tahun Fiskal",
+    "search_client_placeholder": "Cari berdasarkan nama klien...",
+    "manage_customers": "Kelola pelanggan",
+    "customer_ranking": "Peringkat pelanggan",
+    "fy_start": "Awal tahun fiskal",
+    "financial_year": "TA {{start}}-{{end}}",
+    "save_in_s3": "Simpan ke S3",
+    "last_backup": "Cadangan terakhir: {{when}}",
+    "never": "belum pernah",
+    "last_backup_hint": "Gunakan “Simpan ke S3” di menu",
+    "backup_saved": "Cadangan berhasil disimpan!",
+    "backup_failed": "Gagal mengunggah ke S3. Silakan coba lagi.",
+    "total_invoiced": "Total ditagih",
+    "total_paid": "Total dibayar",
+    "total_booked": "Total dibukukan",
+    "total_pending": "Total tertunda",
+    "invoice_count_one": "{{count}} faktur",
+    "invoice_count_other": "{{count}} faktur",
+    "ranking_title": "Peringkat pelanggan berdasarkan jumlah tagihan",
+    "ranking_subtitle": "Pelanggan teratas berdasarkan total tagihan",
+    "customer_count_one": "{{count}} pelanggan",
+    "customer_count_other": "{{count}} pelanggan",
+    "unknown_customer": "Pelanggan tidak dikenal",
+    "no_invoices": "Tidak ada faktur"
+  },
+  "invoices-list": {
+    "invoice_number": "No.",
+    "client": "Pelanggan",
+    "issued_at": "Diterbikan pada",
+    "total": "Total",
+    "status": "Status",
+    "overdue": "Jatuh tempo",
+    "duplicate": "Duplikat faktur",
+    "tax_amount": "({{amount}} pajak)"
+  },
+  "statuses": {
+    "statuses": {
+      "draft": "konsep",
+      "booked": "dipesan",
+      "sent": "terkirim",
+      "paid": "lunas",
+      "written_off": "dihapusbukukan",
+      "cancelled": "dibatalkan"
+    }
+  },
+  "team-fields": {
+    "label": "Label",
+    "field": "Kolom isian",
+    "delete_modal": {
+      "title": "Hapus Kolom isian",
+      "ok_title": "Hapus",
+      "cancel_title": "Gugurkan"
+    },
+    "notification_delete": "Dihapus"
+  },
+  "team-form": {
+    "title": "Usaha/Perusahan Anda",
+    "done": "Selesai",
+    "updated": "Diperbarui",
+    "loading": "Memuat",
+    "tabs": {
+      "general": "Umum",
+      "invoicing": "Penagihan",
+      "address": "Alamat",
+      "taxes": "Pajak"
+    },
+    "general": {
+      "company_name": "Nama Usaha",
+      "contact_email": "Email",
+      "contact_phone": "No. HP",
+      "website": "Website",
+      "logo": "Logo"
+    },
+    "invoicing": {
+      "invoice_late_fee": "Denda Keterlambatan (%)",
+      "invoice_due_days": "Ketentuan pemabarayan, hari",
+      "currency": "Mata uang baku"
+    },
+    "address": {
+      "company_address": "Alamat usaha",
+      "company_postal_code": "Kode Pos",
+      "company_city": "Kota",
+      "company_county": "Provinsi/Wilayah",
+      "company_country": "Negara"
+    },
+    "tax_modal": {
+      "title": "Timpa pajak untuk baris invoice saat ini?",
+      "ok_title": "Timpa",
+      "cancel_title": "Gugurkan",
+      "taxes_updated": "Pajak Diperbarui"
+    }
+  },
+  "team-logo": {
+    "modal_title": "Pilih logo",
+    "button_text": "Pilih dari berkas",
+    "logo_url": "Sisipkan tautan gambar",
+    "logo_url_err": "Ukuran berkas logo tidak boleh melebihi 512kb.",
+    "or": "atau"
+  },
+  "team-taxes": {
+    "label": "Label",
+    "tax": "Pajak",
+    "delete_modal": {
+      "title": "Hapus pajak",
+      "ok_title": "Hapus",
+      "cancel_title": "Gugurkan"
+    },
+    "notification_deleted": "Dihapus"
+  },
+  "the-footer": {
+    "lights-on": "Beralih ke Mode Terang",
+    "lights-off": "Beralih ke Mode Gelap",
+    "title": "Semua data tersimpan di peramban Anda, bukan di peladen/server manapun.\n                                   Aplikasi ini benar-benar serverless dan hanya Anda yang memiliki akses ke data Anda.",
+    "what_about_my_data": "Bagaimana dengan data saya? "
+  }
+}

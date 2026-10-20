@@ -5,12 +5,12 @@
                 <h4>{{ t('title') }}</h4>
                 <div v-if="client">
                     <div v-if="!isNew">
-                        <BDropdown variant="link" size="sm" no-caret placement="bottom-end">
+                        <AppDropdown size="sm">
                             <template #button-content>
                                 <i class="material-icons">more_vert</i>
                             </template>
-                            <BDropdownItemButton @click="deleteClient">{{ t('delete') }}</BDropdownItemButton>
-                        </BDropdown>
+                            <li><button type="button" class="dropdown-item" @click="deleteClient">{{ t('delete') }}</button></li>
+                        </AppDropdown>
                         <button class="btn btn-sm btn-primary"
                                 @click="$emit('done')">{{ t('done') }}
                         </button>
@@ -23,8 +23,17 @@
             </div>
         </div>
 
-        <BTabs v-if="client" nav-class="nav-tabs--simple mb-4" nav-wrapper-class="px-0" content-class="col-12" class="row">
-            <BTab :title="t('tabs.general')">
+        <AppTabs v-if="client"
+                 :tabs="[
+                   { key: 'general', title: t('tabs.general') },
+                   { key: 'invoicing', title: t('tabs.invoicing') },
+                   { key: 'address', title: t('tabs.address') },
+                 ]"
+                 nav-class="nav-tabs--simple mb-4"
+                 nav-wrapper-class="px-0"
+                 content-class="col-12"
+                 class="row">
+            <template #general>
                 <div class="row">
                     <AppInput :value="client.company_name" @change="updateProp({ company_name: $event })"
                               :label="t('general.company_name')" field="company_name" :errors="errors" class="col-12"/>
@@ -34,9 +43,9 @@
                 </div>
 
                 <ClientFields class="row" :client="client"/>
-            </BTab>
+            </template>
 
-            <BTab :title="t('tabs.invoicing')">
+            <template #invoicing>
                 <div class="row">
                     <AppInput :value="client.currency" @change="updateProp({ currency: $event })"
                               :label="t('invoicing.currency')" field="currency" :errors="errors" class="col-sm-4"/>
@@ -44,17 +53,17 @@
                               :label="t('invoicing.rate')" field="rate" :errors="errors" class="col-sm-4"/>
                     <AppCheckbox :value="client.has_tax" @input="updateProp({ has_tax: $event })"
                                  :label="t('invoicing.has_tax')" field="has_tax" :errors="errors" class="col-sm-4"/>
-                    <AppSelect :value="client.bank_account"
+                    <AppSelect :value="bankAccount"
                                track-by="id"
                                :label="t('invoicing.bank_account')"
                                label-field="bank_name"
-                               :options="bankAccounts || []"
+                               :options="bankAccounts"
                                @input="bankAccountChanged"
                                class="col-12"/>
                 </div>
-            </BTab>
+            </template>
 
-            <BTab :title="t('tabs.address')">
+            <template #address>
                 <div class="row">
                     <AppInput :value="client.company_address" @change="updateProp({ company_address: $event })"
                               :label="t('address.company_address')" field="company_address" :errors="errors"
@@ -73,26 +82,25 @@
                               :label="t('address.company_country')" field="company_country" :errors="errors"
                               class="col-sm-6"/>
                 </div>
-            </BTab>
+            </template>
 
-        </BTabs>
+        </AppTabs>
 
         <div v-if="!client">{{ t('loading') }}</div>
     </div>
 </template>
 <script>
 import { mapState, mapStores } from 'pinia';
-import {
-  BTab, BTabs, BDropdownItemButton, BDropdown,
-} from 'bootstrap-vue-next';
 import { useTranslation } from 'i18next-vue';
 import NotificationService from '@/services/notification.service';
 import ConfirmService from '@/services/confirm.service';
 import AppInput from '@/components/form/AppInput.vue';
 import AppSelect from '@/components/form/AppSelect.vue';
-import Errors from '@/utils/errors';
 import AppCheckbox from '@/components/form/AppCheckbox.vue';
+import AppDropdown from '@/components/ui/AppDropdown.vue';
+import AppTabs from '@/components/ui/AppTabs.vue';
 import ClientFields from '@/components/clients/ClientFields.vue';
+import Errors from '@/utils/errors';
 import { useBankAccountsStore } from '@/store/bank-accounts';
 import { useClientsStore } from '@/store/clients';
 
@@ -102,14 +110,12 @@ export default {
   },
   emits: ['done'],
   components: {
-    ClientFields,
     AppCheckbox,
+    AppDropdown,
     AppInput,
     AppSelect,
-    BTab,
-    BTabs,
-    BDropdown,
-    BDropdownItemButton,
+    AppTabs,
+    ClientFields,
   },
   data() {
     return {
@@ -119,77 +125,42 @@ export default {
   },
   computed: {
     ...mapStores(useClientsStore, useBankAccountsStore),
-    ...mapState(useClientsStore, ['client']),
+    ...mapState(useClientsStore, ['client', 'isDraft']),
     ...mapState(useBankAccountsStore, { bankAccounts: 'all' }),
     isNew() {
-      return this.client && this.client.$isNew;
+      return this.isDraft;
     },
-  },
-  mounted() {
-    this.getBankAccounts();
+    bankAccount() {
+      return this.bankAccountsStore.find(this.client.bank_account_id);
+    },
   },
   methods: {
-    getBankAccounts() {
-      this.bankAccountsStore.getBankAccounts();
-    },
-    updateProp(props) {
-      if (this.isNew) {
-        return this.clientsStore.clientProps({
-          props,
-          clientId: this.client.id,
-        });
+    async updateProp(props) {
+      await this.clientsStore.updateClient(this.client.id, props);
+      if (!this.isNew) {
+        NotificationService.success(this.t('notification_updated'));
       }
-      this.errors.clear();
-
-      this.clientsStore.updateClient({
-        props,
-        clientId: this.client.id,
-      })
-        .then(() => {
-          NotificationService.success(this.t('notification_updated'));
-        })
-        .catch(err => this.errors.set(err.errors));
     },
-    bankAccountChanged(val) {
-      this.updateProp({
-        bank_account_id: val ? val.id : null,
-        bank_account: val,
-      });
+    bankAccountChanged(bankAccount) {
+      this.updateProp({ bank_account_id: bankAccount ? bankAccount.id : null });
     },
-    createClient() {
+    async createClient() {
       this.loading = true;
-      this.errors.clear();
-
-      return this.clientsStore.createNewClient(this.client)
-        .then((client) => {
-          this.$router.push({
-            query: {
-              clientId: client.id,
-            },
-          });
-          this.$emit('done');
-        })
-        .catch(err => this.errors.set(err.errors))
-        .finally(() => {
-          this.loading = false;
-        });
+      await this.clientsStore.createDraftClient();
+      this.loading = false;
+      this.$emit('done');
     },
     async deleteClient() {
       const confirmed = await ConfirmService.confirm(`${this.t('delete_modal.title')} ${this.client.company_name}?`, {
         okTitle: this.t('delete_modal.ok_title'),
         okVariant: 'danger',
         cancelTitle: this.t('delete_modal.cancel_title'),
-        cancelVariant: 'btn-link',
-        contentClass: 'bg-base dp--24',
       });
       if (confirmed) {
+        const clientId = this.client.id;
         this.$emit('done');
-        await this.clientsStore.deleteClient(this.client.id);
-        try {
-          NotificationService.success(this.t('notification_deleted'));
-        } catch (err) {
-          NotificationService.error(err.message);
-        }
+        await this.clientsStore.deleteClient(clientId);
+        NotificationService.success(this.t('notification_deleted'));
       }
     },
   },

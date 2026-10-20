@@ -1,0 +1,292 @@
+{
+  "bank-account-form": {
+    "title": "Conto bancario",
+    "bank_name": "Nome banca",
+    "account_no": "Dettaglio conto",
+    "loading": "Caricamento",
+    "done": "Fatto",
+    "create": "Crea",
+    "notification_updated": "Aggiornato"
+  },
+  "bank-accounts-list": {
+    "loading": "Caricamento",
+    "bank": "Banca",
+    "bank_account_details": "Dettaglio conto corrente",
+    "add_bank_account": "Aggiungi conto corrente"
+  },
+  "client-fields": {
+    "label": "Etichetta",
+    "field": "Campo",
+    "delete_modal": {
+      "title": "Cancella campo",
+      "ok_title": "Cancella",
+      "cancel_title": "Annulla"
+    },
+    "notification_deleted": "Cancellato"
+  },
+  "client-form": {
+    "title": "Cliente",
+    "delete": "Cancella",
+    "done": "Fatto",
+    "create": "Crea",
+    "loading": "Caricamento",
+    "tabs": {
+      "general": "Generale",
+      "invoicing": "Fatturazione",
+      "address": "Indirizzo"
+    },
+    "general": {
+      "company_name": "Ragione sociale",
+      "invoice_email": "Posta elettronica"
+    },
+    "invoicing": {
+      "currency": "Moneta",
+      "rate": "Tariffa oraria",
+      "has_tax": "Applica tassa",
+      "bank_account": "Conto bancario"
+    },
+    "address": {
+      "company_address": "Indirizzo societa'",
+      "company_postal_code": "CAP",
+      "company_city": "Citta",
+      "company_county": "Provincia",
+      "company_country": "Stato"
+    },
+    "delete_modal": {
+      "title": "Elimina Cliente",
+      "ok_title": "Elimina",
+      "cancel_title": "Cancella"
+    },
+    "notification_deleted": "Cancellato",
+    "notification_updated": "Aggiornato"
+  },
+  "client-selector": {
+    "client": "Cliente",
+    "create": "Crea",
+    "new": "Nuovo",
+    "suggest_placeholder": "Ricerca Cliente"
+  },
+  "clients-list": {
+    "title": "Gestisci clienti",
+    "loading": "Caricamento",
+    "company_name": "Ragione sociale",
+    "email": "Email",
+    "city": "Città",
+    "add_client": "Aggiungi cliente",
+    "search_placeholder": "Cerca clienti...",
+    "delete_modal": {
+      "title": "Elimina cliente",
+      "ok_title": "Elimina",
+      "cancel_title": "Annulla"
+    },
+    "notification_deleted": "Cliente eliminato"
+  },
+  "customizations-modal": {
+    "title": "Adatta il tuo modello di fattura",
+    "textarea_label": "Aggiungi il tuo foglio di stile",
+    "updated": "Aggiorna"
+  },
+  "empty-state": {
+    "content": "Niente"
+  },
+  "import-modal": {
+    "title": "Importa i tuoi dati",
+    "warning": "I tuoi dati attuali saranno socrascritti da quelli importati!",
+    "button_text": "Seleziona il file da importare",
+    "import-error": "Formato JSON non valido"
+  },
+  "invoice-bank-details": {
+    "bank_name": "Aggiungi una banca",
+    "bank_account_no": "Aggiungi i dati della banca",
+    "bank_account_modal_title": "Scegli un conto bancario"
+  },
+  "invoice-client-details": {
+    "client_address": "Indirizzo",
+    "client_postal_code": "Codice postale",
+    "client_city": "Citta'",
+    "client_county": "Provincia",
+    "client_country": "Stato",
+    "client_email": "Posta elettronica del cliente"
+  },
+  "invoice-company-details": {
+    "your_company_name": "Ragione sociale",
+    "address": "Indirizzo",
+    "postal_code": "CAP",
+    "city": "Citta",
+    "county": "Provincia",
+    "country": "Stato",
+    "your_email": "Posta elettronica"
+  },
+  "invoice-contact-details": {
+    "add_website": "Aggiungi un sito web",
+    "add_email": "Aggiungi un indirizzo di posta elettronica",
+    "add_phone": "Aggiungi un numero di telefono"
+  },
+  "invoice-controls": {
+    "back": "Ritorna",
+    "book": "Libro",
+    "design_and_layout": "Stile e impaginazione",
+    "compact": "Compatto",
+    "comfortable": "Comodo",
+    "customize": "Adattabile",
+    "download_pdf": "Scarica file PDF",
+    "delete": "Rimuovi",
+    "delete_modal": {
+      "title": "Rimuovi fattura",
+      "ok_title": "Rimuovi",
+      "cancel_title": "Cancella"
+    },
+    "notification_deleted": "Rimosso"
+  },
+  "invoice-form": {
+    "insert_note": "Inserisci nota"
+  },
+  "invoice-header": {
+    "invoice_title": "Fattura",
+    "invoice_number": "Numero",
+    "issued_at": "Emassa il: ",
+    "due_at": "Da pagare entro:",
+    "late_fee": "Interessi da pagare:",
+    "add_late_fee": "Aggiungi interessi da pagare"
+  },
+  "invoice-row": {
+    "enter_item": "Aggiungi Prodotto",
+    "enter_quantity": "Aggiunti Quantita'",
+    "enter_unit": "Aggiungi unita'",
+    "enter_price": "Aggiung prezzo unitario",
+    "enter_tax": "Aggiungi tassa"
+  },
+  "invoice-rows-header": {
+    "item": "Prodotto",
+    "quantity": "Quantita'",
+    "unit": "Unita'",
+    "price": "Prezzo",
+    "sum": "Somma"
+  },
+  "invoice-totals": {
+    "subtotal": "Importo parziale",
+    "total": "Importo totale",
+    "add_currency": "Aggiungi valuta"
+  },
+  "invoices": {
+    "title": "Fatture",
+    "new_invoice": "Nuova fattura",
+    "export": "Esporta",
+    "import": "Importa",
+    "hide_paid_invoices": "Nascondi Fatture Pagate",
+    "show_fy_summary": "Mostra Riepilogo Anno Fiscale",
+    "search_client_placeholder": "Cerca per nome cliente...",
+    "manage_customers": "Gestisci clienti",
+    "customer_ranking": "Classifica clienti",
+    "fy_start": "Inizio dell'anno fiscale",
+    "financial_year": "Esercizio {{start}}-{{end}}",
+    "save_in_s3": "Salva su S3",
+    "last_backup": "Ultimo backup: {{when}}",
+    "never": "mai",
+    "last_backup_hint": "Usa «Salva su S3» nel menu",
+    "backup_saved": "Backup salvato!",
+    "backup_failed": "Caricamento su S3 non riuscito. Riprova.",
+    "total_invoiced": "Totale fatturato",
+    "total_paid": "Totale pagato",
+    "total_booked": "Totale registrato",
+    "total_pending": "Totale in sospeso",
+    "invoice_count_one": "{{count}} fattura",
+    "invoice_count_other": "{{count}} fatture",
+    "ranking_title": "Classifica clienti per importo fatturato",
+    "ranking_subtitle": "Migliori clienti per importo totale fatturato",
+    "customer_count_one": "{{count}} cliente",
+    "customer_count_other": "{{count}} clienti",
+    "unknown_customer": "Cliente sconosciuto",
+    "no_invoices": "Nessuna fattura trovata"
+  },
+  "invoices-list": {
+    "invoice_number": "Numero",
+    "client": "Cliente",
+    "issued_at": "Fatturato il: ",
+    "total": "Totale",
+    "status": "Stato",
+    "overdue": "Scaduta",
+    "duplicate": "Duplica fattura",
+    "tax_amount": "({{amount}} di tasse)"
+  },
+  "statuses": {
+    "statuses": {
+      "draft": "bozza",
+      "booked": "prenotata",
+      "sent": "mandata",
+      "paid": "pagata",
+      "written_off": "inesigibile",
+      "cancelled": "cancellata"
+    }
+  },
+  "team-fields": {
+    "label": "Etichetta",
+    "field": "Campo",
+    "delete_modal": {
+      "title": "Cancella campo",
+      "ok_title": "Cancella",
+      "cancel_title": "Annulla"
+    },
+    "notification_delete": "Rimosso"
+  },
+  "team-form": {
+    "title": "Tua azienda",
+    "done": "Fatto",
+    "updated": "Aggiornato",
+    "loading": "Caricato",
+    "tabs": {
+      "general": "Generale",
+      "invoicing": "Fatturazione",
+      "address": "Indirizzi",
+      "taxes": "Tasse"
+    },
+    "general": {
+      "company_name": "Noma azienda",
+      "contact_email": "Posta elettronica",
+      "contact_phone": "Telefono",
+      "website": "Sito internet",
+      "logo": "Logo"
+    },
+    "invoicing": {
+      "invoice_late_fee": "Interessi (%)",
+      "invoice_due_days": "Termini pagamento, giorni",
+      "currency": "Valuta predefinita"
+    },
+    "address": {
+      "company_address": "Indirizzo Azienda",
+      "company_postal_code": "CAP",
+      "company_city": "Citta'",
+      "company_county": "Provincia",
+      "company_country": "Stato"
+    },
+    "tax_modal": {
+      "title": "Sovrascrivi la tassa per la fattura selezionata?",
+      "ok_title": "Sovrascrivi",
+      "cancel_title": "Cancella",
+      "taxes_updated": "Tasse aggiornate"
+    }
+  },
+  "team-logo": {
+    "modal_title": "Scegli logo",
+    "button_text": "Seleziona da file esterno",
+    "logo_url": "Inserisci immagine da risorsa web",
+    "logo_url_err": "Il logo deve avere dimensione inferiore a 512kb.",
+    "or": "o"
+  },
+  "team-taxes": {
+    "label": "Etichetta",
+    "tax": "Tassa",
+    "delete_modal": {
+      "title": "Cancella tassa",
+      "ok_title": "Cancella",
+      "cancel_title": "Annulla"
+    },
+    "notification_deleted": "Rimosso"
+  },
+  "the-footer": {
+    "lights-on": "Tema chiaro",
+    "lights-off": "Tema scuro",
+    "title": "Tutti i tuoi dati sono salvati nel tuo browser e in nessun server esterno.\n Questo programma è interamente realizzato senza server, e solo tu hai accesso alle tue Fatture.",
+    "what_about_my_data": "Dove sono i miei dati? "
+  }
+}

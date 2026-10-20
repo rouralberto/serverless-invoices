@@ -15,7 +15,8 @@ services:
       - ./public:/app/public
       - ./src/assets:/app/src/assets
       - ./src/components:/app/src/components
-      - ./src/filters:/app/src/filters
+      - ./src/config:/app/src/config
+      - ./src/locales:/app/src/locales
       - ./src/services:/app/src/services
       - ./src/store:/app/src/store
       - ./src/utils:/app/src/utils

@@ -65,41 +65,23 @@ export default {
   },
   computed: {
     ...mapStores(useBankAccountsStore),
-    ...mapState(useBankAccountsStore, ['bankAccount']),
+    ...mapState(useBankAccountsStore, ['bankAccount', 'isDraft']),
     isNew() {
-      return this.bankAccount && this.bankAccount.$isNew;
+      return this.isDraft;
     },
   },
   methods: {
-    updateProp(props) {
-      if (this.isNew) {
-        return this.bankAccountsStore.bankAccountProps(props);
+    async updateProp(props) {
+      await this.bankAccountsStore.updateBankAccount(props);
+      if (!this.isNew) {
+        NotificationService.success(this.t('notification_updated'));
       }
-      this.errors.clear();
-
-      return this.bankAccountsStore.updateBankAccount(props)
-        .then(() => {
-          NotificationService.success(this.t('notification_updated'));
-        })
-        .catch(err => this.errors.set(err.errors));
     },
-    createBankAccount() {
+    async createBankAccount() {
       this.loading = true;
-      this.errors.clear();
-
-      return this.bankAccountsStore.createNewBankAccount(this.bankAccount)
-        .then((bankAccount) => {
-          this.$router.push({
-            query: {
-              bankAccountId: bankAccount.id,
-            },
-          });
-          this.$emit('done');
-        })
-        .catch(err => this.errors.set(err.errors))
-        .finally(() => {
-          this.loading = false;
-        });
+      await this.bankAccountsStore.createBankAccount();
+      this.loading = false;
+      this.$emit('done');
     },
   },
 };

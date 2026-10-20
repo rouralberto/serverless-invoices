@@ -61,28 +61,7 @@
     }
   }
 
-  &-success {
-    &--light {
-      color: $success;
-      background-color: rgba($success, 0.07);
-
-      &:hover, &:active, &:focus {
-        color: $success;
-        background-color: rgba($success, 0.07);
-      }
-    }
-  }
-
   &-link {
     color: var(--text-primary);
-  }
-
-  &--fab {
-    position: fixed;
-    bottom: 32px;
-    right: 32px;
-    z-index: 1;
-    border-radius: 99px;
-    box-shadow: $box-shadow-light-3;
   }
 }

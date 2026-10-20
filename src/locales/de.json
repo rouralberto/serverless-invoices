@@ -1,0 +1,292 @@
+{
+  "bank-account-form": {
+    "title": "Bankkonto",
+    "bank_name": "Bankname",
+    "account_no": "Bankkonto-Details",
+    "loading": "Lädt",
+    "done": "Fertig",
+    "create": "Erstellen",
+    "notification_updated": "Aktualisiert"
+  },
+  "bank-accounts-list": {
+    "loading": "Lädt",
+    "bank": "Bank",
+    "bank_account_details": "Bankkonto-Details",
+    "add_bank_account": "Bankkonto hinzufügen"
+  },
+  "client-fields": {
+    "label": "Kennung",
+    "field": "Feld",
+    "delete_modal": {
+      "title": "Feld löschen",
+      "ok_title": "Löschen",
+      "cancel_title": "ablehnen"
+    },
+    "notification_deleted": "Gelöscht"
+  },
+  "client-form": {
+    "title": "Kunde",
+    "delete": "Löschen",
+    "done": "Fertig",
+    "create": "Erstellen",
+    "loading": "Lädt",
+    "tabs": {
+      "general": "Allgemein",
+      "invoicing": "Inrechnungsstellung",
+      "address": "Adresse"
+    },
+    "general": {
+      "company_name": "Firmenname",
+      "invoice_email": "E-Mail"
+    },
+    "invoicing": {
+      "currency": "Währung",
+      "rate": "Stundenlohn",
+      "has_tax": "Steuern anwenden",
+      "bank_account": "Bankkonto"
+    },
+    "address": {
+      "company_address": "Firmenadresse",
+      "company_postal_code": "Postleitzahl",
+      "company_city": "Stadt",
+      "company_county": "Bundesland",
+      "company_country": "Land"
+    },
+    "delete_modal": {
+      "title": "Kunden löschen",
+      "ok_title": "Löschen",
+      "cancel_title": "Ablehnen"
+    },
+    "notification_deleted": "Gelöscht",
+    "notification_updated": "Aktualisiert"
+  },
+  "client-selector": {
+    "client": "Kunde",
+    "create": "Erstellen",
+    "new": "neu",
+    "suggest_placeholder": "Kunden suchen"
+  },
+  "clients-list": {
+    "title": "Kunden verwalten",
+    "loading": "Wird geladen",
+    "company_name": "Firmenname",
+    "email": "E-Mail",
+    "city": "Stadt",
+    "add_client": "Kunde hinzufügen",
+    "search_placeholder": "Kunden suchen...",
+    "delete_modal": {
+      "title": "Kunde löschen",
+      "ok_title": "Löschen",
+      "cancel_title": "Abbrechen"
+    },
+    "notification_deleted": "Kunde gelöscht"
+  },
+  "customizations-modal": {
+    "title": "Rechnungen anpassen",
+    "textarea_label": "Benutzerdefiniertes CSS einfügen",
+    "updated": "Aktualisiert"
+  },
+  "empty-state": {
+    "content": "Hier ist noch nichts."
+  },
+  "import-modal": {
+    "title": "Daten importieren",
+    "warning": "Deine aktuellen Daten werden entfernt und von den importierten Daten überschrieben!",
+    "button_text": "Importdatei auswählen",
+    "import-error": "Ungültiges JSON Format"
+  },
+  "invoice-bank-details": {
+    "bank_name": "Bank hinzufügen",
+    "bank_account_no": "Bankdetails hinzufügen",
+    "bank_account_modal_title": "Bankkonto auswählen"
+  },
+  "invoice-client-details": {
+    "client_address": "Adresse",
+    "client_postal_code": "Postleitzahl",
+    "client_city": "Stadt",
+    "client_county": "Bundesland",
+    "client_country": "Land",
+    "client_email": "Kunden-E-Mail"
+  },
+  "invoice-company-details": {
+    "your_company_name": "Dein Firmenname",
+    "address": "Adresse",
+    "postal_code": "Postleitzahl",
+    "city": "Stadt",
+    "county": "Bundesland",
+    "country": "Land",
+    "your_email": "Deine E-Mail"
+  },
+  "invoice-contact-details": {
+    "add_website": "Website hinzufügen",
+    "add_email": "E-Mail hinzufügen",
+    "add_phone": "Telefon hinzufügen"
+  },
+  "invoice-controls": {
+    "back": "Zurück",
+    "book": "Buchen",
+    "design_and_layout": "Design & Layout",
+    "compact": "Kompakt",
+    "comfortable": "Komfortabel",
+    "customize": "Deinen Wüschen anpassen",
+    "download_pdf": "PDF herunterladen",
+    "delete": "Löschen",
+    "delete_modal": {
+      "title": "Rechnung löschen",
+      "ok_title": "Löschen",
+      "cancel_title": "Ablehnen"
+    },
+    "notification_deleted": "Gelöscht"
+  },
+  "invoice-form": {
+    "insert_note": "Notiz einfügen"
+  },
+  "invoice-header": {
+    "invoice_title": "Rechnung ",
+    "invoice_number": "Nein.",
+    "issued_at": "Ausgestellt am: ",
+    "due_at": "Fällig am:",
+    "late_fee": "Verzugsgebühr:",
+    "add_late_fee": "Verzugsgebühr hinzufügen"
+  },
+  "invoice-row": {
+    "enter_item": "Gegenstand eingeben",
+    "enter_quantity": "Menge eingeben",
+    "enter_unit": "Einheit eingeben",
+    "enter_price": "Preis eingeben",
+    "enter_tax": "Steuer eingeben"
+  },
+  "invoice-rows-header": {
+    "item": "Gegenstand",
+    "quantity": "Menge",
+    "unit": "Einheit",
+    "price": "Preis",
+    "sum": "Summe"
+  },
+  "invoice-totals": {
+    "subtotal": "Zwischensumme",
+    "total": "Gesamtsumme",
+    "add_currency": "Währung hinzufügen"
+  },
+  "invoices": {
+    "title": "Rechnungen",
+    "new_invoice": "Neue Rechnung",
+    "export": "Exportieren",
+    "import": "Importieren",
+    "hide_paid_invoices": "Bezahlte Rechnungen Ausblenden",
+    "show_fy_summary": "FY-Zusammenfassung Anzeigen",
+    "search_client_placeholder": "Nach Kundenname suchen...",
+    "manage_customers": "Kunden verwalten",
+    "customer_ranking": "Kundenranking",
+    "fy_start": "Beginn des Geschäftsjahres",
+    "financial_year": "GJ {{start}}-{{end}}",
+    "save_in_s3": "In S3 sichern",
+    "last_backup": "Letzte Sicherung: {{when}}",
+    "never": "nie",
+    "last_backup_hint": "Nutze „In S3 sichern“ im Menü",
+    "backup_saved": "Sicherung erfolgreich gespeichert!",
+    "backup_failed": "Hochladen zu S3 fehlgeschlagen. Bitte erneut versuchen.",
+    "total_invoiced": "Insgesamt fakturiert",
+    "total_paid": "Insgesamt bezahlt",
+    "total_booked": "Insgesamt gebucht",
+    "total_pending": "Insgesamt ausstehend",
+    "invoice_count_one": "{{count}} Rechnung",
+    "invoice_count_other": "{{count}} Rechnungen",
+    "ranking_title": "Kundenranking nach fakturiertem Betrag",
+    "ranking_subtitle": "Top-Kunden nach fakturiertem Gesamtbetrag",
+    "customer_count_one": "{{count}} Kunde",
+    "customer_count_other": "{{count}} Kunden",
+    "unknown_customer": "Unbekannter Kunde",
+    "no_invoices": "Keine Rechnungen gefunden"
+  },
+  "invoices-list": {
+    "invoice_number": "Nein.",
+    "client": "Kunde",
+    "issued_at": "Ausgestellt am",
+    "total": "Gesamtsumme",
+    "status": "Status",
+    "overdue": "Überfällig",
+    "duplicate": "Rechnung duplizieren",
+    "tax_amount": "({{amount}} Steuern)"
+  },
+  "statuses": {
+    "statuses": {
+      "draft": "Entwurf",
+      "booked": "Gebucht",
+      "sent": "Gesendet",
+      "paid": "Bezahlt",
+      "written_off": "Abgeschrieben",
+      "cancelled": "Abgebrochen"
+    }
+  },
+  "team-fields": {
+    "label": "Kennung",
+    "field": "Feld",
+    "delete_modal": {
+      "title": "Feld löschen",
+      "ok_title": "Löschen",
+      "cancel_title": "Ablehnen"
+    },
+    "notification_delete": "Gelöscht"
+  },
+  "team-form": {
+    "title": "Deine Firma",
+    "done": "Fertig",
+    "updated": "Aktualisiert",
+    "loading": "Lädt",
+    "tabs": {
+      "general": "Allgemein",
+      "invoicing": "Inrechnungsstellung",
+      "address": "Adresse",
+      "taxes": "Steuern"
+    },
+    "general": {
+      "company_name": "Firmenname",
+      "contact_email": "E-Mail",
+      "contact_phone": "Telefon",
+      "website": "Website",
+      "logo": "Logo"
+    },
+    "invoicing": {
+      "invoice_late_fee": "Verzugsgebühr (%)",
+      "invoice_due_days": "Bezahlungsbedingungen, Tage",
+      "currency": "Standardwährung"
+    },
+    "address": {
+      "company_address": "Firmenadresse",
+      "company_postal_code": "Postleitzahl",
+      "company_city": "Stadt",
+      "company_county": "Bundesland",
+      "company_country": "Land"
+    },
+    "tax_modal": {
+      "title": "Steuern für aktuelle Rechnungsreihen überschreiben?",
+      "ok_title": "Überschreiben",
+      "cancel_title": "Ablehnen",
+      "taxes_updated": "Steuern aktualisiert"
+    }
+  },
+  "team-logo": {
+    "modal_title": "Logo auswählen",
+    "button_text": "Aus Dateien auswählen",
+    "logo_url": "Bild-Web-URL einfügen",
+    "logo_url_err": "Die Logogröße muss unter 512kb liegen.",
+    "or": "oder"
+  },
+  "team-taxes": {
+    "label": "Kennung",
+    "tax": "Steuer",
+    "delete_modal": {
+      "title": "Steuer löschen",
+      "ok_title": "Löschen",
+      "cancel_title": "Ablehnen"
+    },
+    "notification_deleted": "Gelöscht"
+  },
+  "the-footer": {
+    "lights-on": "Licht an",
+    "lights-off": "Licht aus",
+    "title": "All deine Daten sind in deinem Browser gespeichtert und auf keinem Server.\n                                   This application is truly serverless and only you have access to your data.",
+    "what_about_my_data": "Was passiert mit meinen Daten? "
+  }
+}

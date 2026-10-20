@@ -16,21 +16,20 @@
                      field="bank_account_no"
                      :placeholder="t('bank_account_no')"
                      class="break-line"/>
-        <BModal v-model="isModalOpen"
-                centered
-                :title="t('bank_account_modal_title')"
-                no-footer
-                size="lg"
-                content-class="bg-base dp--24">
+        <AppModal v-model="isModalOpen"
+                  centered
+                  :title="t('bank_account_modal_title')"
+                  size="lg"
+                  content-class="bg-base dp--24">
            <BankAccountsList @select="accountSelected"/>
-        </BModal>
+        </AppModal>
     </div>
 </template>
 <script>
-import { BModal } from 'bootstrap-vue-next';
 import { useTranslation } from 'i18next-vue';
 import BankAccountsList from '@/components/bank-accounts/BankAccountsList.vue';
 import AppEditable from '@/components/form/AppEditable.vue';
+import AppModal from '@/components/ui/AppModal.vue';
 
 export default {
   setup() {
@@ -40,7 +39,7 @@ export default {
   emits: ['update'],
   components: {
     AppEditable,
-    BModal,
+    AppModal,
     BankAccountsList,
   },
   data() {

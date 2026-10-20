@@ -23,7 +23,7 @@ import NotificationService from '@/services/notification.service';
 import ConfirmService from '@/services/confirm.service';
 import AppInput from '@/components/form/AppInput.vue';
 import AppEditable from '@/components/form/AppEditable.vue';
-import { useTeamFieldsStore } from '@/store/team-fields';
+import { useTeamsStore } from '@/store/teams';
 
 export default {
   setup() {
@@ -35,34 +35,25 @@ export default {
     AppInput,
   },
   computed: {
-    ...mapStores(useTeamFieldsStore),
+    ...mapStores(useTeamsStore),
   },
   methods: {
     addNewField() {
-      this.teamFieldsStore.addNewField(this.team.id);
+      this.teamsStore.addField();
     },
     async removeField(field) {
       const confirmed = await ConfirmService.confirm(`${this.t('delete_modal.title')} ${field.label}?`, {
         okTitle: this.t('delete_modal.ok_title'),
         okVariant: 'danger',
         cancelTitle: this.t('delete_modal.cancel_title'),
-        cancelVariant: 'btn-link',
-        contentClass: 'bg-base dp--24',
       });
       if (confirmed) {
-        await this.teamFieldsStore.deleteTeamField(field.id);
-        try {
-          NotificationService.success(this.t('notification_delete'));
-        } catch (err) {
-          NotificationService.error(err.message);
-        }
+        await this.teamsStore.deleteField(field.id);
+        NotificationService.success(this.t('notification_delete'));
       }
     },
     updateFieldProp(props, field) {
-      this.teamFieldsStore.updateTeamField({
-        props,
-        fieldId: field.id,
-      });
+      this.teamsStore.updateField(field.id, props);
     },
   },
 };

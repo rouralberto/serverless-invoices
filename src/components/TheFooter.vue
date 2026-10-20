@@ -10,8 +10,7 @@
             </button>
         </div>
         <div class="col-md-8 text-start text-md-end">
-            <small v-b-tooltip.hover
-                   :title="t('title')"
+            <small :title="t('title')"
                    class="pointer">
                 {{ t('what_about_my_data') }}
             </small>
@@ -30,8 +29,7 @@
 </template>
 
 <script>
-import { mapWritableState } from 'pinia';
-import { vBTooltip } from 'bootstrap-vue-next';
+import { mapActions, mapState } from 'pinia';
 import { useTranslation } from 'i18next-vue';
 import { useThemesStore } from '@/store/themes';
 import LanguageSwitcher from './LanguageSwitcher.vue';
@@ -41,18 +39,11 @@ export default {
     return useTranslation('the-footer');
   },
   components: { LanguageSwitcher },
-  directives: {
-    'b-tooltip': vBTooltip,
-  },
   computed: {
-    ...mapWritableState(useThemesStore, ['theme']),
+    ...mapState(useThemesStore, ['theme']),
   },
   methods: {
-    toggleTheme() {
-      this.theme = this.theme === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', this.theme);
-      document.documentElement.setAttribute('data-theme', this.theme);
-    },
+    ...mapActions(useThemesStore, ['toggleTheme']),
   },
 };
 </script>

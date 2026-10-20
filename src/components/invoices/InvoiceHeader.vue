@@ -9,34 +9,15 @@
                          @change="updateProp({ number: $event })"/>
         </h3>
         {{ t('issued_at') }}
-        <span class="editable__item" @click="isIssuedAtModalOpen = true">{{ formatDate(invoice.issued_at, 'D. MMM YYYY', 'YYYY-MM-DD') }}</span>
-        <BModal v-model="isIssuedAtModalOpen"
-                centered
-                :title="t('modal_issued_at_title')"
-                no-footer
-                size="sm"
-                content-class="bg-base dp--24">
-            <AppDatePicker :value="invoice.issued_at"
-                           @change="updateProp({ issued_at: $event })"
-                           :errors="errors"
-                           :inline="true"
-                           field="issued_at"/>
-        </BModal>
+        <AppDatePicker :value="invoice.issued_at"
+                       @change="updateProp({ issued_at: $event })"
+                       :errors="errors"
+                       field="issued_at"/>
         <br>{{ t('due_at') }}
-        <span class="editable__item"
-              @click="isDueAtModalOpen = true">{{ formatDate(invoice.due_at, 'D. MMM YYYY', 'YYYY-MM-DD') }}</span>
-        <BModal v-model="isDueAtModalOpen"
-                centered
-                :title="t('modal_due_at_title')"
-                no-footer
-                size="sm"
-                content-class="bg-base dp--24">
-            <AppDatePicker :value="invoice.due_at"
-                           @change="updateProp({ due_at: $event })"
-                           :errors="errors"
-                           :inline="true"
-                           field="due_at"/>
-        </BModal>
+        <AppDatePicker :value="invoice.due_at"
+                       @change="updateProp({ due_at: $event })"
+                       :errors="errors"
+                       field="due_at"/>
         <span :class="{'d-print-none': !invoice.late_fee}">
             <br>{{ t('late_fee') }}
             <AppEditable :value="formatCurrency(invoice.late_fee)"
@@ -49,12 +30,10 @@
     </div>
 </template>
 <script>
-import { BModal } from 'bootstrap-vue-next';
 import { useTranslation } from 'i18next-vue';
 import AppEditable from '@/components/form/AppEditable.vue';
 import AppDatePicker from '@/components/form/AppDatePicker.vue';
-import { formatDate } from '@/filters/date.filter';
-import { formatCurrency } from '@/filters/currency.filter';
+import { formatCurrency } from '@/utils/format';
 
 export default {
   setup() {
@@ -65,16 +44,8 @@ export default {
   components: {
     AppEditable,
     AppDatePicker,
-    BModal,
-  },
-  data() {
-    return {
-      isIssuedAtModalOpen: false,
-      isDueAtModalOpen: false,
-    };
   },
   methods: {
-    formatDate,
     formatCurrency,
     updateProp(props) {
       this.$emit('update', props);

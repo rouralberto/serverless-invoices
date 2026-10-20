@@ -1,82 +1,70 @@
 <template>
-    <BModal v-model="isOpen"
-            centered
-            no-footer
-            no-header
-            content-class="bg-base dp--24">
-        <ClientForm @done="close()"/>
-    </BModal>
+    <AppModal v-model="isOpen"
+              centered
+              no-header
+              content-class="bg-base dp--24">
+        <ClientForm @done="done()"/>
+    </AppModal>
 </template>
 
 <script>
 import { mapState, mapStores } from 'pinia';
-import { BModal } from 'bootstrap-vue-next';
+import AppModal from '@/components/ui/AppModal.vue';
 import ClientForm from '@/components/clients/ClientForm.vue';
 import { useClientsStore } from '@/store/clients';
 import { useInvoicesStore } from '@/store/invoices';
 
 export default {
   components: {
+    AppModal,
     ClientForm,
-    BModal,
   },
   computed: {
+    ...mapStores(useClientsStore, useInvoicesStore),
+    ...mapState(useClientsStore, ['client']),
+    ...mapState(useInvoicesStore, ['invoice']),
     isOpen: {
       get() {
         return this.clientsStore.isModalOpen;
       },
       set(val) {
         if (!val) {
-          this.$router.push({ query: {} });
-          this.clientsStore.getClients();
+          this.close();
         }
-        this.clientsStore.isModalOpen = val;
       },
     },
-    ...mapStores(useClientsStore, useInvoicesStore),
-    ...mapState(useClientsStore, ['client']),
-    ...mapState(useInvoicesStore, ['invoice']),
   },
   watch: {
     '$route.query.clientId'() {
-      this.getClient();
+      this.openFromRoute();
     },
   },
   mounted() {
-    this.getClient();
+    this.openFromRoute();
   },
   methods: {
-    getClient() {
-      const query = this.$route.query;
-      if (Object.hasOwn(query, 'clientId')) {
-        if ((this.client && this.client.id !== query.clientId) || !this.client) {
-          this.clientsStore.getClient(query.clientId);
-        }
-
-        this.clientsStore.isModalOpen = true;
-      } else {
-        this.clientsStore.isModalOpen = false;
+    // Existing clients open through ?clientId= so the modal can be linked to.
+    openFromRoute() {
+      const { clientId } = this.$route.query;
+      if (clientId) {
+        this.clientsStore.openClient(clientId);
+      } else if (!this.clientsStore.isDraft) {
+        this.clientsStore.closeModal();
       }
     },
-    async close() {
-      await this.promptUpdateInvoice();
-      this.isOpen = false;
-    },
-    async promptUpdateInvoice() {
-      if (this.$route.name === 'invoice' && this.invoice.client_id === this.client.id) {
-        /* const confirmed = await ConfirmService.confirm('Update client details on invoice?', {
-          okTitle: 'Update',
-          cancelTitle: 'Dismiss',
-          cancelVariant: 'btn-link',
-          contentClass: 'bg-base dp--24',
-        });
-        if (confirmed) { */
-        this.invoicesStore.prefillClient({
-          client: this.client,
-          invoiceId: this.invoice.id,
-        });
-        /* } */
+    close() {
+      const { clientId, ...query } = this.$route.query;
+      this.clientsStore.closeModal();
+      if (clientId) {
+        this.$router.push({ query });
       }
+    },
+    done() {
+      // Refresh the open invoice with the client's latest details.
+      if (this.$route.name === 'invoice' && this.client && this.invoice.client_id === this.client.id) {
+        this.invoicesStore.prefillClient(this.invoice.id, this.client);
+      }
+      this.close();
     },
   },
 };

@@ -1,0 +1,292 @@
+{
+  "bank-account-form": {
+    "title": "Compte bancaire",
+    "bank_name": "Nom de la banque",
+    "account_no": "Détails du compte bancaire",
+    "loading": "Chargement",
+    "done": "Terminé",
+    "create": "Créer",
+    "notification_updated": "Mis à jour"
+  },
+  "bank-accounts-list": {
+    "loading": "Chargement",
+    "bank": "Banque",
+    "bank_account_details": "Détails du compte bancaire",
+    "add_bank_account": "Ajouter un compte bancaire"
+  },
+  "client-fields": {
+    "label": "Libellé",
+    "field": "Champs",
+    "delete_modal": {
+      "title": "Supprimer champ",
+      "ok_title": "Supprimer",
+      "cancel_title": "Annuler"
+    },
+    "notification_deleted": "Supprimé"
+  },
+  "client-form": {
+    "title": "Client",
+    "delete": "Supprimer",
+    "done": "Terminé",
+    "create": "Créer",
+    "loading": "Chargement",
+    "tabs": {
+      "general": "Général",
+      "invoicing": "Facturation",
+      "address": "Adresse"
+    },
+    "general": {
+      "company_name": "Nom de la société",
+      "invoice_email": "E-mail"
+    },
+    "invoicing": {
+      "currency": "Devise",
+      "rate": "Taux horaire",
+      "has_tax": "Taxes à appliquer",
+      "bank_account": "Compte bancaire"
+    },
+    "address": {
+      "company_address": "Addresse de la société",
+      "company_postal_code": "Code postal",
+      "company_city": "Ville",
+      "company_county": "Province/Région",
+      "company_country": "Pays"
+    },
+    "delete_modal": {
+      "title": "Supprimer client",
+      "ok_title": "Supprimer",
+      "cancel_title": "Annuler"
+    },
+    "notification_deleted": "Supprimer",
+    "notification_updated": "Mis à jour"
+  },
+  "client-selector": {
+    "client": "Client",
+    "create": "Créer",
+    "new": "nouveau",
+    "suggest_placeholder": "Rechercher client"
+  },
+  "clients-list": {
+    "title": "Gérer les clients",
+    "loading": "Chargement",
+    "company_name": "Nom de l'entreprise",
+    "email": "E-mail",
+    "city": "Ville",
+    "add_client": "Ajouter un client",
+    "search_placeholder": "Rechercher des clients...",
+    "delete_modal": {
+      "title": "Supprimer le client",
+      "ok_title": "Supprimer",
+      "cancel_title": "Annuler"
+    },
+    "notification_deleted": "Client supprimé"
+  },
+  "customizations-modal": {
+    "title": "Customiser vos factures",
+    "textarea_label": "Ajouter votre CSS customisée",
+    "updated": "Mis à jour"
+  },
+  "empty-state": {
+    "content": "Rien à voir ici"
+  },
+  "import-modal": {
+    "title": "Importer vos données",
+    "warning": "Vos données actuelles seront supprimées et écrasées avec les données importées!",
+    "button_text": "Choisissez votre fichier à importer",
+    "import-error": "Format JSON invalide"
+  },
+  "invoice-bank-details": {
+    "bank_name": "Ajouter une banque",
+    "bank_account_no": "Ajoutez les détails d'une banque",
+    "bank_account_modal_title": "Choisissez un compte bancaire"
+  },
+  "invoice-client-details": {
+    "client_address": "Adresse",
+    "client_postal_code": "Code postal",
+    "client_city": "Ville",
+    "client_county": "Province/Région",
+    "client_country": "Pays",
+    "client_email": "E-mail du client"
+  },
+  "invoice-company-details": {
+    "your_company_name": "Votre nom de société",
+    "address": "Adresse",
+    "postal_code": "Code postal",
+    "city": "Ville",
+    "county": "Province/Région",
+    "country": "Country",
+    "your_email": "Your email"
+  },
+  "invoice-contact-details": {
+    "add_website": "Ajouter un site web",
+    "add_email": "Ajouter un e-mail",
+    "add_phone": "Ajouter un téléphone"
+  },
+  "invoice-controls": {
+    "back": "Retour",
+    "book": "Book",
+    "design_and_layout": "Apparence",
+    "compact": "Compacte",
+    "comfortable": "Comfortable",
+    "customize": "Customise",
+    "download_pdf": "Télécharger PDF",
+    "delete": "Supprimer",
+    "delete_modal": {
+      "title": "Supprimer facture",
+      "ok_title": "Supprimer",
+      "cancel_title": "Annuler"
+    },
+    "notification_deleted": "Supprimé"
+  },
+  "invoice-form": {
+    "insert_note": "Ajouter une note"
+  },
+  "invoice-header": {
+    "invoice_title": "Facture ",
+    "invoice_number": "No.",
+    "issued_at": "Facturé le: ",
+    "due_at": "Exigible le:",
+    "late_fee": "Intérets de retard:",
+    "add_late_fee": "Ajouter intérets de retard"
+  },
+  "invoice-row": {
+    "enter_item": "Entrer objet",
+    "enter_quantity": "Entrer quantité",
+    "enter_unit": "Entrer unité",
+    "enter_price": "Entrer prix",
+    "enter_tax": "Entrer taxe"
+  },
+  "invoice-rows-header": {
+    "item": "Objet",
+    "quantity": "Quantité",
+    "unit": "Unité",
+    "price": "Prix",
+    "sum": "Total"
+  },
+  "invoice-totals": {
+    "subtotal": "Sous-total",
+    "total": "Total",
+    "add_currency": "Ajouter devise"
+  },
+  "invoices": {
+    "title": "Factures",
+    "new_invoice": "Nouvelle facture",
+    "export": "Exporter",
+    "import": "Importer",
+    "hide_paid_invoices": "Masquer les Factures Payées",
+    "show_fy_summary": "Afficher le Résumé de l'Année Fiscale",
+    "search_client_placeholder": "Rechercher par nom de client...",
+    "manage_customers": "Gérer les clients",
+    "customer_ranking": "Classement des clients",
+    "fy_start": "Début de l'année fiscale",
+    "financial_year": "Exercice {{start}}-{{end}}",
+    "save_in_s3": "Sauvegarder sur S3",
+    "last_backup": "Dernière sauvegarde : {{when}}",
+    "never": "jamais",
+    "last_backup_hint": "Utilisez « Sauvegarder sur S3 » dans le menu",
+    "backup_saved": "Sauvegarde enregistrée !",
+    "backup_failed": "Échec de l'envoi vers S3. Veuillez réessayer.",
+    "total_invoiced": "Total facturé",
+    "total_paid": "Total payé",
+    "total_booked": "Total comptabilisé",
+    "total_pending": "Total en attente",
+    "invoice_count_one": "{{count}} facture",
+    "invoice_count_other": "{{count}} factures",
+    "ranking_title": "Classement des clients par montant facturé",
+    "ranking_subtitle": "Meilleurs clients par montant total facturé",
+    "customer_count_one": "{{count}} client",
+    "customer_count_other": "{{count}} clients",
+    "unknown_customer": "Client inconnu",
+    "no_invoices": "Aucune facture trouvée"
+  },
+  "invoices-list": {
+    "invoice_number": "No.",
+    "client": "Client",
+    "issued_at": "Facturé le",
+    "total": "Total",
+    "status": "Etat",
+    "overdue": "En retard",
+    "duplicate": "Dupliquer la facture",
+    "tax_amount": "({{amount}} de taxes)"
+  },
+  "statuses": {
+    "statuses": {
+      "draft": "brouillon",
+      "booked": "signé",
+      "sent": "envoyé",
+      "paid": "payé",
+      "written_off": "passé en pertes",
+      "cancelled": "annulé"
+    }
+  },
+  "team-fields": {
+    "label": "Libellé",
+    "field": "Champ",
+    "delete_modal": {
+      "title": "Supprimer un champ",
+      "ok_title": "Supprimer",
+      "cancel_title": "Annuler"
+    },
+    "notification_delete": "Supprimé"
+  },
+  "team-form": {
+    "title": "Votre société",
+    "done": "Terminé",
+    "updated": "Mis à jour",
+    "loading": "Chargement",
+    "tabs": {
+      "general": "Général",
+      "invoicing": "Facturation",
+      "address": "Adresse",
+      "taxes": "Taxes"
+    },
+    "general": {
+      "company_name": "Nom de la société",
+      "contact_email": "E-mail",
+      "contact_phone": "Téléphone",
+      "website": "Site web",
+      "logo": "Logo"
+    },
+    "invoicing": {
+      "invoice_late_fee": "Intérêt de retard (%)",
+      "invoice_due_days": "Conditions de paiements, jours",
+      "currency": "Devise par défaut"
+    },
+    "address": {
+      "company_address": "Address de la société",
+      "company_postal_code": "Code postal",
+      "company_city": "Ville",
+      "company_county": "Province/Région",
+      "company_country": "Pays"
+    },
+    "tax_modal": {
+      "title": "Ecraser les taxes pour les lignes de la facture courante?",
+      "ok_title": "Ecraser",
+      "cancel_title": "Annuler",
+      "taxes_updated": "Taxes mises à jour"
+    }
+  },
+  "team-logo": {
+    "modal_title": "Choisissez un logo",
+    "button_text": "Choisissez dans vos fichiers",
+    "logo_url": "Insérez un image à partir d'une url",
+    "logo_url_err": "Le logo doit avoir une taille < 512kb.",
+    "or": "ou"
+  },
+  "team-taxes": {
+    "label": "Libellé",
+    "tax": "Taxe",
+    "delete_modal": {
+      "title": "Supprimer la taxe",
+      "ok_title": "Supprimer",
+      "cancel_title": "Annuler"
+    },
+    "notification_deleted": "Supprimé"
+  },
+  "the-footer": {
+    "lights-on": "Mode clair",
+    "lights-off": "Mode sombre",
+    "title": "Toutes vos données sont sauvées dans votre naviguateur et sur aucun serveur.\n Cette application est réellement serverless et vous avez seulement accès à vos propres données.",
+    "what_about_my_data": "Qu'en est-il de mes données? "
+  }
+}

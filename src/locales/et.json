@@ -1,0 +1,292 @@
+{
+  "bank-account-form": {
+    "title": "Pangakonto",
+    "bank_name": "Panga nimi",
+    "account_no": "Rekvisiidid",
+    "loading": "Laeb",
+    "done": "Tehtud",
+    "create": "Loo",
+    "notification_updated": "Uuendatud"
+  },
+  "bank-accounts-list": {
+    "loading": "Laeb",
+    "bank": "Pank",
+    "bank_account_details": "Rekvisiidid",
+    "add_bank_account": "Lisa uus pangakonto"
+  },
+  "client-fields": {
+    "label": "Nimetus",
+    "field": "Väli",
+    "delete_modal": {
+      "title": "Kustuta väli",
+      "ok_title": "Kustuta",
+      "cancel_title": "Sulge"
+    },
+    "notification_deleted": "Kustutatud"
+  },
+  "client-form": {
+    "title": "Klient",
+    "delete": "Kustuta",
+    "done": "Tehtud",
+    "create": "Loo",
+    "loading": "Laeb",
+    "tabs": {
+      "general": "Üldine",
+      "invoicing": "Arveldamine",
+      "address": "Aadress"
+    },
+    "general": {
+      "company_name": "Firma nimi",
+      "invoice_email": "E-mail"
+    },
+    "invoicing": {
+      "currency": "Valuuta",
+      "rate": "Tunni hind",
+      "has_tax": "Kasuta maksusid",
+      "bank_account": "Maksmise pangakonto"
+    },
+    "address": {
+      "company_address": "Firma aadress",
+      "company_postal_code": "Postiindeks",
+      "company_city": "Linn",
+      "company_county": "Maakond",
+      "company_country": "Riik"
+    },
+    "delete_modal": {
+      "title": "Kustuta klient",
+      "ok_title": "Kustuta",
+      "cancel_title": "Sulge"
+    },
+    "notification_deleted": "Kustutatud",
+    "notification_updated": "Uuendatud"
+  },
+  "client-selector": {
+    "client": "Klient",
+    "create": "Loo",
+    "new": "uus",
+    "suggest_placeholder": "Otsi klienti"
+  },
+  "clients-list": {
+    "title": "Halda kliente",
+    "loading": "Laadimine",
+    "company_name": "Ettevõtte nimi",
+    "email": "E-post",
+    "city": "Linn",
+    "add_client": "Lisa klient",
+    "search_placeholder": "Otsi kliente...",
+    "delete_modal": {
+      "title": "Kustuta klient",
+      "ok_title": "Kustuta",
+      "cancel_title": "Loobu"
+    },
+    "notification_deleted": "Klient kustutatud"
+  },
+  "customizations-modal": {
+    "title": "Customize your invoices",
+    "textarea_label": "Insert your custom CSS",
+    "updated": "Updated"
+  },
+  "empty-state": {
+    "content": "Arveid pole veel lisatud"
+  },
+  "import-modal": {
+    "title": "Impordi andmed",
+    "warning": "Andmed eemaldatakse ja kirjutatakse üle imporditud andmetega!",
+    "button_text": "Vali import fail",
+    "import-error": "Ebasobiv JSON formaat"
+  },
+  "invoice-bank-details": {
+    "bank_name": "Lisa pangakonto",
+    "bank_account_no": "Lisa rekvisiidid",
+    "bank_account_modal_title": "Vali pangakonto"
+  },
+  "invoice-client-details": {
+    "client_address": "Aadress",
+    "client_postal_code": "Postiindeks",
+    "client_city": "Linn",
+    "client_county": "Maakond",
+    "client_country": "Riik",
+    "client_email": "Kliendi e-mail"
+  },
+  "invoice-company-details": {
+    "your_company_name": "Sinu firma nimi",
+    "address": "Aadress",
+    "postal_code": "Postiindeks",
+    "city": "Linn",
+    "county": "Maakond",
+    "country": "Riik",
+    "your_email": "Sinu email"
+  },
+  "invoice-contact-details": {
+    "add_website": "Lisa veebiaadress",
+    "add_email": "Lisa e-mail",
+    "add_phone": "Lisa telefon"
+  },
+  "invoice-controls": {
+    "back": "Tagasi",
+    "book": "Kinnita",
+    "design_and_layout": "Design & layout",
+    "compact": "Compact",
+    "comfortable": "Comfortable",
+    "customize": "Customize",
+    "download_pdf": "Lae alla PDF",
+    "delete": "Kustuta",
+    "delete_modal": {
+      "title": "Kustuta arve",
+      "ok_title": "Kustuta",
+      "cancel_title": "Sulge"
+    },
+    "notification_deleted": "Kustutatud"
+  },
+  "invoice-form": {
+    "insert_note": "Lisa kommentaar"
+  },
+  "invoice-header": {
+    "invoice_title": "Arve ",
+    "invoice_number": "#",
+    "issued_at": "Kuupäev:",
+    "due_at": "Maksetähtaeg:",
+    "late_fee": "Viivis:",
+    "add_late_fee": "Lisa viivis"
+  },
+  "invoice-row": {
+    "enter_item": "Sisesta nimetus",
+    "enter_quantity": "Sisesta kogus",
+    "enter_unit": "Sisesta ühik",
+    "enter_price": "Sisesta hind",
+    "enter_tax": "Sisesta maks"
+  },
+  "invoice-rows-header": {
+    "item": "Nimetus",
+    "quantity": "Kogus",
+    "unit": "Ühik",
+    "price": "Hind",
+    "sum": "Summa"
+  },
+  "invoice-totals": {
+    "subtotal": "Vahesumma",
+    "total": "Kokku",
+    "add_currency": "Lisa valuuta"
+  },
+  "invoices": {
+    "title": "Arved",
+    "new_invoice": "Uus arve",
+    "export": "Ekspordi",
+    "import": "Impordi",
+    "hide_paid_invoices": "Peida Makstud Arved",
+    "show_fy_summary": "Näita Majandusaasta Kokkuvõtet",
+    "search_client_placeholder": "Otsi kliendi nime järgi...",
+    "manage_customers": "Halda kliente",
+    "customer_ranking": "Klientide edetabel",
+    "fy_start": "Majandusaasta algus",
+    "financial_year": "Majandusaasta {{start}}-{{end}}",
+    "save_in_s3": "Salvesta S3-sse",
+    "last_backup": "Viimane varukoopia: {{when}}",
+    "never": "mitte kunagi",
+    "last_backup_hint": "Kasuta menüüs „Salvesta S3-sse“",
+    "backup_saved": "Varukoopia salvestatud!",
+    "backup_failed": "S3-sse üleslaadimine ebaõnnestus. Proovi uuesti.",
+    "total_invoiced": "Arveldatud kokku",
+    "total_paid": "Makstud kokku",
+    "total_booked": "Kirjendatud kokku",
+    "total_pending": "Ootel kokku",
+    "invoice_count_one": "{{count}} arve",
+    "invoice_count_other": "{{count}} arvet",
+    "ranking_title": "Klientide edetabel arveldatud summa järgi",
+    "ranking_subtitle": "Parimad kliendid arveldatud kogusumma järgi",
+    "customer_count_one": "{{count}} klient",
+    "customer_count_other": "{{count}} klienti",
+    "unknown_customer": "Tundmatu klient",
+    "no_invoices": "Arveid ei leitud"
+  },
+  "invoices-list": {
+    "invoice_number": "#",
+    "client": "Klient",
+    "issued_at": "Kuupäev",
+    "total": "Summa",
+    "status": "Staatus",
+    "overdue": "Tähtaeg ületatud",
+    "duplicate": "Kopeeri arve",
+    "tax_amount": "({{amount}} maksud)"
+  },
+  "statuses": {
+    "statuses": {
+      "draft": "mustand",
+      "booked": "kinnitatud",
+      "sent": "saadetud",
+      "paid": "makstud",
+      "written_off": "maha kantud",
+      "cancelled": "tühistatud"
+    }
+  },
+  "team-fields": {
+    "label": "Nimetus",
+    "field": "Väli",
+    "delete_modal": {
+      "title": "Kustuta väli",
+      "ok_title": "Kustuta",
+      "cancel_title": "Sulge"
+    },
+    "notification_delete": "Kustutatud"
+  },
+  "team-form": {
+    "title": "Sinu firma",
+    "done": "Tehtud",
+    "updated": "Uuendatud",
+    "loading": "Laeb",
+    "tabs": {
+      "general": "Üldine",
+      "invoicing": "Arveldamine",
+      "address": "Aadress",
+      "taxes": "Maksud"
+    },
+    "general": {
+      "company_name": "Firma nimi",
+      "contact_email": "E-mail",
+      "contact_phone": "Telefon",
+      "website": "Veebiaadress",
+      "logo": "Logo"
+    },
+    "invoicing": {
+      "invoice_late_fee": "Viivis (%)",
+      "invoice_due_days": "Makse tähtaeg, päevades",
+      "currency": "Vaikimisi valuuta"
+    },
+    "address": {
+      "company_address": "Firma aadress",
+      "company_postal_code": "Postiindeks",
+      "company_city": "Linn",
+      "company_county": "Maakond",
+      "company_country": "Riik"
+    },
+    "tax_modal": {
+      "title": "Kirjuta antud arve ridade maksud üle?",
+      "ok_title": "Kirjuta üle",
+      "cancel_title": "Sulge",
+      "taxes_updated": "Maksud uuendatud"
+    }
+  },
+  "team-logo": {
+    "modal_title": "Vali logo",
+    "button_text": "Vali oma failidest",
+    "logo_url": "Sisesta pildifaili url",
+    "logo_url_err": "Logo peab olema väiksem kui 512kb.",
+    "or": "või"
+  },
+  "team-taxes": {
+    "label": "Nimetus",
+    "tax": "Maks",
+    "delete_modal": {
+      "title": "Kustuta maks",
+      "ok_title": "Kustuta",
+      "cancel_title": "Sulge"
+    },
+    "notification_deleted": "Kustutatud"
+  },
+  "the-footer": {
+    "lights-on": "Tuled sisse",
+    "lights-off": "Tuled välja",
+    "title": "Kõik sinu andmed salvestatakse veebilehitseja mällu ja mitte üheski serveris. \n Antud rakendus on \"Serverless\" ja ainult sinul on ligipääs sinu andmetele.",
+    "what_about_my_data": "Kus mu andmed on? "
+  }
+}

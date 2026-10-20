@@ -1,0 +1,292 @@
+{
+  "bank-account-form": {
+    "title": "حساب بانکی",
+    "bank_name": "نام بانک",
+    "account_no": "جزئیات حساب بانکی",
+    "loading": "بارگذاری",
+    "done": "انجام شده",
+    "create": "ايجاد كردن",
+    "notification_updated": "به روز شده"
+  },
+  "bank-accounts-list": {
+    "loading": "بارگذاری",
+    "bank": "بانک",
+    "bank_account_details": "جزئیات حساب بانکی",
+    "add_bank_account": "حساب بانکی اضافه کنید"
+  },
+  "client-fields": {
+    "label": "برچسب",
+    "field": "رشته",
+    "delete_modal": {
+      "title": "قسمت را حذف کنید",
+      "ok_title": "حذف",
+      "cancel_title": "رد"
+    },
+    "notification_deleted": "حذف شده"
+  },
+  "client-form": {
+    "title": "مشتری",
+    "delete": "حذف",
+    "done": "انجام شده",
+    "create": "ايجاد كردن",
+    "loading": "بارگذاری",
+    "tabs": {
+      "general": "عمومی",
+      "invoicing": "صورتحساب",
+      "address": "نشانی"
+    },
+    "general": {
+      "company_name": "نام شرکت",
+      "invoice_email": "پست الکترونیک"
+    },
+    "invoicing": {
+      "currency": "واحد پول",
+      "rate": "نرخ ساعتی",
+      "has_tax": "مالیات اعمال کنید",
+      "bank_account": "حساب بانکی"
+    },
+    "address": {
+      "company_address": "آدرس شرکت",
+      "company_postal_code": "کد پستی",
+      "company_city": "شهر",
+      "company_county": "شهرستان / ایالت",
+      "company_country": "کشور"
+    },
+    "delete_modal": {
+      "title": "حذف مشتری",
+      "ok_title": "حذف",
+      "cancel_title": "رد"
+    },
+    "notification_deleted": "حذف شده",
+    "notification_updated": "به روز شده"
+  },
+  "client-selector": {
+    "client": "مشتری",
+    "create": "ايجاد كردن",
+    "new": "جدید",
+    "suggest_placeholder": "مشتری جستجو کنید"
+  },
+  "clients-list": {
+    "title": "مدیریت مشتریان",
+    "loading": "در حال بارگذاری",
+    "company_name": "نام شرکت",
+    "email": "ایمیل",
+    "city": "شهر",
+    "add_client": "افزودن مشتری",
+    "search_placeholder": "جستجوی مشتریان...",
+    "delete_modal": {
+      "title": "حذف مشتری",
+      "ok_title": "حذف",
+      "cancel_title": "انصراف"
+    },
+    "notification_deleted": "مشتری حذف شد"
+  },
+  "customizations-modal": {
+    "title": "Customize your invoices",
+    "textarea_label": "Insert your custom CSS",
+    "updated": "Updated"
+  },
+  "empty-state": {
+    "content": "هنوز چیزی در اینجا نیست"
+  },
+  "import-modal": {
+    "title": "وارد کردن داده",
+    "warning": "داده های فعلی شما پاک شده و با داده های وارد شده رونویسی می شوند!",
+    "button_text": "وارد کردن پرونده را انتخاب کنید",
+    "import-error": "قالب JSON نامعتبر است"
+  },
+  "invoice-bank-details": {
+    "bank_name": "اضافه کردن بانک",
+    "bank_account_no": "جزئیات بانک را اضافه کنید",
+    "bank_account_modal_title": "حساب بانکی را انتخاب کنید"
+  },
+  "invoice-client-details": {
+    "client_address": "نشانی",
+    "client_postal_code": "کد پستی",
+    "client_city": "شهر",
+    "client_county": "شهرستان / ایالت",
+    "client_country": "کشور",
+    "client_email": "ایمیل مشتری"
+  },
+  "invoice-company-details": {
+    "your_company_name": "نام شرکت شما",
+    "address": "نشانی",
+    "postal_code": "کد پستی",
+    "city": "شهر",
+    "county": "شهرستان / ایالت",
+    "country": "کشور",
+    "your_email": "ایمیل شما"
+  },
+  "invoice-contact-details": {
+    "add_website": "وب سایت اضافه کنید",
+    "add_email": "ایمیل اضافه کنید",
+    "add_phone": "تلفن اضافه کنید"
+  },
+  "invoice-controls": {
+    "back": "بازگشت",
+    "book": "کتاب",
+    "design_and_layout": "Design & layout",
+    "compact": "Compact",
+    "comfortable": "Comfortable",
+    "customize": "Customize",
+    "download_pdf": "بارگیری PDF",
+    "delete": "حذف",
+    "delete_modal": {
+      "title": "فاکتور را حذف کنید",
+      "ok_title": "حذف",
+      "cancel_title": "رد"
+    },
+    "notification_deleted": "حذف شده"
+  },
+  "invoice-form": {
+    "insert_note": "درج یادداشت"
+  },
+  "invoice-header": {
+    "invoice_title": "صورتحساب ",
+    "invoice_number": "شماره",
+    "issued_at": "صادر شده در: ",
+    "due_at": "سر رسید در:",
+    "late_fee": "هزینه دیرهنگام:",
+    "add_late_fee": "هزینه دیرکرد اضافه کنید"
+  },
+  "invoice-row": {
+    "enter_item": "مورد را وارد کنید",
+    "enter_quantity": "مقدار را وارد کنید",
+    "enter_unit": "واحد وارد کنید",
+    "enter_price": "قیمت را وارد کنید",
+    "enter_tax": "مالیات را وارد کنید"
+  },
+  "invoice-rows-header": {
+    "item": "مورد",
+    "quantity": "تعداد",
+    "unit": "واحد",
+    "price": "قیمت",
+    "sum": "جمع"
+  },
+  "invoice-totals": {
+    "subtotal": "جمع کل",
+    "total": "جمع",
+    "add_currency": "ارز اضافه کنید"
+  },
+  "invoices": {
+    "title": "فاکتورها",
+    "new_invoice": "فاکتور جدید",
+    "export": "صادرات",
+    "import": "وارد كردن",
+    "hide_paid_invoices": "مخفی کردن فاکتورهای پرداخت شده",
+    "show_fy_summary": "نمایش خلاصه سال مالی",
+    "search_client_placeholder": "جستجو بر اساس نام مشتری...",
+    "manage_customers": "مدیریت مشتریان",
+    "customer_ranking": "رتبه‌بندی مشتریان",
+    "fy_start": "شروع سال مالی",
+    "financial_year": "سال مالی {{start}}-{{end}}",
+    "save_in_s3": "ذخیره در S3",
+    "last_backup": "آخرین پشتیبان‌گیری: {{when}}",
+    "never": "هرگز",
+    "last_backup_hint": "از «ذخیره در S3» در منو استفاده کنید",
+    "backup_saved": "پشتیبان با موفقیت ذخیره شد!",
+    "backup_failed": "بارگذاری در S3 ناموفق بود. لطفاً دوباره تلاش کنید.",
+    "total_invoiced": "مجموع فاکتور شده",
+    "total_paid": "مجموع پرداخت شده",
+    "total_booked": "مجموع ثبت شده",
+    "total_pending": "مجموع در انتظار",
+    "invoice_count_one": "{{count}} فاکتور",
+    "invoice_count_other": "{{count}} فاکتور",
+    "ranking_title": "رتبه‌بندی مشتریان بر اساس مبلغ فاکتور شده",
+    "ranking_subtitle": "برترین مشتریان بر اساس مجموع مبلغ فاکتور شده",
+    "customer_count_one": "{{count}} مشتری",
+    "customer_count_other": "{{count}} مشتری",
+    "unknown_customer": "مشتری ناشناس",
+    "no_invoices": "فاکتوری یافت نشد"
+  },
+  "invoices-list": {
+    "invoice_number": "شمار.",
+    "client": "مشتری",
+    "issued_at": "صادر شده در",
+    "total": "Total",
+    "status": "وضعیت",
+    "overdue": "سررسید گذشته",
+    "duplicate": "تکثیر فاکتور",
+    "tax_amount": "({{amount}} مالیات)"
+  },
+  "statuses": {
+    "statuses": {
+      "draft": "پیش نویس",
+      "booked": "رزرو",
+      "sent": "ارسال شد",
+      "paid": "پرداخت شده",
+      "written_off": "سوخت شده",
+      "cancelled": "لغو شد"
+    }
+  },
+  "team-fields": {
+    "label": "برچسب",
+    "field": "رشته",
+    "delete_modal": {
+      "title": "قسمت را حذف کنید",
+      "ok_title": "حذف",
+      "cancel_title": "رد"
+    },
+    "notification_delete": "حذف شده"
+  },
+  "team-form": {
+    "title": "شرکت شما",
+    "done": "انجام شده",
+    "updated": "به روز شده",
+    "loading": "بارگذاری",
+    "tabs": {
+      "general": "عمومی",
+      "invoicing": "صورتحساب",
+      "address": "نشانی",
+      "taxes": "مالیات"
+    },
+    "general": {
+      "company_name": "نام شرکت",
+      "contact_email": "پست الکترونیک",
+      "contact_phone": "تلفن",
+      "website": "سایت اینترنتی",
+      "logo": "لوگو"
+    },
+    "invoicing": {
+      "invoice_late_fee": "هزینه دیرهنگام (%)",
+      "invoice_due_days": "شرایط پرداخت ، روزها",
+      "currency": "ارز پیش فرض"
+    },
+    "address": {
+      "company_address": "آدرس شرکت",
+      "company_postal_code": "کد پستی",
+      "company_city": "شهر",
+      "company_county": "شهرستان / ایالت",
+      "company_country": "کشور"
+    },
+    "tax_modal": {
+      "title": "برای ردیف های فاکتور فعلی مالیات بازنویسی شود؟",
+      "ok_title": "زیاد نوشتن",
+      "cancel_title": "رد",
+      "taxes_updated": "مالیات به روز شد"
+    }
+  },
+  "team-logo": {
+    "modal_title": "آرم را انتخاب کنید",
+    "button_text": "از میان پرونده ها انتخاب کنید",
+    "logo_url": "آدرس اینترنتی وب را وارد کنید",
+    "logo_url_err": "آرم باید زیر 512 کیلوبایت باشد.",
+    "or": "یا"
+  },
+  "team-taxes": {
+    "label": "برچسب",
+    "tax": "مالیات",
+    "delete_modal": {
+      "title": "حذف مالیات",
+      "ok_title": "حذف",
+      "cancel_title": "رد"
+    },
+    "notification_deleted": "حذف شده"
+  },
+  "the-footer": {
+    "lights-on": "چراغ روشن است",
+    "lights-off": "چراغ خاموش",
+    "title": "تمام داده های شما در مرورگر شما و نه در هر سرور ذخیره می شود.\n                                   این برنامه واقعاً بدون سرور است و فقط شما به داده های خود دسترسی دارید.",
+    "what_about_my_data": "در مورد داده های من چطور؟"
+  }
+}

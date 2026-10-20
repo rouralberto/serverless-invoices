@@ -136,7 +136,7 @@ export default {
     },
     async createNewClient() {
       if (this.query.length) {
-        const client = await this.clientsStore.createNewClient({ company_name: this.query });
+        const client = await this.clientsStore.createClient({ company_name: this.query });
         this.$emit('selected', client);
       } else {
         this.clientsStore.openNewClientModal();

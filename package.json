@@ -14,25 +14,15 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.1153.0",
-    "@floating-ui/vue": "^2.0.1",
     "@kyvg/vue3-notification": "^3.4.2",
-    "@vuepic/vue-datepicker": "^14.0.0",
-    "@vueuse/core": "^15.0.0",
+    "aws4fetch": "^1.0.20",
     "bootstrap": "^5.3.8",
-    "bootstrap-vue-next": "^1.2.2",
     "dayjs": "^1.11.23",
-    "focus-trap": "^8.2.3",
     "i18next": "^26.5.3",
-    "i18next-browser-languagedetector": "^8.2.1",
-    "i18next-http-backend": "^4.0.4",
     "i18next-vue": "^5.4.0",
     "localforage": "^1.10.0",
     "pinia": "^4.1.0",
-    "pinia-orm": "^2.0.0",
-    "reka-ui": "^2.11.0",
     "vue": "^3.5.44",
-    "vue-multiselect": "^3.5.0",
     "vue-router": "^5.4.0"
   },
   "devDependencies": {

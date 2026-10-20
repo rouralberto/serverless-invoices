@@ -10,7 +10,13 @@
   }
 }
 
-// bootstrap-vue-next marks caret-less toggles but leaves hiding the caret to the app.
-.dropdown-toggle-no-caret::after {
-  display: none;
+// AppDropdown menus are native popovers positioned next to their toggle.
+.dropdown-menu[popover] {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+
+  &:popover-open {
+    display: block;
+  }
 }
