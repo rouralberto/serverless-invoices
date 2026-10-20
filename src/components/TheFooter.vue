@@ -12,14 +12,12 @@
         <div class="col-md-8 text-start text-md-end">
             <small v-b-tooltip.hover
                    :title="t('title')"
-                   class="pointer"
-                   v-if="!isStorageWordpress">
+                   class="pointer">
                 {{ t('what_about_my_data') }}
             </small>
             <a href="https://github.com/rouralberto/serverless-invoices"
                class="btn btn-sm btn--icon ms-0 ms-md-2"
-               target="_blank"
-               v-if="!isStorageWordpress">
+               target="_blank">
                 <img src="@/assets/img/github.png"
                      alt="Serverless Invoices Github"
                      v-if="theme === 'dark'">
@@ -35,7 +33,6 @@
 import { mapWritableState } from 'pinia';
 import { vBTooltip } from 'bootstrap-vue-next';
 import { useTranslation } from 'i18next-vue';
-import config from '@/config/app.config';
 import { useThemesStore } from '@/store/themes';
 import LanguageSwitcher from './LanguageSwitcher.vue';
 
@@ -49,9 +46,6 @@ export default {
   },
   computed: {
     ...mapWritableState(useThemesStore, ['theme']),
-    isStorageWordpress() {
-      return config.storageType === 'wordpress';
-    },
   },
   methods: {
     toggleTheme() {

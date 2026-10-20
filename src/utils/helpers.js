@@ -92,11 +92,18 @@ export function toStorable(obj) {
   return stripOrmFlags(JSON.parse(JSON.stringify(obj)));
 }
 
-export function generateInvoiceNumber(invoices) {
-  const date = dayjs()
-    .format('YYYYMMDD');
-  const number = invoices.length + 1;
-  return `${date}-${number}`;
+/**
+ * Invoice numbers are the issue date plus a counter for that day: 20261001-1, 20261001-2, ...
+ */
+export function generateInvoiceNumber(invoices, date = dayjs()) {
+  const prefix = `${dayjs(date).format('YYYYMMDD')}-`;
+  const lastNumberToday = invoices
+    .map(invoice => String(invoice.number || ''))
+    .filter(number => number.startsWith(prefix))
+    .map(number => parseInt(number.slice(prefix.length), 10))
+    .filter(number => !Number.isNaN(number))
+    .reduce((max, number) => Math.max(max, number), 0);
+  return `${prefix}${lastNumberToday + 1}`;
 }
 
 export function download(data, filename, type) {

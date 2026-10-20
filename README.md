@@ -34,14 +34,11 @@ Built with [Vue 3](https://vuejs.org/), [Vite](https://vite.dev/), [Pinia](https
   - Monthly summaries
   - Financial year summaries
   - Customer rankings
-- **S3 backup** — automatic JSON backup to AWS S3
+- **S3 backup** — one-click JSON backup to AWS S3, with the time of the last backup on the dashboard
 - **Export & import** JSON data
 - **Dark and light mode**
 - **PWA support**
-- **Backend adapters**
-  - Browser Storage (default)
-  - WordPress
-  - Custom HTTP API
+- **Browser storage** — data is kept in IndexedDB, and the app asks the browser to keep it persistent
 
 ## Requirements
 
@@ -56,13 +53,7 @@ Built with [Vue 3](https://vuejs.org/), [Vite](https://vite.dev/), [Pinia](https
 npm install
 ```
 
-### 2. Create app config
-
-```bash
-cp src/config/app.config.example.js src/config/app.config.js
-```
-
-### 3. Development
+### 2. Development
 
 ```bash
 npm run serve
@@ -70,13 +61,13 @@ npm run serve
 
 The dev server runs on http://localhost:8080.
 
-### 4. Production build
+### 3. Production build
 
 ```bash
 npm run build
 ```
 
-### 5. Lint
+### 4. Lint
 
 ```bash
 npm run lint
@@ -129,7 +120,6 @@ Variables prefixed with `VUE_APP_` or `VITE_` are embedded in the built app at b
 
 | File | Created from | Purpose |
 |------|-------------|---------|
-| `src/config/app.config.js` | `app.config.example.js` | Storage adapter config |
 | `docker-compose.override.yml` | — | Local Docker overrides |
 
 ## License

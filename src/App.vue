@@ -2,7 +2,6 @@
     <div id="app"
          class="min-vh-100"
          :class="$route.name">
-        <AppProgressBar/>
         <router-view v-slot="{ Component }">
             <transition name="fade" mode="out-in">
                 <component :is="Component"/>
@@ -16,14 +15,12 @@
 <script>
 import { mapWritableState } from 'pinia';
 import { BOrchestrator, useModal } from 'bootstrap-vue-next';
-import AppProgressBar from '@/components/AppProgressBar.vue';
 import ConfirmService from '@/services/confirm.service';
 import { useThemesStore } from '@/store/themes';
 
 export default {
   name: 'app',
   components: {
-    AppProgressBar,
     BOrchestrator,
   },
   setup() {

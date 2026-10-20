@@ -13,8 +13,6 @@ RUN npm ci
 
 COPY . .
 
-COPY src/config/app.config.example.js ./src/config/app.config.js
-
 RUN npm run build
 
 EXPOSE 8080

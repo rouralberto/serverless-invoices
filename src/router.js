@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import i18next from 'i18next';
 import { initialized } from '@/config/i18n.config';
-import config from '@/config/app.config';
 import { useTeamsStore } from '@/store/teams';
 
 const routes = [
@@ -34,7 +33,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(config.base_url),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 });
 

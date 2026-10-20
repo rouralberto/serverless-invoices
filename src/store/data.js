@@ -18,6 +18,8 @@ async function getAllData() {
 export const useDataStore = defineStore('data', {
   state: () => ({
     isImportModalOpen: false,
+    // Kept in localStorage rather than IndexedDB so it isn't part of exports, imports or the backup itself.
+    lastBackupAt: localStorage.getItem('lastBackupAt'),
   }),
   actions: {
     async migrate() {
@@ -25,7 +27,10 @@ export const useDataStore = defineStore('data', {
     },
     async saveJson() {
       const data = await getAllData();
-      return storeInBucket(JSON.stringify(data), 'serverless-invoices.json', 'application/json');
+      const filename = await storeInBucket(JSON.stringify(data), 'serverless-invoices.json', 'application/json');
+      this.lastBackupAt = new Date().toISOString();
+      localStorage.setItem('lastBackupAt', this.lastBackupAt);
+      return filename;
     },
     async exportJson() {
       const data = await getAllData();

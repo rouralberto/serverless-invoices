@@ -23,6 +23,12 @@
                 </span>
               </h4>
                 <div>
+                    <small class="me-3"
+                           :class="isBackupStale ? 'text-danger' : 'text-muted'"
+                           v-b-tooltip.hover
+                           :title="lastBackupAt ? new Date(lastBackupAt).toLocaleString() : 'Use Save in S3 in the menu'">
+                        Last backup: {{ lastBackupLabel }}
+                    </small>
                     <button class="btn btn-sm btn-outline-secondary me-2"
                             @click="openCustomerRankingModal">
                       <i class="material-icons md-18 me-1">leaderboard</i>
@@ -38,7 +44,6 @@
 
                         <BDropdownItem @click="openClientsListModal">{{ t('manage_customers') }}</BDropdownItem>
 
-                        <template v-if="isStorageLocal">
                         <BDropdownDivider divider-class="my-3"/>
 
                         <li class="dropdown-item-text px-3 pb-3">
@@ -87,7 +92,6 @@
                         <BDropdownItem @click="openImportModal">{{ t('import') }}</BDropdownItem>
                         <li role="presentation"><span class="dropdown-item">—</span></li>
                         <BDropdownItem @click="saveJson">Save in S3</BDropdownItem>
-                        </template>
                     </BDropdown>
                 </div>
             </div>
@@ -219,7 +223,7 @@ import {
 import { useTranslation } from 'i18next-vue';
 import InvoicesList from '@/components/invoices/InvoicesList.vue';
 import ClientsList from '@/components/clients/ClientsList.vue';
-import config from '@/config/app.config';
+import { fromNow } from '@/filters/date.filter';
 import { useDataStore } from '@/store/data';
 import { useInvoicesStore } from '@/store/invoices';
 import { useTeamsStore } from '@/store/teams';
@@ -269,8 +273,13 @@ export default {
     ...mapStores(useInvoicesStore, useDataStore),
     ...mapState(useTeamsStore, ['team']),
     ...mapState(useInvoicesStore, { invoices: 'all' }),
-    isStorageLocal() {
-      return config.storageType === 'local';
+    ...mapState(useDataStore, ['lastBackupAt']),
+    lastBackupLabel() {
+      return this.lastBackupAt ? fromNow(this.lastBackupAt) : 'never';
+    },
+    isBackupStale() {
+      const weekMs = 7 * 24 * 60 * 60 * 1000;
+      return !this.lastBackupAt || Date.now() - new Date(this.lastBackupAt).getTime() > weekMs;
     },
     filteredInvoices() {
       let result = this.invoices;
@@ -374,7 +383,8 @@ export default {
       this.dataStore.exportJson();
     },
     saveJson() {
-      this.dataStore.saveJson();
+      // storeInBucket already alerts the user when the upload fails.
+      this.dataStore.saveJson().catch(() => {});
     },
     openImportModal() {
       this.dataStore.isImportModalOpen = true;
