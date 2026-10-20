@@ -67,7 +67,6 @@
     "suggest_placeholder": "مشتری جستجو کنید"
   },
   "clients-list": {
-    "title": "مدیریت مشتریان",
     "loading": "در حال بارگذاری",
     "company_name": "نام شرکت",
     "email": "ایمیل",
@@ -97,8 +96,7 @@
   "import-modal": {
     "title": "وارد کردن داده",
     "warning": "داده های فعلی شما پاک شده و با داده های وارد شده رونویسی می شوند!",
-    "button_text": "وارد کردن پرونده را انتخاب کنید",
-    "import-error": "قالب JSON نامعتبر است"
+    "button_text": "وارد کردن پرونده را انتخاب کنید"
   },
   "invoice-bank-details": {
     "bank_name": "اضافه کردن بانک",
@@ -212,7 +210,8 @@
     "status": "وضعیت",
     "overdue": "سررسید گذشته",
     "duplicate": "تکثیر فاکتور",
-    "tax_amount": "({{amount}} مالیات)"
+    "tax_amount": "({{amount}} مالیات)",
+    "loading": "بارگذاری"
   },
   "statuses": {
     "statuses": {

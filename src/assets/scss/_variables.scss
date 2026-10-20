@@ -11,6 +11,14 @@ $cyan: #17a2b8;
 $dark: #343a40;
 $white: #fff;
 
+// Brand: indigo with an amber accent (see src/assets/img/logo.svg).
+$brand: #4F46E5;
+$brand-darken: #4338CA;
+$brand-light: #A5B4FC;
+$brand-lighter: #C7D2FE;
+$accent: #FBBF24;
+$primary: $brand;
+
 // Colours for the app's own styles. Bootstrap components follow `data-bs-theme` through the
 // Sass variables below; index.html sets the attribute before the app loads.
 :root,
@@ -22,11 +30,12 @@ $white: #fff;
   --divider: rgba(0, 0, 0, .12);
   --shade: rgba(0, 0, 0, .04);
 
-  --primary: #{$blue};
-  --primary-darken: #0D47A1;
+  --primary: #{$brand};
+  --primary-darken: #{$brand-darken};
   --error-darken: #B71C1C;
 
   --bg-primary: #fff;
+  --accent: #{$accent};
   --bg-control: transparent;
 
   --scrim: rgba(0, 0, 0, .32);
@@ -51,11 +60,12 @@ $white: #fff;
   --divider: rgba(255, 255, 255, .2);
   --shade: rgba(255, 255, 255, .04);
 
-  --primary: #bbdefb;
-  --primary-darken: #90CAF9;
+  --primary: #{$brand-light};
+  --primary-darken: #{$brand-lighter};
   --error-darken: #EF9A9A;
 
-  --bg-primary: #121212;
+  --bg-primary: #111318;
+  --accent: #{$accent};
   --bg-control: rgba(255, 255, 255, 0.04);
 
   --scrim: rgba(0, 0, 0, .32);
@@ -93,9 +103,9 @@ $font-family-base: 'Work Sans', sans-serif;
 $gray-highlight: rgba(0, 0, 0, 0.07);
 $light-primary: rgba(255, 255, 255, 0.87);
 
-$body-bg: #f3f8f8;
+$body-bg: #F5F6FA;
 $body-color: rgba(0, 0, 0, .87);
-$body-bg-dark: #121212;
+$body-bg-dark: #111318;
 $body-color-dark: rgba(255, 255, 255, .87);
 
 $line-height-base: 1.25;
@@ -176,8 +186,8 @@ $list-group-item-padding-x: $grid-gutter-width * .5;
 $table-bg: transparent;
 
 // Keep Bootstrap 4 looks that Bootstrap 5 changed.
-$link-color-dark: $blue;
-$link-hover-color-dark: shade-color($blue, 20%);
+$link-color-dark: $brand-light;
+$link-hover-color-dark: $brand-lighter;
 $enable-negative-margins: true;
 $link-decoration: none;
 $link-hover-decoration: underline;

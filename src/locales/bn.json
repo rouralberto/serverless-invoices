@@ -67,7 +67,6 @@
     "suggest_placeholder": "ক্লায়েন্ট খুঁজুন"
   },
   "clients-list": {
-    "title": "গ্রাহক পরিচালনা",
     "loading": "লোড হচ্ছে",
     "company_name": "কোম্পানির নাম",
     "email": "ইমেইল",
@@ -97,8 +96,7 @@
   "import-modal": {
     "title": "তথ্য ইমপোর্ট",
     "warning": "আপনার বর্তমান তথ্যাদি মুছে যাবে এবং নতুন তথ্য দ্বারা ওভাররাইট করা হবে!",
-    "button_text": "সিলেক্ট ইমপোর্ট ফাইল",
-    "import-error": "ভুল JSON ফরম্যাট"
+    "button_text": "সিলেক্ট ইমপোর্ট ফাইল"
   },
   "invoice-bank-details": {
     "bank_name": "ব্যাংক যোগ করুন",
@@ -212,7 +210,8 @@
     "status": "স্ট্যাটাস",
     "overdue": "মেয়াদোত্তীর্ণ",
     "duplicate": "চালান ডুপ্লিকেট করুন",
-    "tax_amount": "({{amount}} কর)"
+    "tax_amount": "({{amount}} কর)",
+    "loading": "লোডিং"
   },
   "statuses": {
     "statuses": {

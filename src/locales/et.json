@@ -67,7 +67,6 @@
     "suggest_placeholder": "Otsi klienti"
   },
   "clients-list": {
-    "title": "Halda kliente",
     "loading": "Laadimine",
     "company_name": "Ettevõtte nimi",
     "email": "E-post",
@@ -97,8 +96,7 @@
   "import-modal": {
     "title": "Impordi andmed",
     "warning": "Andmed eemaldatakse ja kirjutatakse üle imporditud andmetega!",
-    "button_text": "Vali import fail",
-    "import-error": "Ebasobiv JSON formaat"
+    "button_text": "Vali import fail"
   },
   "invoice-bank-details": {
     "bank_name": "Lisa pangakonto",
@@ -212,7 +210,8 @@
     "status": "Staatus",
     "overdue": "Tähtaeg ületatud",
     "duplicate": "Kopeeri arve",
-    "tax_amount": "({{amount}} maksud)"
+    "tax_amount": "({{amount}} maksud)",
+    "loading": "Laeb"
   },
   "statuses": {
     "statuses": {

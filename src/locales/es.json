@@ -67,7 +67,6 @@
     "suggest_placeholder": "Buscar Cliente"
   },
   "clients-list": {
-    "title": "Gestionar clientes",
     "loading": "Cargando",
     "company_name": "Nombre de la empresa",
     "email": "Correo electrónico",
@@ -97,8 +96,7 @@
   "import-modal": {
     "title": "Importar datos",
     "warning": "Sus datos actuales se borrarán y sobreescribirán con datos importados",
-    "button_text": "Seleccionar archivo para importar",
-    "import-error": "Formato de JSON invalido"
+    "button_text": "Seleccionar archivo para importar"
   },
   "invoice-bank-details": {
     "bank_name": "Añadir banco",
@@ -212,7 +210,8 @@
     "status": "Estado",
     "overdue": "Vencida",
     "duplicate": "Duplicar factura",
-    "tax_amount": "({{amount}} de impuestos)"
+    "tax_amount": "({{amount}} de impuestos)",
+    "loading": "Cargando"
   },
   "statuses": {
     "statuses": {

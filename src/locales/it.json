@@ -67,7 +67,6 @@
     "suggest_placeholder": "Ricerca Cliente"
   },
   "clients-list": {
-    "title": "Gestisci clienti",
     "loading": "Caricamento",
     "company_name": "Ragione sociale",
     "email": "Email",
@@ -97,8 +96,7 @@
   "import-modal": {
     "title": "Importa i tuoi dati",
     "warning": "I tuoi dati attuali saranno socrascritti da quelli importati!",
-    "button_text": "Seleziona il file da importare",
-    "import-error": "Formato JSON non valido"
+    "button_text": "Seleziona il file da importare"
   },
   "invoice-bank-details": {
     "bank_name": "Aggiungi una banca",
@@ -212,7 +210,8 @@
     "status": "Stato",
     "overdue": "Scaduta",
     "duplicate": "Duplica fattura",
-    "tax_amount": "({{amount}} di tasse)"
+    "tax_amount": "({{amount}} di tasse)",
+    "loading": "Caricamento"
   },
   "statuses": {
     "statuses": {

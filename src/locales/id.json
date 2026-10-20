@@ -67,7 +67,6 @@
     "suggest_placeholder": "Cari pelanggan"
   },
   "clients-list": {
-    "title": "Kelola pelanggan",
     "loading": "Memuat",
     "company_name": "Nama perusahaan",
     "email": "Email",
@@ -97,8 +96,7 @@
   "import-modal": {
     "title": "Impor data",
     "warning": "Data Anda saat ini akan dihapus dan ditimpa dengan data yang diimpor!",
-    "button_text": "Pilih berkas untuk diimpor",
-    "import-error": "Format JSON tidak valid"
+    "button_text": "Pilih berkas untuk diimpor"
   },
   "invoice-bank-details": {
     "bank_name": "Tambah rekening bank",
@@ -212,7 +210,8 @@
     "status": "Status",
     "overdue": "Jatuh tempo",
     "duplicate": "Duplikat faktur",
-    "tax_amount": "({{amount}} pajak)"
+    "tax_amount": "({{amount}} pajak)",
+    "loading": "Memuat"
   },
   "statuses": {
     "statuses": {

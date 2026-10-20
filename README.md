@@ -1,5 +1,7 @@
 # Serverless Invoices
 
+![Serverless Invoices](public/img/social-preview.png)
+
 A free, open-source invoicing tool for freelancers and small businesses.
 
 Data is stored in your browser — no server required. Run it locally or host it yourself.
@@ -122,6 +124,7 @@ Variables prefixed with `VUE_APP_` or `VITE_` are embedded in the built app at b
 | File | Created from | Purpose |
 |------|-------------|---------|
 | `docker-compose.override.yml` | — | Local Docker overrides |
+| `public/.htaccess` | `public/.htaccess.example` | Apache rewrite rules so routes like `/invoices` work on reload |
 
 ## License
 
