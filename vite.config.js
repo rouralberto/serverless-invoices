@@ -34,7 +34,7 @@ export default defineConfig(({ mode }) => {
           ],
         },
         workbox: {
-          globPatterns: ['**/*.{js,css,html,ico,png,svg,json}'],
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,json,woff2}'],
           // The social preview is only fetched by link crawlers, so keep it out of the offline cache.
           globIgnores: ['**/.htaccess*', '**/social-preview.png'],
         },

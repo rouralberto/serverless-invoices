@@ -5,11 +5,20 @@
     align-items: center;
     padding: ($spacer * .25) ($spacer);
     margin-bottom: $spacer * .25;
-    border-radius: $border-radius-lg;
+    border-radius: .75rem;
+    border-left: 4px solid $brand-light;
     box-shadow: $box-shadow-2;
-    background-color: $dark;
+    background-color: #1f2330;
     font-size: .875rem;
     color: $light-primary;
+
+    &.success {
+      border-left-color: $green;
+    }
+
+    &.error {
+      border-left-color: $red;
+    }
   }
 }
 

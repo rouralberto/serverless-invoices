@@ -1,13 +1,14 @@
 <template>
-    <AppDropdown v-if="selectedLang" size="sm" toggle-class="text-secondary">
+    <AppDropdown v-if="selectedLang" toggle-class="btn-icon btn-icon--text">
         <template #button-content>
-            <span class="text-secondary">
-                <span class="text-uppercase">{{ selectedLang.code }}</span>
-                <i class="material-icons md-18">expand_more</i>
-            </span>
+            <i class="material-icons-round md-18">translate</i>
+            <span class="text-uppercase small">{{ selectedLang.code.split('_')[0] }}</span>
         </template>
         <li v-for="lang in languages" :key="lang.code">
-            <button type="button" class="dropdown-item" @click="langChanged(lang)">{{ lang.name }}</button>
+            <button type="button"
+                    class="dropdown-item"
+                    :class="{ active: lang.code === selectedLang.code }"
+                    @click="langChanged(lang)">{{ lang.name }}</button>
         </li>
     </AppDropdown>
 </template>

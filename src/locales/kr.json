@@ -1,4 +1,12 @@
 {
+  "app-header": {
+    "invoices": "송장",
+    "clients": "고객",
+    "company": "회사",
+    "data": "데이터",
+    "theme_dark": "다크 모드",
+    "theme_light": "라이트 모드"
+  },
   "bank-account-form": {
     "title": "은행 계좌",
     "bank_name": "은행 이름",
@@ -78,7 +86,9 @@
       "ok_title": "삭제",
       "cancel_title": "취소"
     },
-    "notification_deleted": "고객이 삭제되었습니다"
+    "notification_deleted": "고객이 삭제되었습니다",
+    "clients_count_one": "고객 {{count}}명",
+    "clients_count_other": "고객 {{count}}명"
   },
   "common": {
     "close": "닫기",
@@ -179,7 +189,6 @@
     "hide_paid_invoices": "결제 완료된 송장 숨기기",
     "show_fy_summary": "회계연도 요약 표시",
     "search_client_placeholder": "고객 이름으로 검색...",
-    "manage_customers": "고객 관리",
     "customer_ranking": "고객 순위",
     "fy_start": "회계연도 시작",
     "financial_year": "{{start}}-{{end}} 회계연도",
@@ -200,7 +209,11 @@
     "customer_count_one": "고객 {{count}}명",
     "customer_count_other": "고객 {{count}}명",
     "unknown_customer": "알 수 없는 고객",
-    "no_invoices": "송장이 없습니다"
+    "no_invoices": "송장이 없습니다",
+    "fy_summary": "회계연도 요약",
+    "hide": "숨기기",
+    "no_invoices_yet": "아직 송장이 없습니다",
+    "create_first_invoice": "첫 송장 만들기"
   },
   "invoices-list": {
     "invoice_number": "번호",
@@ -288,8 +301,6 @@
     "notification_deleted": "삭제되었습니다"
   },
   "the-footer": {
-    "lights-on": "밝은 배경으로 보기",
-    "lights-off": "어두운 배경으로 보기",
     "title": "당신의 모든 정보는 서버가 아니라 당신의 브라우저에 저장되어있습니다. \n 이 응용 프로그램은 서버리스이며 오직 당신만이 당신의 정보에 접근할 수 있습니다.",
     "what_about_my_data": "제 정보는 어떻게 보호받나요? ",
     "github_alt": "GitHub의 Serverless Invoices"

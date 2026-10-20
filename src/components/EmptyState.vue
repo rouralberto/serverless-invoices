@@ -1,7 +1,9 @@
 <template>
-  <div :class="`col-12 text-muted text-${align}`">
-    <small>{{ content || t('content') }}</small>
-    <h4 class="mt-2">¯\_(ツ)_/¯</h4>
+  <div class="empty-state" :class="`text-${align}`">
+    <span class="empty-state__icon">
+      <i class="material-icons-round">{{ icon }}</i>
+    </span>
+    <p class="empty-state__text">{{ content || t('content') }}</p>
     <slot></slot>
   </div>
 </template>
@@ -19,6 +21,9 @@ export default {
     },
     align: {
       default: 'center',
+    },
+    icon: {
+      default: 'inbox',
     },
   },
 };

@@ -1,4 +1,12 @@
 {
+  "app-header": {
+    "invoices": "Factures",
+    "clients": "Clients",
+    "company": "Entreprise",
+    "data": "Données",
+    "theme_dark": "Mode sombre",
+    "theme_light": "Mode clair"
+  },
   "bank-account-form": {
     "title": "Compte bancaire",
     "bank_name": "Nom de la banque",
@@ -78,7 +86,9 @@
       "ok_title": "Supprimer",
       "cancel_title": "Annuler"
     },
-    "notification_deleted": "Client supprimé"
+    "notification_deleted": "Client supprimé",
+    "clients_count_one": "{{count}} client",
+    "clients_count_other": "{{count}} clients"
   },
   "common": {
     "close": "Fermer",
@@ -179,7 +189,6 @@
     "hide_paid_invoices": "Masquer les Factures Payées",
     "show_fy_summary": "Afficher le Résumé de l'Année Fiscale",
     "search_client_placeholder": "Rechercher par nom de client...",
-    "manage_customers": "Gérer les clients",
     "customer_ranking": "Classement des clients",
     "fy_start": "Début de l'année fiscale",
     "financial_year": "Exercice {{start}}-{{end}}",
@@ -200,7 +209,11 @@
     "customer_count_one": "{{count}} client",
     "customer_count_other": "{{count}} clients",
     "unknown_customer": "Client inconnu",
-    "no_invoices": "Aucune facture trouvée"
+    "no_invoices": "Aucune facture trouvée",
+    "fy_summary": "Résumé de l'exercice",
+    "hide": "Masquer",
+    "no_invoices_yet": "Aucune facture pour l'instant",
+    "create_first_invoice": "Créer votre première facture"
   },
   "invoices-list": {
     "invoice_number": "No.",
@@ -288,8 +301,6 @@
     "notification_deleted": "Supprimé"
   },
   "the-footer": {
-    "lights-on": "Mode clair",
-    "lights-off": "Mode sombre",
     "title": "Toutes vos données sont sauvées dans votre naviguateur et sur aucun serveur.\n Cette application est réellement serverless et vous avez seulement accès à vos propres données.",
     "what_about_my_data": "Qu'en est-il de mes données? ",
     "github_alt": "Serverless Invoices sur GitHub"

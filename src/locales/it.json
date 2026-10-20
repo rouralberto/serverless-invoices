@@ -1,4 +1,12 @@
 {
+  "app-header": {
+    "invoices": "Fatture",
+    "clients": "Clienti",
+    "company": "Azienda",
+    "data": "Dati",
+    "theme_dark": "Modalità scura",
+    "theme_light": "Modalità chiara"
+  },
   "bank-account-form": {
     "title": "Conto bancario",
     "bank_name": "Nome banca",
@@ -78,7 +86,9 @@
       "ok_title": "Elimina",
       "cancel_title": "Annulla"
     },
-    "notification_deleted": "Cliente eliminato"
+    "notification_deleted": "Cliente eliminato",
+    "clients_count_one": "{{count}} cliente",
+    "clients_count_other": "{{count}} clienti"
   },
   "common": {
     "close": "Chiudi",
@@ -179,7 +189,6 @@
     "hide_paid_invoices": "Nascondi Fatture Pagate",
     "show_fy_summary": "Mostra Riepilogo Anno Fiscale",
     "search_client_placeholder": "Cerca per nome cliente...",
-    "manage_customers": "Gestisci clienti",
     "customer_ranking": "Classifica clienti",
     "fy_start": "Inizio dell'anno fiscale",
     "financial_year": "Esercizio {{start}}-{{end}}",
@@ -200,7 +209,11 @@
     "customer_count_one": "{{count}} cliente",
     "customer_count_other": "{{count}} clienti",
     "unknown_customer": "Cliente sconosciuto",
-    "no_invoices": "Nessuna fattura trovata"
+    "no_invoices": "Nessuna fattura trovata",
+    "fy_summary": "Riepilogo dell'esercizio",
+    "hide": "Nascondi",
+    "no_invoices_yet": "Ancora nessuna fattura",
+    "create_first_invoice": "Crea la tua prima fattura"
   },
   "invoices-list": {
     "invoice_number": "Numero",
@@ -288,8 +301,6 @@
     "notification_deleted": "Rimosso"
   },
   "the-footer": {
-    "lights-on": "Tema chiaro",
-    "lights-off": "Tema scuro",
     "title": "Tutti i tuoi dati sono salvati nel tuo browser e in nessun server esterno.\n Questo programma è interamente realizzato senza server, e solo tu hai accesso alle tue Fatture.",
     "what_about_my_data": "Dove sono i miei dati? ",
     "github_alt": "Serverless Invoices su GitHub"

@@ -14,6 +14,9 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/material-icons": "^5.3.0",
+    "@fontsource/material-icons-round": "^5.3.0",
     "@kyvg/vue3-notification": "^3.4.2",
     "aws4fetch": "^1.0.20",
     "bootstrap": "^5.3.8",

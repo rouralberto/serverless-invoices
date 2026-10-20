@@ -5,7 +5,12 @@
     box-shadow: $box-shadow-light-2;
   }
 
+  &-menu {
+    padding: .35rem;
+  }
+
   &-item {
+    border-radius: .5rem;
     transition: all 0.15s ease-out;
   }
 }
