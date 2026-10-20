@@ -67,16 +67,13 @@ export default {
   },
   methods: {
     editClient() {
-      this.$router.push({ query: { clientId: this.invoice.client_id } });
+      this.$router.push({ query: { ...this.$route.query, clientId: this.invoice.client_id } });
     },
     updateProp(props) {
       this.$emit('update', props);
     },
     clientSelected(client) {
-      this.invoicesStore.prefillClient({
-        client,
-        invoiceId: this.invoice.id,
-      });
+      this.invoicesStore.prefillClient(this.invoice.id, client);
     },
   },
 };

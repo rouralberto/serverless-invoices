@@ -19,3 +19,8 @@ label {
 .form-check-label {
   margin-bottom: 0;
 }
+
+// Selects don't inherit text-transform (reboot resets it), e.g. the invoice status picker.
+.text-capitalize .form-select {
+  text-transform: capitalize;
+}

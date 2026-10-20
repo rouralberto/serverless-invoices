@@ -1,11 +1,10 @@
 <template>
-    <BModal v-model="isOpen"
-            centered
-            no-footer
-            :title="t('title')"
-            size="lg"
-            scrollable
-            content-class="bg-base dp--24 text-center">
+    <AppModal v-model="isOpen"
+              centered
+              :title="t('title')"
+              size="lg"
+              scrollable
+              content-class="bg-base dp--24 text-center">
         <AppTextarea :value="team.custom_css"
                      @change="updateProp({ custom_css: $event })"
                      :label="t('textarea_label')"
@@ -13,14 +12,14 @@
                      :errors="errors"
                      input-classes="min-vh-50 font-monospace"
                      class="text-start"/>
-    </BModal>
+    </AppModal>
 </template>
 
 <script>
 import { mapState, mapStores, mapWritableState } from 'pinia';
-import { BModal } from 'bootstrap-vue-next';
 import { useTranslation } from 'i18next-vue';
 import AppTextarea from '@/components/form/AppTextarea.vue';
+import AppModal from '@/components/ui/AppModal.vue';
 import Errors from '@/utils/errors';
 import NotificationService from '@/services/notification.service';
 import { useInvoicesStore } from '@/store/invoices';
@@ -36,7 +35,7 @@ export default {
     };
   },
   components: {
-    BModal,
+    AppModal,
     AppTextarea,
   },
   computed: {
@@ -69,14 +68,10 @@ export default {
     close() {
       this.isOpen = false;
     },
-    updateProp(props) {
-      this.errors.clear();
-      this.teamsStore.updateTeam(props)
-        .then(() => {
-          NotificationService.success(this.t('updated'));
-          this.updateStyleEl(props.custom_css);
-        })
-        .catch(err => this.errors.set(err.errors));
+    async updateProp(props) {
+      await this.teamsStore.updateTeam(props);
+      NotificationService.success(this.t('updated'));
+      this.updateStyleEl(props.custom_css);
     },
   },
 };

@@ -1,85 +1,126 @@
 import { defineStore } from 'pinia';
-import { useRepo } from 'pinia-orm';
-import ClientService from '@/services/client.service';
-import Client from '@/store/models/client';
-import ClientField from '@/store/models/client-field';
-import { useClientFieldsStore } from '@/store/client-fields';
-import {
-  createNew, persisted, replaceAll, updateRecord,
-} from '@/store/orm';
+import * as db from '@/services/db';
+import { uuidv4 } from '@/utils/helpers';
 
-const repo = () => useRepo(Client);
+function newClient(props = {}) {
+  return {
+    id: uuidv4(),
+    company_name: '',
+    company_address: '',
+    company_postal_code: '',
+    company_country: '',
+    company_county: '',
+    company_city: '',
+    has_tax: true,
+    currency: null,
+    rate: null,
+    invoice_email: '',
+    bank_account_id: null,
+    fields: [],
+    updated_at: '',
+    created_at: '',
+    ...props,
+  };
+}
 
-function getClientById(clientId) {
-  return repo().query()
-    .with('bank_account')
-    .with('fields')
-    .find(clientId);
+// Older versions stored a copy of the bank account inside each client; the id is enough.
+function fromStorage({ bank_account, ...client }) {
+  return { ...client, fields: client.fields || [] };
 }
 
 export const useClientsStore = defineStore('clients', {
   state: () => ({
+    clients: [],
     clientId: null,
+    // A client being filled in the modal that hasn't been created yet.
+    draft: null,
     isModalOpen: false,
   }),
+  getters: {
+    all: state => state.clients,
+    client: state => (state.draft && state.draft.id === state.clientId
+      ? state.draft
+      : state.clients.find(it => it.id === state.clientId) || null),
+    isDraft: state => !!state.draft && state.draft.id === state.clientId,
+  },
   actions: {
-    init() {
-      return this.getClients();
+    async load() {
+      this.clients = (await db.load('clients', [])).map(fromStorage);
     },
-    terminate() {
-      useRepo(ClientField).flush();
-      return repo().flush();
+    save() {
+      return db.save('clients', this.clients);
     },
-    async getClients() {
-      const clients = await ClientService.getClients();
-      replaceAll(repo(), clients);
-      return clients;
+    find(clientId) {
+      return this.clients.find(it => it.id === clientId) || null;
     },
-    async getClient(clientId) {
-      const client = await ClientService.getClient(clientId);
-      this.clientId = client.id;
-      repo().save(persisted(client));
-    },
-    async createNewClient(client) {
-      if (!Object.hasOwn(client, 'id')) {
-        client = repo().make(client);
-      }
-      useClientFieldsStore().addAllFields(client.id);
-
-      const res = await ClientService.createClient(getClientById(client.id) || client);
-      repo().save(persisted(res));
-      return getClientById(res.id);
-    },
-    clientProps(payload) {
-      return updateRecord(repo(), payload.clientId, payload.props);
-    },
-    async updateClient(payload) {
-      if (payload.props) {
-        this.clientProps(payload);
-      }
-      return ClientService.updateClient(getClientById(payload.clientId));
-    },
-    openNewClientModal() {
-      const client = createNew(repo());
-      this.clientId = client.id;
+    openClient(clientId) {
+      this.clientId = clientId;
       this.isModalOpen = true;
     },
-    async deleteClient(clientId) {
-      const res = await ClientService.deleteClient(clientId);
-      repo().destroy(clientId);
-      return res;
+    openNewClientModal() {
+      this.draft = newClient();
+      this.openClient(this.draft.id);
     },
-  },
-  getters: {
-    client(state) {
-      return getClientById(state.clientId);
+    closeModal() {
+      this.isModalOpen = false;
+      this.draft = null;
     },
-    all() {
-      return repo().query()
-        .where('$isNew', false)
-        .with('bank_account')
-        .with('fields')
-        .get();
+    createClient(props) {
+      return this.insertClient(newClient(props));
+    },
+    async createDraftClient() {
+      const client = await this.insertClient(this.draft);
+      this.draft = null;
+      return client;
+    },
+    async insertClient(client) {
+      // Give new clients every custom field label already used by other clients.
+      const labels = new Set(client.fields.map(field => field.label));
+      this.clients.flatMap(it => it.fields).forEach(({ label }) => {
+        if (label && !labels.has(label)) {
+          labels.add(label);
+          client.fields.push({
+            id: uuidv4(), client_id: client.id, label, value: '',
+          });
+        }
+      });
+
+      this.clients.push(client);
+      await this.save();
+      return this.find(client.id);
+    },
+    updateClient(clientId, props) {
+      const client = this.draft && this.draft.id === clientId ? this.draft : this.find(clientId);
+      if (!client) {
+        return;
+      }
+      Object.assign(client, props);
+      return client === this.draft ? undefined : this.save();
+    },
+    addField(clientId) {
+      const client = this.draft && this.draft.id === clientId ? this.draft : this.find(clientId);
+      client.fields.push({
+        id: uuidv4(), client_id: clientId, label: '', value: '',
+      });
+      return client === this.draft ? undefined : this.save();
+    },
+    updateField(clientId, fieldId, props) {
+      const client = this.draft && this.draft.id === clientId ? this.draft : this.find(clientId);
+      const field = client && client.fields.find(it => it.id === fieldId);
+      if (!field) {
+        return;
+      }
+      Object.assign(field, props);
+      return client === this.draft ? undefined : this.save();
+    },
+    deleteField(clientId, fieldId) {
+      const client = this.draft && this.draft.id === clientId ? this.draft : this.find(clientId);
+      client.fields = client.fields.filter(it => it.id !== fieldId);
+      return client === this.draft ? undefined : this.save();
+    },
+    deleteClient(clientId) {
+      this.clients = this.clients.filter(it => it.id !== clientId);
+      return this.save();
     },
   },
 });

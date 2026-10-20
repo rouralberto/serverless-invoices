@@ -38,31 +38,22 @@ export default {
   },
   methods: {
     addNewTax() {
-      this.taxesStore.addNewTax();
+      this.taxesStore.addTax();
     },
     async removeTax(field) {
       const confirmed = await ConfirmService.confirm(`${this.t('delete_modal.title')} ${field.label}?`, {
         okTitle: this.t('delete_modal.ok_title'),
         okVariant: 'danger',
         cancelTitle: this.t('delete_modal.cancel_title'),
-        cancelVariant: 'btn-link',
-        contentClass: 'bg-base dp--24',
       });
       if (confirmed) {
         await this.taxesStore.deleteTax(field.id);
-        try {
-          this.$emit('changed');
-          NotificationService.success(this.t('notification_deleted'));
-        } catch (err) {
-          NotificationService.error(err.message);
-        }
+        this.$emit('changed');
+        NotificationService.success(this.t('notification_deleted'));
       }
     },
     updateTaxProp(props, tax) {
-      this.taxesStore.updateTax({
-        props,
-        taxId: tax.id,
-      });
+      this.taxesStore.updateTax(tax.id, props);
       this.$emit('changed');
     },
   },

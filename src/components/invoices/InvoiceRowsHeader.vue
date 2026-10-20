@@ -16,14 +16,14 @@
 <script>
 import { mapState } from 'pinia';
 import { useTranslation } from 'i18next-vue';
-import { useInvoiceRowsStore } from '@/store/invoice-rows';
+import { useInvoicesStore } from '@/store/invoices';
 
 export default {
   setup() {
     return useTranslation('invoice-rows-header');
   },
   computed: {
-    ...mapState(useInvoiceRowsStore, ['taxes']),
+    ...mapState(useInvoicesStore, ['taxes']),
   },
 };
 </script>

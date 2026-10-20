@@ -1,4 +1,20 @@
-:root {
+$blue: #007bff;
+$indigo: #6610f2;
+$purple: #6f42c1;
+$pink: #e83e8c;
+$red: #dc3545;
+$orange: #fd7e14;
+$yellow: #ffc107;
+$green: #28a745;
+$teal: #20c997;
+$cyan: #17a2b8;
+$dark: #343a40;
+$white: #fff;
+
+// Colours for the app's own styles. Bootstrap components follow `data-bs-theme` through the
+// Sass variables below; index.html sets the attribute before the app loads.
+:root,
+[data-bs-theme="light"] {
   --text-primary: rgba(0, 0, 0, .87);
   --text-secondary: rgba(0, 0, 0, .6);
   --text-disabled: rgba(0, 0, 0, .38);
@@ -6,15 +22,11 @@
   --divider: rgba(0, 0, 0, .12);
   --shade: rgba(0, 0, 0, .04);
 
-  --primary: #2962ff;
+  --primary: #{$blue};
   --primary-darken: #0D47A1;
-  --success: #64DD17;
-  --error: #C62828;
   --error-darken: #B71C1C;
 
-  --bg-body: #f3f8f8;
   --bg-primary: #fff;
-  --bg-secondary: #EEEEEE;
   --bg-control: transparent;
 
   --scrim: rgba(0, 0, 0, .32);
@@ -29,130 +41,36 @@
   --dp12: #fff;
   --dp16: #fff;
   --dp24: #fff;
-
-  @media (prefers-color-scheme: dark) {
-    --text-primary: rgba(255, 255, 255, .87);
-    --text-secondary: rgba(255, 255, 255, .6);
-    --text-disabled: rgba(255, 255, 255, .38);
-    --text-caption: rgba(255, 255, 255, .12);
-    --divider: rgba(255, 255, 255, .2);
-    --shade: rgba(255, 255, 255, .04);
-
-    --primary: #bbdefb;
-    --primary-darken: #90CAF9;
-    --success: #DCEDC8;
-    --error: #FFCDD2;
-    --error-darken: #EF9A9A;
-
-
-    --bg-body: #121212;
-    --bg-primary: #121212;
-    --bg-secondary: #616161;
-    --bg-control: rgba(255, 255, 255, 0.04);
-
-    --scrim: rgba(0, 0, 0, .32);
-
-    --dp00: transparent;
-    --dp01: rgba(255, 255, 255, 0.05);
-    --dp02: rgba(255, 255, 255, 0.07);
-    --dp03: rgba(255, 255, 255, 0.08);
-    --dp04: rgba(255, 255, 255, 0.09);
-    --dp06: rgba(255, 255, 255, 0.11);
-    --dp08: rgba(255, 255, 255, 0.12);
-    --dp12: rgba(255, 255, 255, 0.14);
-    --dp16: rgba(255, 255, 255, 0.15);
-    --dp24: rgba(255, 255, 255, 0.16);
-
-    &[data-theme="light"] {
-      --text-primary: rgba(0, 0, 0, .87);
-      --text-secondary: rgba(0, 0, 0, .6);
-      --text-disabled: rgba(0, 0, 0, .38);
-      --text-caption: rgba(0, 0, 0, .12);
-      --divider: rgba(0, 0, 0, .12);
-      --shade: rgba(0, 0, 0, .04);
-
-      --primary: #2962ff;
-      --primary-darken: #0D47A1;
-      --success: #64DD17;
-      --error: #C62828;
-      --error-darken: #B71C1C;
-
-      --bg-body: #f3f8f8;
-      --bg-primary: #fff;
-      --bg-secondary: #EEEEEE;
-      --bg-control: transparent;
-
-      --scrim: rgba(0, 0, 0, .32);
-
-      --dp00: #fff;
-      --dp01: #fff;
-      --dp02: #fff;
-      --dp03: #fff;
-      --dp04: #fff;
-      --dp06: #fff;
-      --dp08: #fff;
-      --dp12: #fff;
-      --dp16: #fff;
-      --dp24: #fff;
-    }
-  }
-
-  &[data-theme="dark"] {
-    @media not print {
-      --text-primary: rgba(255, 255, 255, .87);
-      --text-secondary: rgba(255, 255, 255, .6);
-      --text-disabled: rgba(255, 255, 255, .38);
-      --text-caption: rgba(255, 255, 255, .12);
-      --divider: rgba(255, 255, 255, .2);
-      --shade: rgba(255, 255, 255, .04);
-
-      --primary: #bbdefb;
-      --primary-darken: #90CAF9;
-      --success: #DCEDC8;
-      --error: #FFCDD2;
-      --error-darken: #EF9A9A;
-
-
-      --bg-body: #121212;
-      --bg-primary: #121212;
-      --bg-secondary: #616161;
-      --bg-control: rgba(255, 255, 255, 0.04);
-
-      --scrim: rgba(0, 0, 0, .32);
-
-      --dp00: transparent;
-      --dp01: rgba(255, 255, 255, 0.05);
-      --dp02: rgba(255, 255, 255, 0.07);
-      --dp03: rgba(255, 255, 255, 0.08);
-      --dp04: rgba(255, 255, 255, 0.09);
-      --dp06: rgba(255, 255, 255, 0.11);
-      --dp08: rgba(255, 255, 255, 0.12);
-      --dp12: rgba(255, 255, 255, 0.14);
-      --dp16: rgba(255, 255, 255, 0.15);
-      --dp24: rgba(255, 255, 255, 0.16);
-    }
-  }
 }
 
-$blue: #007bff;
-$indigo: #6610f2;
-$purple: #6f42c1;
-$pink: #e83e8c;
-$red: #dc3545;
-$orange: #fd7e14;
-$yellow: #ffc107;
-$green: #28a745;
-$teal: #20c997;
-$cyan: #17a2b8;
-$dark: #343a40;
-$white: #fff;
-$blue-dark: #0091EA;
+[data-bs-theme="dark"] {
+  --text-primary: rgba(255, 255, 255, .87);
+  --text-secondary: rgba(255, 255, 255, .6);
+  --text-disabled: rgba(255, 255, 255, .38);
+  --text-caption: rgba(255, 255, 255, .12);
+  --divider: rgba(255, 255, 255, .2);
+  --shade: rgba(255, 255, 255, .04);
 
+  --primary: #bbdefb;
+  --primary-darken: #90CAF9;
+  --error-darken: #EF9A9A;
 
-// Bootstrap 4 palette, so theme colors don't shift with the Bootstrap 5 upgrade.
-$blue: #007bff;
-$green: #28a745;
-$cyan: #17a2b8;
+  --bg-primary: #121212;
+  --bg-control: rgba(255, 255, 255, 0.04);
+
+  --scrim: rgba(0, 0, 0, .32);
+
+  --dp00: transparent;
+  --dp01: rgba(255, 255, 255, 0.05);
+  --dp02: rgba(255, 255, 255, 0.07);
+  --dp03: rgba(255, 255, 255, 0.08);
+  --dp04: rgba(255, 255, 255, 0.09);
+  --dp06: rgba(255, 255, 255, 0.11);
+  --dp08: rgba(255, 255, 255, 0.12);
+  --dp12: rgba(255, 255, 255, 0.14);
+  --dp16: rgba(255, 255, 255, 0.15);
+  --dp24: rgba(255, 255, 255, 0.16);
+}
 
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
@@ -162,41 +80,23 @@ $cyan: #17a2b8;
 
 $warning: $orange;
 
-//$box-shadow-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-$box-shadow-1: rgba(23, 43, 77, 0.2) 0px 1px 1px, rgba(23, 43, 77, 0.2) 0px 0px 1px;
 $box-shadow-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-$box-shadow-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-$box-shadow-4: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-$box-shadow-5: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
 
 $box-shadow-light-1: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.12);
 $box-shadow-light-2: 0 3px 6px rgba(0, 0, 0, 0.08), 0 3px 6px rgba(0, 0, 0, 0.12);
 $box-shadow-light-3: 0 10px 20px rgba(0, 0, 0, 0.09), 0 6px 6px rgba(0, 0, 0, 0.12);
-$box-shadow-light-4: 0 14px 28px rgba(0, 0, 0, 0.12), 0 10px 10px rgba(0, 0, 0, 0.11);
 $box-shadow-light-5: 0 19px 38px rgba(0, 0, 0, 0.15), 0 15px 12px rgba(0, 0, 0, 0.11);
 $box-shadow-light-6: 0 0 82px 2px rgba(61, 69, 74, .2);
 
 $font-family-base: 'Work Sans', sans-serif;
 
-$gray-primary: rgba(0, 0, 0, 0.87);
-$gray-medium: rgba(0, 0, 0, 0.72);
-$gray-secondary: rgba(0, 0, 0, 0.54);
-$gray-caption: rgba(0, 0, 0, 0.20);
-$gray-divider: rgba(0, 0, 0, 0.12);
 $gray-highlight: rgba(0, 0, 0, 0.07);
-$gray-shade: rgba(0, 0, 0, 0.02);
-
 $light-primary: rgba(255, 255, 255, 0.87);
-$light-secondary: rgba(255, 255, 255, 0.54);
-$light-caption: rgba(255, 255, 255, 0.20);
-$light-divider: rgba(255, 255, 255, 0.12);
-$light-highlight: rgba(255, 255, 255, 0.07);
-$light-shade: rgba(255, 255, 255, 0.03);
 
-// Bootstrap 5 derives RGB channels from $body-bg/$body-color, so those must stay real colors.
-// The themed values are applied through the --bs-body-* custom properties in _utilities.scss.
-$app-body-bg: var(--bg-body);
-$app-body-color: var(--text-primary);
+$body-bg: #f3f8f8;
+$body-color: rgba(0, 0, 0, .87);
+$body-bg-dark: #121212;
+$body-color-dark: rgba(255, 255, 255, .87);
 
 $line-height-base: 1.25;
 
@@ -209,13 +109,10 @@ $container-padding-x: $grid-gutter-width * .5;
 
 $spacer: 1rem;
 
-$alert-bg-level: -11;
-$alert-border-level: -11;
-$alert-padding-x: .75rem;
-
 $badge-font-size: 68.75%;
 
 $border-color: var(--text-caption);
+$border-color-dark: var(--text-caption);
 
 $border-radius-large: 6px;
 
@@ -225,18 +122,14 @@ $hr-border-color: var(--divider);
 
 $dropdown-bg: var(--dp24);
 $dropdown-border-color: transparent;
-$dropdown-color: $app-body-color;
-$dropdown-link-color: $app-body-color;
-$dropdown-link-active-color: $app-body-color;
+$dropdown-color: var(--text-primary);
+$dropdown-link-color: var(--text-primary);
+$dropdown-link-active-color: var(--text-primary);
 $dropdown-link-active-bg: var(--shade);
 $dropdown-link-hover-bg: var(--shade);
 $dropdown-link-hover-color: $dropdown-link-color;
 $dropdown-divider-bg: $hr-border-color;
 $dropdown-header-color: var(--text-secondary);
-
-$close-color: var(--text-primary);
-$close-text-shadow: none;
-$close-font-weight: 500;
 
 $modal-header-border-color: transparent;
 $modal-footer-border-color: transparent;
@@ -246,25 +139,13 @@ $modal-backdrop-opacity: 1;
 $modal-content-border-color: transparent;
 $modal-content-box-shadow-sm-up: $box-shadow-light-6;
 
-$navbar-light-color: var(--text-secondary);
-$navbar-light-hover-color: $app-body-color;
-$navbar-light-active-color: $app-body-color;
-
 $nav-tabs-link-active-bg: var(--bg-control);
 $nav-tabs-link-active-border-color: transparent;
 $nav-tabs-border-color: transparent;
 $nav-tabs-link-hover-border-color: transparent;
 $nav-tabs-link-active-color: var(--text-primary);
 
-$navbar-padding-y: $spacer;
-$navbar-nav-link-padding-x: 1rem;
-
-$navbar-brand-font-size: 1.75rem;
-
-$nav-pills-link-active-bg: var(--text-caption);
-$nav-pills-link-active-color: $app-body-color;
-
-$input-color: $app-body-color;
+$input-color: var(--text-primary);
 $input-focus-color: $input-color;
 $input-border-color: var(--text-caption);
 $input-bg: var(--bg-control);
@@ -274,7 +155,7 @@ $input-btn-padding-x: $grid-gutter-width * .5;
 $input-placeholder-color: var(--text-disabled);
 
 $input-focus-box-shadow: none;
-$input-focus-border-color: $app-body-color;
+$input-focus-border-color: var(--text-primary);
 
 $btn-font-size-sm: $font-size-sm;
 $btn-focus-box-shadow: none;
@@ -287,16 +168,16 @@ $input-group-addon-border-color: $input-border-color;
 
 $list-group-border-color: transparent;
 $list-group-bg: var(--bg-control);
-$list-group-color: $app-body-color;
+$list-group-color: var(--text-primary);
 $list-group-item-padding-y: $grid-gutter-width * .25;
 $list-group-item-padding-x: $grid-gutter-width * .5;
-
-$progress-bar-bg: var(--text-caption);
 
 // Bootstrap 5 paints table cells with the body background by default.
 $table-bg: transparent;
 
-// Keep Bootstrap 4 defaults that Bootstrap 5 changed.
+// Keep Bootstrap 4 looks that Bootstrap 5 changed.
+$link-color-dark: $blue;
+$link-hover-color-dark: shade-color($blue, 20%);
 $enable-negative-margins: true;
 $link-decoration: none;
 $link-hover-decoration: underline;
@@ -315,20 +196,12 @@ $link-transition-duration: 0.15s;
 
 $text-muted: var(--text-disabled);
 
-$sidebar-width: 220px;
-$sidebar-width-collapsed: 72px;
-
-$sheet-width: 360px;
-
-$tracker-width: $sheet-width * 1.5;
-
 $table-cell-padding-y: $grid-gutter-width * .5;
 $table-cell-padding-x: $grid-gutter-width * .5;
-$table-border-color: $border-color;
 $table-border-color: var(--text-caption);
 $table-hover-bg: var(--divider);
-$table-color: $app-body-color;
-$table-hover-color: $app-body-color;
+$table-color: var(--text-primary);
+$table-hover-color: var(--text-primary);
 
 
 $grid-breakpoints: (

@@ -89,17 +89,14 @@ export default {
       ));
     },
   },
-  mounted() {
-    this.clientsStore.getClients();
-  },
   methods: {
     createNewClient() {
       this.clientsStore.openNewClientModal();
     },
     openClientModal(client) {
-      this.clientsStore.clientId = client.id;
       this.$router.push({
         query: {
+          ...this.$route.query,
           clientId: client.id,
         },
       });
@@ -111,8 +108,6 @@ export default {
           okTitle: this.t('delete_modal.ok_title'),
           okVariant: 'danger',
           cancelTitle: this.t('delete_modal.cancel_title'),
-          cancelVariant: 'btn-link',
-          contentClass: 'bg-base dp--24',
         },
       );
 
@@ -121,12 +116,7 @@ export default {
       }
 
       await this.clientsStore.deleteClient(client.id);
-
-      try {
-        NotificationService.success(this.t('notification_deleted'));
-      } catch (err) {
-        NotificationService.error(err.message);
-      }
+      NotificationService.success(this.t('notification_deleted'));
     },
   },
 };

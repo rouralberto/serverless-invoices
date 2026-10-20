@@ -1,64 +1,60 @@
 <template>
-    <BModal v-model="isOpen"
-            centered
-            no-footer
-            no-header
-            size="md"
-            content-class="bg-base dp--24">
+    <AppModal v-model="isOpen"
+              centered
+              no-header
+              content-class="bg-base dp--24">
         <BankAccountForm @done="close()"/>
-    </BModal>
+    </AppModal>
 </template>
 
 <script>
-import { mapState, mapStores } from 'pinia';
-import { BModal } from 'bootstrap-vue-next';
+import { mapStores } from 'pinia';
+import AppModal from '@/components/ui/AppModal.vue';
 import BankAccountForm from '@/components/bank-accounts/BankAccountForm.vue';
 import { useBankAccountsStore } from '@/store/bank-accounts';
 
 export default {
   components: {
-    BModal,
+    AppModal,
     BankAccountForm,
   },
   computed: {
+    ...mapStores(useBankAccountsStore),
     isOpen: {
       get() {
-        return !!this.bankAccountsStore.isModalOpen;
+        return this.bankAccountsStore.isModalOpen;
       },
       set(val) {
         if (!val) {
-          this.$router.push({ query: {} });
-          this.bankAccountsStore.getBankAccounts();
+          this.close();
         }
-        this.bankAccountsStore.isModalOpen = val;
       },
     },
-    ...mapStores(useBankAccountsStore),
-    ...mapState(useBankAccountsStore, ['bankAccount']),
   },
   watch: {
     '$route.query.bankAccountId'() {
-      this.getBankAccount();
+      this.openFromRoute();
     },
   },
   mounted() {
-    this.getBankAccount();
+    this.openFromRoute();
   },
   methods: {
-    getBankAccount() {
-      const query = this.$route.query;
-      if (Object.hasOwn(query, 'bankAccountId')) {
-        if ((this.bankAccount && this.bankAccount.id !== query.bankAccountId) || !this.bankAccount) {
-          this.bankAccountsStore.getBankAccount(query.bankAccountId);
-        }
-
-        this.bankAccountsStore.isModalOpen = true;
-      } else {
-        this.bankAccountsStore.isModalOpen = false;
+    // Existing accounts open through ?bankAccountId= so the modal can be linked to.
+    openFromRoute() {
+      const { bankAccountId } = this.$route.query;
+      if (bankAccountId) {
+        this.bankAccountsStore.openBankAccount(bankAccountId);
+      } else if (!this.bankAccountsStore.isDraft) {
+        this.bankAccountsStore.closeModal();
       }
     },
     close() {
-      this.isOpen = false;
+      const { bankAccountId, ...query } = this.$route.query;
+      this.bankAccountsStore.closeModal();
+      if (bankAccountId) {
+        this.$router.push({ query });
+      }
     },
   },
 };

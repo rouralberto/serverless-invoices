@@ -1,54 +1,89 @@
 import { defineStore } from 'pinia';
-import { useRepo } from 'pinia-orm';
-import TeamService from '@/services/team.service';
-import Team from '@/store/models/team';
-import TeamField from '@/store/models/team-field';
+import * as db from '@/services/db';
+import { uuidv4 } from '@/utils/helpers';
 import { useBankAccountsStore } from '@/store/bank-accounts';
 import { useClientsStore } from '@/store/clients';
-import { useDataStore } from '@/store/data';
 import { useInvoicesStore } from '@/store/invoices';
 import { useTaxesStore } from '@/store/taxes';
-import { replaceAll, updateRecord } from '@/store/orm';
 
-const repo = () => useRepo(Team);
+const customCSS = `
+/* @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap');
+
+.invoice-box:after {
+    background: linear-gradient(to bottom, #1C7CE0, #150051);
+}
+
+.invoice-box {
+    font-family: 'Work Sans', sans-serif;
+} */
+`;
+
+function newTeam() {
+  return {
+    id: uuidv4(),
+    company_name: '',
+    company_address: '',
+    company_postal_code: '',
+    company_country: '',
+    company_county: '',
+    company_city: '',
+    website: '',
+    contact_email: '',
+    contact_phone: '',
+    currency: null,
+    invoice_late_fee: null,
+    invoice_due_days: null,
+    fields: [],
+    updated_at: '',
+    created_at: '',
+    logo_url: '',
+    custom_css: customCSS,
+  };
+}
 
 export const useTeamsStore = defineStore('teams', {
   state: () => ({
+    team: null,
     isModalOpen: false,
   }),
   actions: {
     async init() {
-      await useDataStore().migrate();
-
-      const stores = [useClientsStore(), useBankAccountsStore(), useInvoicesStore(), useTaxesStore()];
-      await Promise.all(stores.map(store => store.terminate()));
-
-      await this.getTeam();
-
-      stores.forEach(store => store.init());
-    },
-    async terminate() {
-      useRepo(TeamField).flush();
-      return repo().flush();
-    },
-    async getTeam() {
-      const team = await TeamService.getTeam();
-      replaceAll(repo(), team);
-      return team;
-    },
-    teamProps(props) {
-      return updateRecord(repo(), this.team.id, props);
-    },
-    async updateTeam(props) {
-      if (props) {
-        this.teamProps(props);
+      const team = await db.load('team');
+      this.team = { ...newTeam(), ...team, fields: team?.fields || [] };
+      if (!team) {
+        await this.save();
       }
-      return TeamService.updateTeam(this.team);
+
+      await Promise.all([
+        useClientsStore().load(),
+        useBankAccountsStore().load(),
+        useInvoicesStore().load(),
+        useTaxesStore().load(),
+      ]);
     },
-  },
-  getters: {
-    team() {
-      return repo().query().with('fields').first();
+    save() {
+      return db.save('team', this.team);
+    },
+    updateTeam(props) {
+      Object.assign(this.team, props);
+      return this.save();
+    },
+    addField() {
+      this.team.fields.push({
+        id: uuidv4(), team_id: this.team.id, label: '', value: '',
+      });
+      return this.save();
+    },
+    updateField(fieldId, props) {
+      const field = this.team.fields.find(it => it.id === fieldId);
+      if (field) {
+        Object.assign(field, props);
+        return this.save();
+      }
+    },
+    deleteField(fieldId) {
+      this.team.fields = this.team.fields.filter(it => it.id !== fieldId);
+      return this.save();
     },
   },
 });

@@ -11,7 +11,7 @@
 <script>
 import { mapState, mapStores } from 'pinia';
 import AppError from '@/components/form/AppError.vue';
-import { useInvoiceRowsStore } from '@/store/invoice-rows';
+import { useInvoicesStore } from '@/store/invoices';
 
 export default {
   props: ['invoice', 'errors'],
@@ -19,15 +19,15 @@ export default {
     AppError,
   },
   computed: {
-    ...mapStores(useInvoiceRowsStore),
-    ...mapState(useInvoiceRowsStore, ['taxes']),
+    ...mapStores(useInvoicesStore),
+    ...mapState(useInvoicesStore, ['taxes']),
     colspan() {
       return 5 + this.taxes.length;
     },
   },
   methods: {
     addRow() {
-      this.invoiceRowsStore.addRow(this.invoice.id);
+      this.invoicesStore.addRow(this.invoice.id);
     },
   },
 };

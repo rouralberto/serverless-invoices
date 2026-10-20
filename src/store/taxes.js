@@ -1,46 +1,36 @@
 import { defineStore } from 'pinia';
-import { useRepo } from 'pinia-orm';
-import Tax from '@/store/models/tax';
-import TaxService from '@/services/tax.service';
-import { replaceAll, updateRecord } from '@/store/orm';
-
-const repo = () => useRepo(Tax);
+import * as db from '@/services/db';
+import { uuidv4 } from '@/utils/helpers';
 
 export const useTaxesStore = defineStore('taxes', {
-  actions: {
-    init() {
-      return this.getTaxes();
-    },
-    terminate() {
-      return repo().flush();
-    },
-    async getTaxes() {
-      const taxes = await TaxService.getTaxes();
-      replaceAll(repo(), taxes);
-      return taxes;
-    },
-    taxProps(payload) {
-      return updateRecord(repo(), payload.taxId, payload.props);
-    },
-    updateTax(payload) {
-      const tax = this.taxProps(payload);
-      return TaxService.updateTax(tax);
-    },
-    addNewTax() {
-      const tax = repo().save({});
-      return TaxService.createTax(tax);
-    },
-    async deleteTax(taxId) {
-      repo().destroy(taxId);
-      return TaxService.deleteTax(taxId);
-    },
-  },
+  state: () => ({
+    taxes: [],
+  }),
   getters: {
-    all() {
-      return repo().all();
+    all: state => state.taxes,
+    allWithLabels: state => state.taxes.filter(tax => !!tax.label),
+  },
+  actions: {
+    async load() {
+      this.taxes = await db.load('taxes', []);
     },
-    allWithLabels() {
-      return repo().all().filter(tax => !!tax.label);
+    save() {
+      return db.save('taxes', this.taxes);
+    },
+    addTax() {
+      this.taxes.push({ id: uuidv4(), label: '', value: '' });
+      return this.save();
+    },
+    updateTax(taxId, props) {
+      const tax = this.taxes.find(it => it.id === taxId);
+      if (tax) {
+        Object.assign(tax, props);
+        return this.save();
+      }
+    },
+    deleteTax(taxId) {
+      this.taxes = this.taxes.filter(it => it.id !== taxId);
+      return this.save();
     },
   },
 });

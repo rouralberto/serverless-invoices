@@ -1,3 +1,46 @@
+// AppModal renders Bootstrap's modal markup inside a native <dialog>.
+.app-modal {
+  &[open] {
+    display: block;
+  }
+
+  // Undo the browser's <dialog> box; Bootstrap's .modal-dialog does the layout.
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+
+  &::backdrop {
+    background-color: $modal-backdrop-bg;
+    animation: modal-fade-in .15s $base-ease;
+  }
+
+  &[open] .modal-dialog {
+    animation: modal-slide-in .2s $base-ease;
+  }
+}
+
+// The page behind an open modal shouldn't scroll.
+html:has(.app-modal[open]) {
+  overflow: hidden;
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes modal-slide-in {
+  from {
+    opacity: 0;
+    transform: translate(0, -16px);
+  }
+}
+
 .modal {
   &-dialog {
     &.modal-lg {
@@ -5,54 +48,6 @@
         max-width: 800px;
       }
     }
-  }
-
-  &.fade {
-    &-slide-horizontal {
-      .modal-dialog {
-        transform: translate(32px, 0);
-      }
-
-      &.show {
-        .modal-dialog {
-          transform: none;
-        }
-      }
-    }
-
-    &-slide-vertical {
-      .modal-dialog {
-        transform: translate(0, 16px);
-      }
-
-      &.show {
-        .modal-dialog {
-          transform: none;
-        }
-      }
-    }
-  }
-
-  &.high {
-    .modal-dialog {
-      height: 100vh;
-      margin: 0;
-      padding: 8px;
-
-      .modal-content {
-        height: 100%;
-      }
-    }
-  }
-
-  &.right {
-    .modal-dialog {
-      float: right;
-    }
-  }
-
-  &-backdrop {
-    opacity: $modal-backdrop-opacity;
   }
 
   &-content {

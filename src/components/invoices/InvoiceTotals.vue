@@ -27,8 +27,8 @@
 import { mapState } from 'pinia';
 import { useTranslation } from 'i18next-vue';
 import AppEditable from '../form/AppEditable.vue';
-import { formatCurrency } from '../../filters/currency.filter';
-import { useInvoiceRowsStore } from '@/store/invoice-rows';
+import { formatCurrency } from '@/utils/format';
+import { useInvoicesStore } from '@/store/invoices';
 
 export default {
   setup() {
@@ -40,7 +40,7 @@ export default {
     AppEditable,
   },
   computed: {
-    ...mapState(useInvoiceRowsStore, ['taxes']),
+    ...mapState(useInvoicesStore, ['taxes']),
     colspan() {
       return 4 + this.taxes.length;
     },

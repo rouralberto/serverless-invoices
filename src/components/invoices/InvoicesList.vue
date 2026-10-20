@@ -33,25 +33,25 @@
                       / {{ formatCurrency(getClientTotal(invoice.client_id)) }}
                     </span>
                     <small class="text-secondary" v-if="invoice.taxTotal">
-                      <br>({{ formatCurrency(invoice.taxTotal) }} tax)
+                      <br>{{ t('tax_amount', { amount: formatCurrency(invoice.taxTotal) }) }}
                     </small>
                 </td>
                 <td class="pointer text-end text-capitalize" @click="openInvoice(invoice)">
                     <i class="material-icons material-icons-round md-18 me-2 text-danger"
                        v-if="isOverDue(invoice)"
-                       v-b-tooltip.hover title="Overdue">warning</i>
+                       :title="t('overdue')">warning</i>
                     <i class="material-icons material-icons-round md-18 me-2 text-warning"
                        v-else-if="invoice.status === 'draft'">edit_note</i>
                     <i class="material-icons material-icons-round md-18 me-2 text-success"
                        v-else-if="invoice.status === 'paid'">done</i>
                     <i class="material-icons material-icons-round md-18 me-2 text-muted"
                        v-else-if="invoice.status === 'written_off'"
-                       v-b-tooltip.hover title="Written-Off">money_off</i>
+                       :title="t('statuses.written_off')">money_off</i>
                     {{ t(`statuses.${invoice.status}`) }}
                 </td>
               <td class="text-end">
                 <i class="pointer material-icons material-icons-round md-18"
-                   v-b-tooltip.hover title="Duplicate Invoice"
+                   :title="t('duplicate')"
                    @click="duplicateInvoice(invoice.id)">
                   copy
                 </i>
@@ -64,12 +64,10 @@
 </template>
 <script>
 import { mapState, mapStores } from 'pinia';
-import { vBTooltip } from 'bootstrap-vue-next';
 import { useTranslation } from 'i18next-vue';
 import dayjs from 'dayjs';
-import { formatDate } from '@/filters/date.filter';
 import EmptyState from '@/components/EmptyState.vue';
-import { formatCurrency } from '@/filters/currency.filter';
+import { formatCurrency, formatDate } from '@/utils/format';
 import { useInvoicesStore } from '@/store/invoices';
 
 export default {
@@ -85,9 +83,6 @@ export default {
   components: {
     EmptyState,
   },
-  directives: {
-    'b-tooltip': vBTooltip,
-  },
   computed: {
     ...mapStores(useInvoicesStore),
     ...mapState(useInvoicesStore, { allInvoices: 'all' }),
@@ -95,9 +90,6 @@ export default {
       // Use prop if provided, otherwise fallback to store
       return this.invoices || this.allInvoices;
     },
-  },
-  mounted() {
-    this.invoicesStore.getInvoices();
   },
   methods: {
     formatDate,

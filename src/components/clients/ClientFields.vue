@@ -23,7 +23,7 @@ import NotificationService from '@/services/notification.service';
 import ConfirmService from '@/services/confirm.service';
 import AppInput from '@/components/form/AppInput.vue';
 import AppEditable from '@/components/form/AppEditable.vue';
-import { useClientFieldsStore } from '@/store/client-fields';
+import { useClientsStore } from '@/store/clients';
 
 export default {
   setup() {
@@ -35,43 +35,25 @@ export default {
     AppInput,
   },
   computed: {
-    ...mapStores(useClientFieldsStore),
-    isNew() {
-      return this.client && this.client.$isNew;
-    },
+    ...mapStores(useClientsStore),
   },
   methods: {
     addNewField() {
-      this.clientFieldsStore.addNewField(this.client.id);
+      this.clientsStore.addField(this.client.id);
     },
     async removeField(field) {
       const confirmed = await ConfirmService.confirm(`${this.t('delete_modal.title')} ${field.label}?`, {
         okTitle: this.t('delete_modal.ok_title'),
         okVariant: 'danger',
         cancelTitle: this.t('delete_modal.cancel_title'),
-        cancelVariant: 'btn-link',
-        contentClass: 'bg-base dp--24',
       });
       if (confirmed) {
-        await this.clientFieldsStore.deleteClientField(field.id);
-        try {
-          NotificationService.success(this.t('notification_deleted'));
-        } catch (err) {
-          NotificationService.error(err.message);
-        }
+        await this.clientsStore.deleteField(this.client.id, field.id);
+        NotificationService.success(this.t('notification_deleted'));
       }
     },
     updateFieldProp(props, field) {
-      if (this.isNew) {
-        return this.clientFieldsStore.clientFieldProps({
-          props,
-          fieldId: field.id,
-        });
-      }
-      this.clientFieldsStore.updateClientField({
-        props,
-        fieldId: field.id,
-      });
+      this.clientsStore.updateField(this.client.id, field.id, props);
     },
   },
 };

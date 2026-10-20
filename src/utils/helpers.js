@@ -1,51 +1,26 @@
-/* eslint-disable */
 import dayjs from 'dayjs';
+import i18next from 'i18next';
 
 export function uuidv4() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    var r = Math.random() * 16 | 0,
-      v = c == 'x' ? r : (r & 0x3 | 0x8);
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
     return v.toString(16);
   });
 }
 
-export function range(end, start = 0, step = 1) {
-  const arr = [];
-  for (let i = start; i < end; i += step) {
-    arr.push(i);
-  }
-  return arr;
-}
-
-/**
- * Returns a subset of the object based on a map of keys
- *
- * @param obj
- * @param map
- */
-export function pick(obj, map) {
-  const pickedKeys = Object.keys(obj)
-    .filter(field => Object.hasOwn(map, field));
-  const objSubset = {};
-  pickedKeys.forEach((key) => {
-    objSubset[map[key]] = obj[key];
-  });
-  return objSubset;
-}
-
-
 export function validate(requiredFields, input) {
   const errors = {};
 
-  for (let [key, value] of Object.entries(requiredFields)) {
+  Object.entries(requiredFields).forEach(([key, value]) => {
     if (Array.isArray(input[key])) {
       input[key].forEach((subInput, index) => {
-        for (let [subKey, subValue] of Object.entries(value)) {
+        Object.entries(value).forEach(([subKey, subValue]) => {
           const error = validateField(subInput, subKey, subValue);
           if (error) {
             errors[`${key}.${index}.${subKey}`] = error;
           }
-        }
+        });
       });
     } else {
       const error = validateField(input, key, value);
@@ -53,7 +28,7 @@ export function validate(requiredFields, input) {
         errors[key] = error;
       }
     }
-  }
+  });
 
   return { errors };
 }
@@ -65,31 +40,28 @@ export function validateField(input, field, label) {
   return null;
 }
 
-const ORM_FLAGS = ['$id', '$isNew', '$isDirty'];
+const LEGACY_FLAGS = ['$id', '$isNew', '$isDirty'];
 
 /**
- * Removes ORM bookkeeping flags at any depth. Data saved by the old Vuex ORM
- * still carries them on nested records, and `$isDirty` would shadow the
- * pinia-orm model method of the same name.
+ * Removes the bookkeeping flags the old Vuex ORM left on records, at any depth.
  */
-export function stripOrmFlags(value) {
+export function stripLegacyFlags(value) {
   if (Array.isArray(value)) {
-    return value.map(stripOrmFlags);
+    return value.map(stripLegacyFlags);
   }
   if (value && typeof value === 'object') {
     return Object.fromEntries(Object.entries(value)
-      .filter(([key]) => !ORM_FLAGS.includes(key))
-      .map(([key, val]) => [key, stripOrmFlags(val)]));
+      .filter(([key]) => !LEGACY_FLAGS.includes(key))
+      .map(([key, val]) => [key, stripLegacyFlags(val)]));
   }
   return value;
 }
 
 /**
- * Returns a plain copy of a model that is safe to persist: no reactive proxies
- * (IndexedDB can't clone them) and no ORM bookkeeping flags.
+ * Returns a plain copy that is safe to persist: no reactive proxies (IndexedDB can't clone them).
  */
 export function toStorable(obj) {
-  return stripOrmFlags(JSON.parse(JSON.stringify(obj)));
+  return JSON.parse(JSON.stringify(obj));
 }
 
 /**
@@ -107,51 +79,54 @@ export function generateInvoiceNumber(invoices, date = dayjs()) {
 }
 
 export function download(data, filename, type) {
-  var file = new Blob([data], { type: type });
-  if (window.navigator.msSaveOrOpenBlob) // IE10+
-  {
-    window.navigator.msSaveOrOpenBlob(file, filename);
-  } else { // Others
-    var a = document.createElement('a'),
-      url = URL.createObjectURL(file);
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(function () {
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-    }, 0);
-  }
+  const url = URL.createObjectURL(new Blob([data], { type }));
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => {
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, 0);
 }
 
-export async function storeInBucket (data, filename, type) {
+function s3ObjectUrl(bucket, region, key) {
+  const path = key.split('/').map(encodeURIComponent).join('/');
+  // Buckets with dots break the virtual-hosted TLS certificate, so use path-style for those.
+  return bucket.includes('.')
+    ? `https://s3.${region}.amazonaws.com/${bucket}/${path}`
+    : `https://${bucket}.s3.${region}.amazonaws.com/${path}`;
+}
+
+export async function storeInBucket(data, filename, type) {
   const timestamp = new Date().toISOString();
   const filenameWithTimestamp = `${timestamp}-${filename}`;
+  const region = import.meta.env.VUE_APP_AWS_REGION;
 
   try {
-    // The S3 SDK is large and only needed for backups, so load it on demand.
-    const { S3Client, PutObjectCommand } = await import('@aws-sdk/client-s3');
-    const s3 = new S3Client({
-      region: import.meta.env.VUE_APP_AWS_REGION,
-      credentials: {
-        accessKeyId: import.meta.env.VUE_APP_AWS_ACCESS_KEY_ID,
-        secretAccessKey: import.meta.env.VUE_APP_AWS_SECRET_ACCESS_KEY,
-      },
+    const { AwsClient } = await import('aws4fetch');
+    const aws = new AwsClient({
+      accessKeyId: import.meta.env.VUE_APP_AWS_ACCESS_KEY_ID,
+      secretAccessKey: import.meta.env.VUE_APP_AWS_SECRET_ACCESS_KEY,
+      region,
+      service: 's3',
     });
+    const url = s3ObjectUrl(import.meta.env.VUE_APP_BUCKET_NAME, region, `serverless-invoices/${filenameWithTimestamp}`);
+    const res = await aws.fetch(url, {
+      method: 'PUT',
+      body: data,
+      headers: { 'Content-Type': type },
+    });
+    if (!res.ok) {
+      throw new Error(`S3 responded ${res.status}: ${await res.text()}`);
+    }
 
-    await s3.send(new PutObjectCommand({
-      Bucket: import.meta.env.VUE_APP_BUCKET_NAME,
-      Key: `serverless-invoices/${filenameWithTimestamp}`,
-      Body: data,
-      ContentType: type
-    }));
-
-    alert('Backup successfully saved!');
+    alert(i18next.t('invoices:backup_saved'));
     return filenameWithTimestamp;
   } catch (error) {
     console.error('Error uploading to S3:', error);
-    alert('Failed to upload file to S3. Please try again.');
+    alert(i18next.t('invoices:backup_failed'));
     throw error;
   }
 }

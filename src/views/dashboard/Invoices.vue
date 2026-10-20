@@ -5,19 +5,19 @@
               <h4 class="mb-0">
                 {{ t('title') }}
                 <span class="badge fw-light">
-                  <span class="text-primary" v-b-tooltip.hover title="Total Invoiced">
+                  <span class="text-primary" :title="t('total_invoiced')">
                     {{ getInvoiceTotals().amount }} ({{ getInvoiceTotals().count }})
                   </span>
                   <span class="text-secondary mx-2">|</span>
-                  <span class="text-success" v-b-tooltip.hover title="Total Paid">
+                  <span class="text-success" :title="t('total_paid')">
                     {{ getInvoiceTotals('paid').amount }} ({{ getInvoiceTotals('paid').count }})
                   </span>
                   <span class="text-secondary mx-2">|</span>
-                  <span class="text-info" v-b-tooltip.hover title="Total Booked">
+                  <span class="text-info" :title="t('total_booked')">
                     {{ getInvoiceTotals('booked').amount }} ({{ getInvoiceTotals('booked').count }})
                   </span>
                   <span class="text-secondary mx-2">|</span>
-                  <span class="text-danger" v-b-tooltip.hover title="Total Pending">
+                  <span class="text-danger" :title="t('total_pending')">
                     {{ getInvoiceTotals('sent').amount }} ({{ getInvoiceTotals('sent').count }})
                   </span>
                 </span>
@@ -25,29 +25,28 @@
                 <div>
                     <small class="me-3"
                            :class="isBackupStale ? 'text-danger' : 'text-muted'"
-                           v-b-tooltip.hover
-                           :title="lastBackupAt ? new Date(lastBackupAt).toLocaleString() : 'Use Save in S3 in the menu'">
-                        Last backup: {{ lastBackupLabel }}
+                           :title="lastBackupAt ? new Date(lastBackupAt).toLocaleString(locale) : t('last_backup_hint')">
+                        {{ t('last_backup', { when: lastBackupLabel }) }}
                     </small>
                     <button class="btn btn-sm btn-outline-secondary me-2"
                             @click="openCustomerRankingModal">
                       <i class="material-icons md-18 me-1">leaderboard</i>
-                      Customer Ranking
+                      {{ t('customer_ranking') }}
                     </button>
                     <button class="btn btn-sm btn-outline-dark"
                             @click="createNewInvoice">{{ t('new_invoice') }}
                     </button>
-                    <BDropdown variant="link" size="sm" no-caret placement="bottom-end">
+                    <AppDropdown size="sm">
                         <template #button-content>
                             <i class="material-icons">more_vert</i>
                         </template>
 
-                        <BDropdownItem @click="openClientsListModal">{{ t('manage_customers') }}</BDropdownItem>
+                        <li><button type="button" class="dropdown-item" @click="openClientsListModal">{{ t('manage_customers') }}</button></li>
 
-                        <BDropdownDivider divider-class="my-3"/>
+                        <li><hr class="dropdown-divider my-3"></li>
 
                         <li class="dropdown-item-text px-3 pb-3">
-                            <label class="form-label mb-2 text-muted small">Financial Year Start</label>
+                            <label class="form-label mb-2 text-muted small">{{ t('fy_start') }}</label>
                             <select
                                 v-model="selectedFyStartMonth"
                                 class="form-select form-select-sm"
@@ -86,13 +85,13 @@
                             </div>
                         </li>
 
-                        <BDropdownDivider divider-class="my-3"/>
+                        <li><hr class="dropdown-divider my-3"></li>
 
-                        <BDropdownItem @click="exportJson">{{ t('export') }}</BDropdownItem>
-                        <BDropdownItem @click="openImportModal">{{ t('import') }}</BDropdownItem>
-                        <li role="presentation"><span class="dropdown-item">—</span></li>
-                        <BDropdownItem @click="saveJson">Save in S3</BDropdownItem>
-                    </BDropdown>
+                        <li><button type="button" class="dropdown-item" @click="exportJson">{{ t('export') }}</button></li>
+                        <li><button type="button" class="dropdown-item" @click="openImportModal">{{ t('import') }}</button></li>
+                        <li role="presentation"><span class="dropdown-item-text px-4">—</span></li>
+                        <li><button type="button" class="dropdown-item" @click="saveJson">{{ t('save_in_s3') }}</button></li>
+                    </AppDropdown>
                 </div>
             </div>
         </div>
@@ -136,7 +135,7 @@
                     </div>
                     <div class="search-results-summary ms-3" v-if="searchQuery">
                         <span class="text-muted small">
-                            {{ filteredInvoices.length }} {{ filteredInvoices.length === 1 ? 'invoice' : 'invoices' }}
+                            {{ t('invoice_count', { count: filteredInvoices.length }) }}
                             <span class="mx-1">·</span>
                             <span class="font-weight-medium">{{ formatCurrency(filteredInvoicesTotal) }}</span>
                         </span>
@@ -157,30 +156,28 @@
         </div>
 
         <!-- Manage Customers Modal -->
-        <BModal v-model="isClientsListModalOpen"
-                 centered
-                 no-footer
-                 :title="t('manage_customers')"
-                 size="lg"
-                 content-class="bg-base dp--24">
+        <AppModal v-model="isClientsListModalOpen"
+                  centered
+                  :title="t('manage_customers')"
+                  size="lg"
+                  content-class="bg-base dp--24">
             <ClientsList/>
-        </BModal>
+        </AppModal>
 
         <!-- Customer Ranking Modal -->
-        <BModal v-model="isCustomerRankingModalOpen"
-                 centered
-                 no-footer
-                 title="Customer Ranking by Invoiced Amounts"
-                 size="lg"
-                 content-class="bg-base dp--24">
+        <AppModal v-model="isCustomerRankingModalOpen"
+                  centered
+                  :title="t('ranking_title')"
+                  size="lg"
+                  content-class="bg-base dp--24">
             <div v-if="customerRanking.length > 0">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <small class="text-muted">Showing top customers by total invoiced amounts</small>
-                    <small class="text-muted">{{ customerRanking.length }} customers</small>
+                    <small class="text-muted">{{ t('ranking_subtitle') }}</small>
+                    <small class="text-muted">{{ t('customer_count', { count: customerRanking.length }) }}</small>
                 </div>
                 <div class="list-group">
                     <div v-for="(customer, index) in customerRanking"
-                         :key="customer.name || 'Unknown'"
+                         :key="customer.name"
                          class="list-group-item d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
                             <div class="ranking-position me-3">
@@ -191,10 +188,10 @@
                             </div>
                             <div>
                                 <div class="fw-bold">
-                                    {{ customer.name || 'Unknown Customer' }}
+                                    {{ customer.name || t('unknown_customer') }}
                                 </div>
                                 <small class="text-muted">
-                                    {{ customer.invoiceCount }} invoice{{ customer.invoiceCount !== 1 ? 's' : '' }}
+                                    {{ t('invoice_count', { count: customer.invoiceCount }) }}
                                 </small>
                             </div>
                         </div>
@@ -209,22 +206,23 @@
             </div>
             <div v-else class="text-center py-4">
                 <i class="material-icons md-48 text-muted">people_outline</i>
-                <p class="text-muted mt-2">No invoices found</p>
+                <p class="text-muted mt-2">{{ t('no_invoices') }}</p>
             </div>
-        </BModal>
+        </AppModal>
     </div>
 </template>
 
 <script>
 import { mapState, mapStores } from 'pinia';
-import {
-  BDropdown, BDropdownDivider, BDropdownItem, BModal, vBTooltip,
-} from 'bootstrap-vue-next';
 import { useTranslation } from 'i18next-vue';
 import InvoicesList from '@/components/invoices/InvoicesList.vue';
 import ClientsList from '@/components/clients/ClientsList.vue';
-import { fromNow } from '@/filters/date.filter';
+import AppDropdown from '@/components/ui/AppDropdown.vue';
+import AppModal from '@/components/ui/AppModal.vue';
+import { intlLocale } from '@/config/i18n.config';
+import { fromNow } from '@/utils/format';
 import { useDataStore } from '@/store/data';
+import { useLanguageStore } from '@/store/language';
 import { useInvoicesStore } from '@/store/invoices';
 import { useTeamsStore } from '@/store/teams';
 
@@ -236,13 +234,8 @@ export default {
   components: {
     InvoicesList,
     ClientsList,
-    BDropdown,
-    BDropdownDivider,
-    BDropdownItem,
-    BModal,
-  },
-  directives: {
-    'b-tooltip': vBTooltip,
+    AppDropdown,
+    AppModal,
   },
   data() {
     return {
@@ -253,20 +246,6 @@ export default {
       showFySummary: this.loadShowFySummary(),
       searchQuery: '',
       copiedToClipboard: false,
-      monthOptions: [
-        { value: 1, text: 'January' },
-        { value: 2, text: 'February' },
-        { value: 3, text: 'March' },
-        { value: 4, text: 'April' },
-        { value: 5, text: 'May' },
-        { value: 6, text: 'June' },
-        { value: 7, text: 'July' },
-        { value: 8, text: 'August' },
-        { value: 9, text: 'September' },
-        { value: 10, text: 'October' },
-        { value: 11, text: 'November' },
-        { value: 12, text: 'December' },
-      ],
     };
   },
   computed: {
@@ -274,8 +253,19 @@ export default {
     ...mapState(useTeamsStore, ['team']),
     ...mapState(useInvoicesStore, { invoices: 'all' }),
     ...mapState(useDataStore, ['lastBackupAt']),
+    ...mapState(useLanguageStore, { languageCode: 'code' }),
+    locale() {
+      return intlLocale(this.languageCode);
+    },
+    monthOptions() {
+      const format = new Intl.DateTimeFormat(this.locale, { month: 'long' });
+      return Array.from({ length: 12 }, (_, index) => ({
+        value: index + 1,
+        text: format.format(new Date(2000, index, 1)),
+      }));
+    },
     lastBackupLabel() {
-      return this.lastBackupAt ? fromNow(this.lastBackupAt) : 'never';
+      return this.lastBackupAt ? fromNow(this.lastBackupAt, this.locale) : this.t('never');
     },
     isBackupStale() {
       const weekMs = 7 * 24 * 60 * 60 * 1000;
@@ -376,7 +366,7 @@ export default {
       setTimeout(() => { this.copiedToClipboard = false; }, 2000);
     },
     createNewInvoice() {
-      this.invoicesStore.createNewInvoice()
+      this.invoicesStore.createInvoice()
         .then(id => this.$router.push({ name: 'invoice', params: { id } }));
     },
     exportJson() {
@@ -435,11 +425,12 @@ export default {
           // If January is selected as FY start, show natural calendar year
           const fyLabel = this.selectedFyStartMonth === 1
             ? fyStart.toString()
-            : `FY ${fyStart}-${fyEnd.toString().slice(-2)}`;
-          const monthYear = date.toLocaleString('default', { month: 'short', year: 'numeric' });
+            : this.t('financial_year', { start: fyStart, end: fyEnd.toString().slice(-2) });
+          const monthYear = date.toLocaleString(this.locale, { month: 'short', year: 'numeric' });
 
           if (!fyData[fyLabel]) {
             fyData[fyLabel] = {
+              fyStart,
               total: 0,
               months: {}
             };
@@ -458,24 +449,7 @@ export default {
 
       // Convert to array format and sort
       return Object.keys(fyData)
-        .sort((a, b) => {
-          // Extract year for sorting, handling both "2024" and "FY 24-25" formats
-          let yearA, yearB;
-
-          if (a.startsWith('FY ')) {
-            yearA = parseInt(a.split(' ')[1].split('-')[0]);
-          } else {
-            yearA = parseInt(a);
-          }
-
-          if (b.startsWith('FY ')) {
-            yearB = parseInt(b.split(' ')[1].split('-')[0]);
-          } else {
-            yearB = parseInt(b);
-          }
-
-          return yearB - yearA; // Most recent first
-        })
+        .sort((a, b) => fyData[b].fyStart - fyData[a].fyStart) // Most recent first
         .map(fyLabel => ({
           label: fyLabel,
           total: this.formatCurrency(fyData[fyLabel].total.toFixed(0)),

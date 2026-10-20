@@ -8,57 +8,36 @@
             </transition>
         </router-view>
         <notifications position="bottom center" classes="snackbar" width="332"/>
-        <BOrchestrator/>
+        <AppConfirm/>
     </div>
 </template>
 
 <script>
-import { mapWritableState } from 'pinia';
-import { BOrchestrator, useModal } from 'bootstrap-vue-next';
-import ConfirmService from '@/services/confirm.service';
-import { useThemesStore } from '@/store/themes';
+import AppConfirm from '@/components/ui/AppConfirm.vue';
+import { raiseToasts } from '@/services/notification.service';
 
 export default {
   name: 'app',
   components: {
-    BOrchestrator,
-  },
-  setup() {
-    ConfirmService.init(useModal());
-  },
-  computed: {
-    ...mapWritableState(useThemesStore, ['theme']),
+    AppConfirm,
   },
   created() {
     this.pauseAnimationsUntilLoaded();
   },
   mounted() {
-    this.initColorScheme();
+    raiseToasts();
   },
   methods: {
     jsLoaded() {
       document.body.classList.remove('js-loading');
     },
     pauseAnimationsUntilLoaded() {
-      document.body.classList.add('js-loading');
-      window.addEventListener('load', this.jsLoaded, false);
-    },
-    initColorScheme() {
-      // local storage is used to override OS theme settings
-      if (localStorage.getItem('theme')) {
-        if (localStorage.getItem('theme') === 'dark') {
-          this.theme = 'dark';
-          return document.documentElement.setAttribute('data-theme', 'dark');
-        }
-      } else if (!window.matchMedia) {
-        // matchMedia method not supported
-        return false;
-      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        // OS theme setting detected as dark
-        this.theme = 'dark';
-        return document.documentElement.setAttribute('data-theme', 'dark');
+      // The app mounts after translations load, which is often after the page's `load` event.
+      if (document.readyState === 'complete') {
+        return;
       }
-      document.documentElement.setAttribute('data-theme', this.theme || 'light');
+      document.body.classList.add('js-loading');
+      window.addEventListener('load', this.jsLoaded, { once: true });
     },
   },
 };

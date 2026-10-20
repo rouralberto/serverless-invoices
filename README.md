@@ -43,6 +43,7 @@ Built with [Vue 3](https://vuejs.org/), [Vite](https://vite.dev/), [Pinia](https
 ## Requirements
 
 - Node 20.19+ or 22.12+
+- A current browser (Chrome/Edge 114+, Firefox 125+, Safari 17+): the UI uses native dialogs and popovers
 - Docker (optional, for containerized setup)
 
 ## Project Setup

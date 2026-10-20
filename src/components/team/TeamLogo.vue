@@ -8,12 +8,11 @@
             <i class="material-icons material-icons-round md-36">file_upload</i>
         </button>
         <AppError :errors="errors" field="logo_url"/>
-        <BModal v-model="isModalOpen"
-                centered
-                :title="t('modal_title')"
-                no-footer
-                size="sm"
-                content-class="bg-base dp--24 text-center">
+        <AppModal v-model="isModalOpen"
+                  centered
+                  :title="t('modal_title')"
+                  size="sm"
+                  content-class="bg-base dp--24 text-center">
             <AppFileInput accept="image/*" class="mb-4" @selected="logoSelected"
                           :button-text="t('button_text')" output-type="base64"/>
             {{ t('or') }}
@@ -24,16 +23,16 @@
                       field="logo_url"
                       :errors="errors"
                       type="url"/>
-        </BModal>
+        </AppModal>
     </div>
 </template>
 <script>
 import { mapState, mapStores } from 'pinia';
-import { BModal } from 'bootstrap-vue-next';
 import { useTranslation } from 'i18next-vue';
 import AppError from '@/components/form/AppError.vue';
 import AppInput from '@/components/form/AppInput.vue';
 import AppFileInput from '@/components/form/AppFileInput.vue';
+import AppModal from '@/components/ui/AppModal.vue';
 import { useTeamsStore } from '@/store/teams';
 
 export default {
@@ -45,7 +44,7 @@ export default {
     AppFileInput,
     AppError,
     AppInput,
-    BModal,
+    AppModal,
   },
   data() {
     return {

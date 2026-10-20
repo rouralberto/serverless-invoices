@@ -1,10 +1,8 @@
 <template>
-    <BModal v-model="isOpen"
-            centered
-            no-footer
-            :title="t('title')"
-            size="md"
-            content-class="bg-base dp--24 text-center">
+    <AppModal v-model="isOpen"
+              centered
+              :title="t('title')"
+              content-class="bg-base dp--24 text-center">
         <p>
             <AppFileInput @selected="onSelected" :button-text="t('button_text')"/>
             <AppError :errors="errors" field="file"/>
@@ -12,17 +10,17 @@
         <p>
             <small>{{ t('warning') }}</small>
         </p>
-    </BModal>
+    </AppModal>
 </template>
 
 <script>
 import { mapStores, mapWritableState } from 'pinia';
-import { BModal } from 'bootstrap-vue-next';
 import { useTranslation } from 'i18next-vue';
 import { useDataStore } from '@/store/data';
 import AppFileInput from './form/AppFileInput.vue';
 import Errors from '../utils/errors';
 import AppError from './form/AppError.vue';
+import AppModal from './ui/AppModal.vue';
 
 export default {
   setup() {
@@ -31,7 +29,7 @@ export default {
   components: {
     AppError,
     AppFileInput,
-    BModal,
+    AppModal,
   },
   data() {
     return {

@@ -1,0 +1,292 @@
+{
+  "bank-account-form": {
+    "title": "ব্যাংক অ্যাকাউন্ট",
+    "bank_name": "ব্যাংক নাম",
+    "account_no": "ব্যাংক অ্যাকাউন্ট খুঁটিনাটি",
+    "loading": "লোডিং",
+    "done": "সম্পন্ন",
+    "create": "ক্রিয়েট",
+    "notification_updated": "আপডেটেড"
+  },
+  "bank-accounts-list": {
+    "loading": "লোডিং",
+    "bank": "ব্যাংক",
+    "bank_account_details": "ব্যাংক অ্যাকাউন্ট খুঁটিনাটি",
+    "add_bank_account": "ব্যাংক অ্যাকাউন্ট যোগ"
+  },
+  "client-fields": {
+    "label": "লেবেল",
+    "field": "ফিল্ড",
+    "delete_modal": {
+      "title": "ডিলিট ফিল্ড",
+      "ok_title": "ডিলিট",
+      "cancel_title": "ডিস্‌মিস্‌"
+    },
+    "notification_deleted": "ডিলিটেড"
+  },
+  "client-form": {
+    "title": "ক্লায়েন্ট",
+    "delete": "ডিলিট",
+    "done": "সম্পন্ন",
+    "create": "ক্রিয়েট",
+    "loading": "লোডিং",
+    "tabs": {
+      "general": "জেনারেল",
+      "invoicing": "চালান",
+      "address": "ঠিকানা"
+    },
+    "general": {
+      "company_name": "কোম্পানীর নাম",
+      "invoice_email": "ইমেইল"
+    },
+    "invoicing": {
+      "currency": "মুদ্রা",
+      "rate": "প্রতি ঘণ্টার মূল্য",
+      "has_tax": "কর প্রযোজ্য",
+      "bank_account": "ব্যাংক অ্যাকাউন্ট"
+    },
+    "address": {
+      "company_address": "কোম্পানীর ঠিকানা",
+      "company_postal_code": "পোস্টাল কোড",
+      "company_city": "শহর",
+      "company_county": "বিভাগ/রাষ্ট্র",
+      "company_country": "দেশ"
+    },
+    "delete_modal": {
+      "title": "ডিলিট ক্লায়েন্ট",
+      "ok_title": "ডিলিট",
+      "cancel_title": "ডিস্‌মিস্‌"
+    },
+    "notification_deleted": "ডিলিটেড",
+    "notification_updated": "আপডেটেড"
+  },
+  "client-selector": {
+    "client": "ক্লায়েন্ট",
+    "create": "ক্রিয়েট",
+    "new": "নতুন",
+    "suggest_placeholder": "ক্লায়েন্ট খুঁজুন"
+  },
+  "clients-list": {
+    "title": "গ্রাহক পরিচালনা",
+    "loading": "লোড হচ্ছে",
+    "company_name": "কোম্পানির নাম",
+    "email": "ইমেইল",
+    "city": "শহর",
+    "add_client": "গ্রাহক যোগ করুন",
+    "search_placeholder": "গ্রাহক খুঁজুন...",
+    "delete_modal": {
+      "title": "গ্রাহক মুছুন",
+      "ok_title": "মুছুন",
+      "cancel_title": "বাতিল"
+    },
+    "notification_deleted": "গ্রাহক মুছে ফেলা হয়েছে"
+  },
+  "customizations-modal": {
+    "title": "Customize your invoices",
+    "textarea_label": "Insert your custom CSS",
+    "updated": "Updated"
+  },
+  "empty-state": {
+    "content": "এখানে কিছুই নাই এখনও"
+  },
+  "import-modal": {
+    "title": "তথ্য ইমপোর্ট",
+    "warning": "আপনার বর্তমান তথ্যাদি মুছে যাবে এবং নতুন তথ্য দ্বারা ওভাররাইট করা হবে!",
+    "button_text": "সিলেক্ট ইমপোর্ট ফাইল",
+    "import-error": "ভুল JSON ফরম্যাট"
+  },
+  "invoice-bank-details": {
+    "bank_name": "ব্যাংক যোগ করুন",
+    "bank_account_no": "ব্যাংক ডিটেলস যোগ করুন",
+    "bank_account_modal_title": "সিলেক্ট ব্যাংক অ্যাকাউন্ট"
+  },
+  "invoice-client-details": {
+    "client_address": " ঠিকানা",
+    "client_postal_code": "পোস্টাল কোড",
+    "client_city": " শহর",
+    "client_county": "বিভাগ/রাষ্ট্র",
+    "client_country": "দেশ",
+    "client_email": " ক্লায়েন্ট'স ইমেইল"
+  },
+  "invoice-company-details": {
+    "your_company_name": "আপনার কোম্পানীর নাম",
+    "address": "ঠিকানা",
+    "postal_code": "পোস্টাল কোড",
+    "city": "শহর",
+    "county": "বিভাগ/রাষ্ট্র",
+    "country": "দেশ",
+    "your_email": "আপনার ইমেইল"
+  },
+  "invoice-contact-details": {
+    "add_website": "ওয়েবসাইট যোগ করুন",
+    "add_email": "ইমেইল যোগ করুন",
+    "add_phone": "ফোন যোগ করুন"
+  },
+  "invoice-controls": {
+    "back": "ব্যাক",
+    "book": "বুক",
+    "design_and_layout": "Design & layout",
+    "compact": "Compact",
+    "comfortable": "Comfortable",
+    "customize": "Customize",
+    "download_pdf": "ডাউনলোড পিডিএফ",
+    "delete": "ডিলিট",
+    "delete_modal": {
+      "title": "ডিলিট চালান",
+      "ok_title": "ডিলিট",
+      "cancel_title": "ডিস্‌মিস্‌"
+    },
+    "notification_deleted": "ডিলিটেড"
+  },
+  "invoice-form": {
+    "insert_note": "নোট যোগ করুন"
+  },
+  "invoice-header": {
+    "invoice_title": "চালান",
+    "invoice_number": "নাম্বার",
+    "issued_at": "জারি: ",
+    "due_at": "পরিশোধনীয়:",
+    "late_fee": "জরিমানা:",
+    "add_late_fee": "জরিমানা যোগ করুন"
+  },
+  "invoice-row": {
+    "enter_item": "আইটেম লিখুন",
+    "enter_quantity": "আইটেম সংখ্যা",
+    "enter_unit": "ইউনিট লিখুন",
+    "enter_price": "দাম লিখুন",
+    "enter_tax": "ট্যাক্স লিখুন"
+  },
+  "invoice-rows-header": {
+    "item": "আইটেম",
+    "quantity": "সংখ্যা",
+    "unit": "ইউনিট",
+    "price": "দাম",
+    "sum": "যোগ"
+  },
+  "invoice-totals": {
+    "subtotal": "উপ-মোট",
+    "total": "সর্বমোট",
+    "add_currency": "মুদ্রা যুক্ত করুন"
+  },
+  "invoices": {
+    "title": "চালান সমূহ",
+    "new_invoice": "নতুন চালান",
+    "export": "এক্সপোর্ট",
+    "import": "ইমপোর্ট",
+    "hide_paid_invoices": "পরিশোধিত চালান লুকান",
+    "show_fy_summary": "আর্থিক বছরের সারসংক্ষেপ দেখান",
+    "search_client_placeholder": "গ্রাহকের নাম দিয়ে অনুসন্ধান করুন...",
+    "manage_customers": "গ্রাহক পরিচালনা",
+    "customer_ranking": "গ্রাহক র‍্যাঙ্কিং",
+    "fy_start": "আর্থিক বছরের শুরু",
+    "financial_year": "অর্থবছর {{start}}-{{end}}",
+    "save_in_s3": "S3-এ সংরক্ষণ করুন",
+    "last_backup": "শেষ ব্যাকআপ: {{when}}",
+    "never": "কখনও না",
+    "last_backup_hint": "মেনু থেকে “S3-এ সংরক্ষণ করুন” ব্যবহার করুন",
+    "backup_saved": "ব্যাকআপ সফলভাবে সংরক্ষিত হয়েছে!",
+    "backup_failed": "S3-এ ফাইল আপলোড ব্যর্থ হয়েছে। আবার চেষ্টা করুন।",
+    "total_invoiced": "মোট চালানকৃত",
+    "total_paid": "মোট পরিশোধিত",
+    "total_booked": "মোট বুক করা",
+    "total_pending": "মোট বকেয়া",
+    "invoice_count_one": "{{count}}টি চালান",
+    "invoice_count_other": "{{count}}টি চালান",
+    "ranking_title": "চালানকৃত অর্থ অনুযায়ী গ্রাহক র‍্যাঙ্কিং",
+    "ranking_subtitle": "মোট চালানকৃত অর্থ অনুযায়ী শীর্ষ গ্রাহক",
+    "customer_count_one": "{{count}} জন গ্রাহক",
+    "customer_count_other": "{{count}} জন গ্রাহক",
+    "unknown_customer": "অজানা গ্রাহক",
+    "no_invoices": "কোনো চালান পাওয়া যায়নি"
+  },
+  "invoices-list": {
+    "invoice_number": "নাম্বার",
+    "client": "ক্লায়েন্ট",
+    "issued_at": "জারি",
+    "total": "সর্বমোট",
+    "status": "স্ট্যাটাস",
+    "overdue": "মেয়াদোত্তীর্ণ",
+    "duplicate": "চালান ডুপ্লিকেট করুন",
+    "tax_amount": "({{amount}} কর)"
+  },
+  "statuses": {
+    "statuses": {
+      "draft": "খসড়া",
+      "booked": "বুকড",
+      "sent": "প্রেরিত",
+      "paid": "পেইড",
+      "written_off": "মওকুফ",
+      "cancelled": "বাতিল করা হয়েছে"
+    }
+  },
+  "team-fields": {
+    "label": "লেবেল",
+    "field": "ফিল্ড",
+    "delete_modal": {
+      "title": "ডিলিট ফিল্ড",
+      "ok_title": "ডিলিট",
+      "cancel_title": "ডিস্‌মিস্‌"
+    },
+    "notification_delete": "ডিলিটেড"
+  },
+  "team-form": {
+    "title": "আপনার কোম্পানী",
+    "done": "সম্পন্ন",
+    "updated": "আপডেটেড",
+    "loading": "লোডিং",
+    "tabs": {
+      "general": "জেনারেল",
+      "invoicing": "চালান",
+      "address": "ঠিকানা",
+      "taxes": "ট্যাক্স"
+    },
+    "general": {
+      "company_name": "কোম্পানীর নাম",
+      "contact_email": "ইমেইল",
+      "contact_phone": "ফোন",
+      "website": "ওয়েবসাইট",
+      "logo": "লোগো"
+    },
+    "invoicing": {
+      "invoice_late_fee": "জরিমানা (%)",
+      "invoice_due_days": "পরিশোধের শর্ত, দিন",
+      "currency": "প্রচলিত মুদ্রা"
+    },
+    "address": {
+      "company_address": "কোম্পানীর ঠিকানা",
+      "company_postal_code": "পোস্টাল কোড",
+      "company_city": "শহর",
+      "company_county": "বিভাগ/রাষ্ট্র",
+      "company_country": "দেশ"
+    },
+    "tax_modal": {
+      "title": "বর্তমান চালান সারিগুলির জন্য ট্যাক্স ওভাররাইট করবেন?",
+      "ok_title": "ওভাররাইট",
+      "cancel_title": "ডিস্‌মিস্‌",
+      "taxes_updated": "ট্যাক্স আপডেটেড"
+    }
+  },
+  "team-logo": {
+    "modal_title": "লোগো সিলেক্ট করুন",
+    "button_text": "ফাইলস থেকে সিলেক্ট করুন",
+    "logo_url": "ইমেজ URL লিংক",
+    "logo_url_err": "লোগো অবশ্যই ৫১২কেবির নিচে হতে হবে",
+    "or": "বা"
+  },
+  "team-taxes": {
+    "label": "লেবেল",
+    "tax": "ট্যাক্স",
+    "delete_modal": {
+      "title": "ডিলিট ট্যাক্স",
+      "ok_title": "ডিলিট",
+      "cancel_title": "ডিস্‌মিস্‌"
+    },
+    "notification_deleted": "ডিলিটেড"
+  },
+  "the-footer": {
+    "lights-on": "লাইটস অন",
+    "lights-off": "লাইটস অফ",
+    "title": "আপনার সমস্ত ডেটা কোনও সার্ভারে নয় আপনার ব্রাউজারে সংরক্ষণ করা হয়েছে। \n                                  এই অ্যাপ্লিকেশনটি সত্যিই সার্ভারহীন এবং কেবলমাত্র আপনি আপনার ডেটার অ্যাক্সেস পাবেন",
+    "what_about_my_data": "আমার তথ্য সম্পর্কে কি?"
+  }
+}

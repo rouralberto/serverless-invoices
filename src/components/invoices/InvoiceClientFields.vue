@@ -12,8 +12,7 @@
 <script>
 import { mapStores } from 'pinia';
 import AppEditable from '@/components/form/AppEditable.vue';
-import { useClientFieldsStore } from '@/store/client-fields';
-import { useInvoiceClientFieldsStore } from '@/store/invoice-client-fields';
+import { useInvoicesStore } from '@/store/invoices';
 
 export default {
   props: ['invoice'],
@@ -21,19 +20,12 @@ export default {
     AppEditable,
   },
   computed: {
-    ...mapStores(useInvoiceClientFieldsStore, useClientFieldsStore),
+    ...mapStores(useInvoicesStore),
   },
   methods: {
     updateProp(props, field) {
-      this.invoiceClientFieldsStore.updateInvoiceClientField({
-        props,
-        fieldId: field.id,
-        invoiceId: this.invoice.id,
-      });
-      this.clientFieldsStore.updateClientField({
-        fieldId: field.client_field_id,
-        props,
-      });
+      // Also updates the matching field on the client, so new invoices pick it up.
+      this.invoicesStore.updateClientField(this.invoice.id, field.id, props);
     },
   },
 };

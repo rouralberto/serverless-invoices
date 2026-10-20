@@ -49,9 +49,9 @@
 <script>
 import { mapStores } from 'pinia';
 import { useTranslation } from 'i18next-vue';
-import { formatCurrency } from '../../filters/currency.filter';
+import { formatCurrency } from '@/utils/format';
 import AppEditable from '../form/AppEditable.vue';
-import { useInvoiceRowsStore } from '@/store/invoice-rows';
+import { useInvoicesStore } from '@/store/invoices';
 
 export default {
   setup() {
@@ -63,27 +63,18 @@ export default {
     AppEditable,
   },
   computed: {
-    ...mapStores(useInvoiceRowsStore),
+    ...mapStores(useInvoicesStore),
   },
   methods: {
     formatCurrency,
     updateProp(props) {
-      this.invoiceRowsStore.updateInvoiceRow({
-        props,
-        id: this.row.id,
-        invoiceId: this.row.invoice_id,
-      });
+      this.invoicesStore.updateRow(this.row.invoice_id, this.row.id, props);
     },
     updateTaxProp(props, tax) {
-      this.invoiceRowsStore.updateInvoiceRowTax({
-        props,
-        invoiceId: this.row.invoice_id,
-        taxId: tax.id,
-      });
+      this.invoicesStore.updateRowTax(this.row.invoice_id, this.row.id, tax.id, props);
     },
-    async removeRow(row) {
-      this.invoiceRowsStore.removeRow(row.id);
-      this.updateProp();
+    removeRow(row) {
+      this.invoicesStore.removeRow(row.invoice_id, row.id);
     },
   },
 };

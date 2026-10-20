@@ -8,30 +8,30 @@
             </router-link>
             <div class="d-flex align-items-center">
                 <AppSelect :value="getStatusObj"
-                           class="mb-0 me-2 text-capitalize multiselect--capitalize"
+                           class="mb-0 me-2 text-capitalize"
                            :options="invoiceStatuses"
+                           track-by="value"
                            label-field="name"
                            @input="updateProp({status: $event.value})"/>
                 <button class="btn btn-outline-dark"
                         v-if="invoice.status === 'draft'"
                         @click="bookInvoice">{{ t('book') }}
                 </button>
-                <BDropdown variant="link" no-caret placement="bottom-end">
+                <AppDropdown>
                     <template #button-content>
                         <i class="material-icons">more_vert</i>
                     </template>
-                    <BDropdownGroup :header="t('design_and_layout')">
-                        <BDropdownItemButton @click="toggleCompact">
+                    <li><h6 class="dropdown-header">{{ t('design_and_layout') }}</h6></li>
+                    <li>
+                        <button type="button" class="dropdown-item" @click="toggleCompact">
                             {{ invoice.is_compact ? t('comfortable') : t('compact') }}
-                        </BDropdownItemButton>
-                        <BDropdownItemButton @click="openCustomizationsModal">
-                            {{ t('customize') }}
-                        </BDropdownItemButton>
-                    </BDropdownGroup>
-                    <BDropdownDivider/>
-                    <BDropdownItemButton @click="print">{{ t('download_pdf') }}</BDropdownItemButton>
-                    <BDropdownItemButton @click="deleteInvoice">{{ t('delete') }}</BDropdownItemButton>
-                </BDropdown>
+                        </button>
+                    </li>
+                    <li><button type="button" class="dropdown-item" @click="openCustomizationsModal">{{ t('customize') }}</button></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><button type="button" class="dropdown-item" @click="print">{{ t('download_pdf') }}</button></li>
+                    <li><button type="button" class="dropdown-item" @click="deleteInvoice">{{ t('delete') }}</button></li>
+                </AppDropdown>
             </div>
         </div>
     </div>
@@ -39,16 +39,11 @@
 
 <script>
 import { mapState, mapStores } from 'pinia';
-import {
-  BDropdown,
-  BDropdownDivider,
-  BDropdownGroup,
-  BDropdownItemButton,
-} from 'bootstrap-vue-next';
 import { useTranslation } from 'i18next-vue';
 import NotificationService from '@/services/notification.service';
 import ConfirmService from '@/services/confirm.service';
 import AppSelect from '@/components/form/AppSelect.vue';
+import AppDropdown from '@/components/ui/AppDropdown.vue';
 import { useInvoicesStore } from '@/store/invoices';
 
 export default {
@@ -56,11 +51,7 @@ export default {
     return useTranslation(['invoice-controls', 'statuses']);
   },
   components: {
-    BDropdown,
-    BDropdownDivider,
-    BDropdownItemButton,
-    BDropdownGroup,
-
+    AppDropdown,
     AppSelect,
   },
   computed: {
@@ -98,25 +89,20 @@ export default {
         okTitle: this.t('delete_modal.ok_title'),
         okVariant: 'danger',
         cancelTitle: this.t('delete_modal.cancel_title'),
-        cancelVariant: 'btn-link',
-        contentClass: 'bg-base dp--24',
       });
       if (confirmed) {
-        await this.invoicesStore.deleteInvoice(this.invoice);
-        NotificationService.success('Deleted');
+        await this.invoicesStore.deleteInvoice(this.invoice.id);
+        NotificationService.success(this.t('notification_deleted'));
         this.$router.push({
           name: 'invoices',
         });
       }
     },
     bookInvoice() {
-      this.invoicesStore.bookInvoice();
+      this.invoicesStore.bookInvoice(this.invoice.id);
     },
     updateProp(props) {
-      this.invoicesStore.updateInvoice({
-        props,
-        invoiceId: this.invoice.id,
-      });
+      this.invoicesStore.updateInvoice(this.invoice.id, props);
     },
     toggleCompact() {
       this.updateProp({ is_compact: !this.invoice.is_compact });

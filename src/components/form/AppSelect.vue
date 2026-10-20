@@ -1,63 +1,59 @@
 <template>
-    <div class="form-group multiselect--form-control">
+    <div class="form-group">
         <label :for="field" v-if="label">{{ label }}</label>
-        <Multiselect :id="field"
-                     :options="options"
-                     :track-by="trackBy"
-                     :disabled="disabled"
-                     :label="labelField"
-                     :allow-empty="allowEmpty"
-                     :custom-label="customLabel"
-                     :deselect-label="deselectLabel"
-                     :select-label="selectLabel"
-                     :selected-label="selectedLabel"
-                     :preserve-search="true"
-                     @update:model-value="$emit('input', $event)"
-                     @search-change="$emit('search-change', $event)"
-                     :model-value="value"
-                     :placeholder="placeholder"
-                     :loading="loading"
-                     :class="{
-                         'is-invalid': errors && errors.has(field)
-                     }"
-                     :multiple="multiple"
-        >
-            <template v-for="(_, name) in $slots" #[name]="slotData">
-                <slot :name="name" v-bind="slotData || {}"/>
-            </template>
-        </Multiselect>
+        <select :id="field"
+                class="form-select"
+                :class="{ 'is-invalid': errors && errors.has(field) }"
+                :disabled="disabled"
+                @change="onChange">
+            <option v-if="selectedIndex === -1" value="" disabled selected hidden>{{ placeholder }}</option>
+            <option v-for="(option, index) in options"
+                    :key="trackBy ? option[trackBy] : index"
+                    :value="index"
+                    :selected="index === selectedIndex">
+                {{ labelField ? option[labelField] : option }}
+            </option>
+        </select>
         <AppError v-if="errors" :errors="errors" :field="field"/>
     </div>
 </template>
 
 <script>
-import { Multiselect } from 'vue-multiselect';
-import 'vue-multiselect/dist/vue-multiselect.min.css';
 import AppError from '@/components/form/AppError.vue';
 
+/**
+ * Native select over a list of options (objects or plain values); emits the chosen option.
+ */
 export default {
   components: {
     AppError,
-    Multiselect,
   },
   props: {
     errors: {},
     label: {},
     value: {},
     field: {},
-    options: {},
-    multiple: {},
+    options: { type: Array, default: () => [] },
     trackBy: {},
     labelField: {},
-    customLabel: {},
-    placeholder: {},
-    loading: {},
-    allowEmpty: { default: false },
-    deselectLabel: { default: '' },
-    selectLabel: { default: '' },
-    selectedLabel: { default: '' },
+    placeholder: { default: '' },
     disabled: { default: false },
   },
-  emits: ['input', 'search-change'],
+  emits: ['input'],
+  computed: {
+    selectedIndex() {
+      if (this.value === null || this.value === undefined) {
+        return -1;
+      }
+      return this.options.findIndex(option => (this.trackBy
+        ? option[this.trackBy] === this.value[this.trackBy]
+        : option === this.value));
+    },
+  },
+  methods: {
+    onChange(event) {
+      this.$emit('input', this.options[Number(event.target.value)]);
+    },
+  },
 };
 </script>

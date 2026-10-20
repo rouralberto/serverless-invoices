@@ -1,0 +1,292 @@
+{
+  "bank-account-form": {
+    "title": "은행 계좌",
+    "bank_name": "은행 이름",
+    "account_no": "은행 계좌 상세 정보",
+    "loading": "실행 중",
+    "done": "완료",
+    "create": "생성하기",
+    "notification_updated": "수정되었습니다"
+  },
+  "bank-accounts-list": {
+    "loading": "실행 중",
+    "bank": "은행",
+    "bank_account_details": "은행 계좌 상세 정보",
+    "add_bank_account": "은행 계좌 추가하기"
+  },
+  "client-fields": {
+    "label": "항목",
+    "field": "내용",
+    "delete_modal": {
+      "title": "항목을 삭제하시겠습니까",
+      "ok_title": "삭제하기",
+      "cancel_title": "취소"
+    },
+    "notification_deleted": "항목이 삭제되었습니다"
+  },
+  "client-form": {
+    "title": "고객",
+    "delete": "삭제",
+    "done": "완료",
+    "create": "생성하기",
+    "loading": "실행 중",
+    "tabs": {
+      "general": "일반",
+      "invoicing": "송장 정보",
+      "address": "주소"
+    },
+    "general": {
+      "company_name": "회사 이름",
+      "invoice_email": "이메일"
+    },
+    "invoicing": {
+      "currency": "통화",
+      "rate": "시간당 요금",
+      "has_tax": "세금 적용 여부",
+      "bank_account": "은행 계좌"
+    },
+    "address": {
+      "company_address": "회사 주소",
+      "company_postal_code": "우편 번호",
+      "company_city": "읍/면/동",
+      "company_county": "시/도",
+      "company_country": "국가"
+    },
+    "delete_modal": {
+      "title": "고객 삭제",
+      "ok_title": "식제",
+      "cancel_title": "취소"
+    },
+    "notification_deleted": "삭제되었습니다",
+    "notification_updated": "수정되었습니다"
+  },
+  "client-selector": {
+    "client": "고객",
+    "create": "생성하기:",
+    "new": "신규 고객",
+    "suggest_placeholder": "고객 검색하기"
+  },
+  "clients-list": {
+    "title": "고객 관리",
+    "loading": "로딩 중",
+    "company_name": "회사명",
+    "email": "이메일",
+    "city": "도시",
+    "add_client": "고객 추가",
+    "search_placeholder": "고객 검색...",
+    "delete_modal": {
+      "title": "고객 삭제",
+      "ok_title": "삭제",
+      "cancel_title": "취소"
+    },
+    "notification_deleted": "고객이 삭제되었습니다"
+  },
+  "customizations-modal": {
+    "title": "당신의 송장을 자유롭게 제작하세요",
+    "textarea_label": "사용자 지정 CSS를 삽입하세요",
+    "updated": "수정되었습니다"
+  },
+  "empty-state": {
+    "content": "아직 아무것도 없습니다"
+  },
+  "import-modal": {
+    "title": "송장 정보 가져오기",
+    "warning": "현재 정보는 지워지거나 가져온 정보로 덮어쓰기 됩니다!",
+    "button_text": "가져오기할 정보 선택하기",
+    "import-error": "가져오기 불가능한 JSON 형식입니다"
+  },
+  "invoice-bank-details": {
+    "bank_name": "은행 추가하기",
+    "bank_account_no": "은행 세부 정보 추가하기",
+    "bank_account_modal_title": "은행 계좌 선택하기"
+  },
+  "invoice-client-details": {
+    "client_address": "주소",
+    "client_postal_code": "우편 번호",
+    "client_city": "읍/면/동",
+    "client_county": "시/도",
+    "client_country": "국가",
+    "client_email": "고객 이메일"
+  },
+  "invoice-company-details": {
+    "your_company_name": "당신의 회사 이름",
+    "address": "주소",
+    "postal_code": "우편 번호",
+    "city": "읍/면/동",
+    "county": "시/도",
+    "country": "국가",
+    "your_email": "당신의 이메일"
+  },
+  "invoice-contact-details": {
+    "add_website": "웹사이트 추가",
+    "add_email": "이메일 추가",
+    "add_phone": "전화번호 추가"
+  },
+  "invoice-controls": {
+    "back": "뒤로가기",
+    "book": "예약하기",
+    "design_and_layout": "디자인 & 레이아웃",
+    "compact": "여백 줄이기",
+    "comfortable": "여백 늘리기",
+    "customize": "사용자 지정하기",
+    "download_pdf": "PDF 다운로드",
+    "delete": "삭제하기",
+    "delete_modal": {
+      "title": "송장 삭제하기",
+      "ok_title": "삭제하기",
+      "cancel_title": "취소"
+    },
+    "notification_deleted": "삭제되었습니다"
+  },
+  "invoice-form": {
+    "insert_note": "기타 사항"
+  },
+  "invoice-header": {
+    "invoice_title": "송장 ",
+    "invoice_number": "번호",
+    "issued_at": "계약년월일: ",
+    "due_at": "납품기한:",
+    "late_fee": "연착 비용:",
+    "add_late_fee": "연착 비용 추가하기"
+  },
+  "invoice-row": {
+    "enter_item": "항목 입력하기",
+    "enter_quantity": "수량 입력하기",
+    "enter_unit": "단위 입력하기",
+    "enter_price": "가격 입력하기",
+    "enter_tax": "세금 입력하기"
+  },
+  "invoice-rows-header": {
+    "item": "항목",
+    "quantity": "수량",
+    "unit": "단위",
+    "price": "가격",
+    "sum": "합계"
+  },
+  "invoice-totals": {
+    "subtotal": "부분 합계",
+    "total": "총계",
+    "add_currency": "통화 추가하기"
+  },
+  "invoices": {
+    "title": "송장 내역",
+    "new_invoice": "신규 송장",
+    "export": "내보내기",
+    "import": "가져오기",
+    "hide_paid_invoices": "결제 완료된 송장 숨기기",
+    "show_fy_summary": "회계연도 요약 표시",
+    "search_client_placeholder": "고객 이름으로 검색...",
+    "manage_customers": "고객 관리",
+    "customer_ranking": "고객 순위",
+    "fy_start": "회계연도 시작",
+    "financial_year": "{{start}}-{{end}} 회계연도",
+    "save_in_s3": "S3에 저장",
+    "last_backup": "마지막 백업: {{when}}",
+    "never": "없음",
+    "last_backup_hint": "메뉴에서 'S3에 저장'을 사용하세요",
+    "backup_saved": "백업이 저장되었습니다!",
+    "backup_failed": "S3 업로드에 실패했습니다. 다시 시도하세요.",
+    "total_invoiced": "총 청구액",
+    "total_paid": "총 결제액",
+    "total_booked": "총 기장액",
+    "total_pending": "총 미결제액",
+    "invoice_count_one": "송장 {{count}}건",
+    "invoice_count_other": "송장 {{count}}건",
+    "ranking_title": "청구 금액별 고객 순위",
+    "ranking_subtitle": "총 청구 금액 기준 상위 고객",
+    "customer_count_one": "고객 {{count}}명",
+    "customer_count_other": "고객 {{count}}명",
+    "unknown_customer": "알 수 없는 고객",
+    "no_invoices": "송장이 없습니다"
+  },
+  "invoices-list": {
+    "invoice_number": "번호",
+    "client": "고객",
+    "issued_at": "계약년월일",
+    "total": "총계",
+    "status": "상태",
+    "overdue": "연체",
+    "duplicate": "송장 복제",
+    "tax_amount": "(세금 {{amount}})"
+  },
+  "statuses": {
+    "statuses": {
+      "draft": "초안",
+      "booked": "예약됨",
+      "sent": "발송됨",
+      "paid": "결제됨",
+      "written_off": "대손처리",
+      "cancelled": "취소됨"
+    }
+  },
+  "team-fields": {
+    "label": "항목",
+    "field": "내용",
+    "delete_modal": {
+      "title": "항목을 삭제하시겠습니까",
+      "ok_title": "삭제하기",
+      "cancel_title": "취소"
+    },
+    "notification_delete": "삭제되었습니다"
+  },
+  "team-form": {
+    "title": "당신의 회사",
+    "done": "완료",
+    "updated": "수정되었습니다",
+    "loading": "실행 중",
+    "tabs": {
+      "general": "일반",
+      "invoicing": "송장 정보",
+      "address": "주소",
+      "taxes": "세금"
+    },
+    "general": {
+      "company_name": "회사 이름",
+      "contact_email": "이메일",
+      "contact_phone": "전화번호",
+      "website": "웹사이트",
+      "logo": "로고"
+    },
+    "invoicing": {
+      "invoice_late_fee": "연착 요금 (%)",
+      "invoice_due_days": "지불조건, 일",
+      "currency": "기본 통화"
+    },
+    "address": {
+      "company_address": "회사 주소",
+      "company_postal_code": "우편번호",
+      "company_city": "읍/면/동",
+      "company_county": "시/도",
+      "company_country": "국가"
+    },
+    "tax_modal": {
+      "title": "현재 송장의 세금 항목을 젚어쓰기 하시겠습니까?",
+      "ok_title": "덮어쓰기",
+      "cancel_title": "취소",
+      "taxes_updated": "세금 정보가 수정되었습니다"
+    }
+  },
+  "team-logo": {
+    "modal_title": "상표(로고) 선택하기",
+    "button_text": "파일 가져오기",
+    "logo_url": "웹 URL 입력하기",
+    "logo_url_err": "상표 파일의 용량은 512kb 이하여야 합니다.",
+    "or": "혹은"
+  },
+  "team-taxes": {
+    "label": "세금 이름",
+    "tax": "세금",
+    "delete_modal": {
+      "title": "세금 항목을 삭제하시겠습니까",
+      "ok_title": "삭제하기",
+      "cancel_title": "취소"
+    },
+    "notification_deleted": "삭제되었습니다"
+  },
+  "the-footer": {
+    "lights-on": "밝은 배경으로 보기",
+    "lights-off": "어두운 배경으로 보기",
+    "title": "당신의 모든 정보는 서버가 아니라 당신의 브라우저에 저장되어있습니다. \n 이 응용 프로그램은 서버리스이며 오직 당신만이 당신의 정보에 접근할 수 있습니다.",
+    "what_about_my_data": "제 정보는 어떻게 보호받나요? "
+  }
+}

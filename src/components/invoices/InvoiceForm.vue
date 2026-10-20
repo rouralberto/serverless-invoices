@@ -81,22 +81,16 @@ export default {
     ...mapState(useInvoicesStore, ['errors', 'invoice']),
   },
   watch: {
-    '$route.params.id'() {
-      this.getInvoice();
+    '$route.params.id': {
+      handler(id) {
+        this.invoicesStore.invoiceId = id;
+      },
+      immediate: true,
     },
-  },
-  created() {
-    this.getInvoice();
   },
   methods: {
-    getInvoice() {
-      this.invoicesStore.getInvoice(this.$route.params.id);
-    },
     updateProp(props) {
-      this.invoicesStore.updateInvoice({
-        props,
-        invoiceId: this.invoice.id,
-      });
+      this.invoicesStore.updateInvoice(this.invoice.id, props);
     },
   },
 };

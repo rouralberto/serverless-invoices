@@ -1,0 +1,292 @@
+{
+  "bank-account-form": {
+    "title": "Bank account",
+    "bank_name": "Bank name",
+    "account_no": "Bank account details",
+    "loading": "Loading",
+    "done": "Done",
+    "create": "Create",
+    "notification_updated": "Updated"
+  },
+  "bank-accounts-list": {
+    "loading": "Loading",
+    "bank": "Bank",
+    "bank_account_details": "Bank account details",
+    "add_bank_account": "Add bank account"
+  },
+  "client-fields": {
+    "label": "Label",
+    "field": "Field",
+    "delete_modal": {
+      "title": "Delete field",
+      "ok_title": "Delete",
+      "cancel_title": "Dismiss"
+    },
+    "notification_deleted": "Deleted"
+  },
+  "client-form": {
+    "title": "Client",
+    "delete": "Delete",
+    "done": "Done",
+    "create": "Create",
+    "loading": "Loading",
+    "tabs": {
+      "general": "General",
+      "invoicing": "Invoicing",
+      "address": "Address"
+    },
+    "general": {
+      "company_name": "Company name",
+      "invoice_email": "Email"
+    },
+    "invoicing": {
+      "currency": "Currency",
+      "rate": "Hourly rate",
+      "has_tax": "Apply taxes",
+      "bank_account": "Bank account"
+    },
+    "address": {
+      "company_address": "Company address",
+      "company_postal_code": "Postal code",
+      "company_city": "City",
+      "company_county": "County/State",
+      "company_country": "Country"
+    },
+    "delete_modal": {
+      "title": "Delete client",
+      "ok_title": "Delete",
+      "cancel_title": "Dismiss"
+    },
+    "notification_deleted": "Deleted",
+    "notification_updated": "Updated"
+  },
+  "client-selector": {
+    "client": "Client",
+    "create": "Create",
+    "new": "new",
+    "suggest_placeholder": "Search client"
+  },
+  "clients-list": {
+    "title": "Manage Customers",
+    "loading": "Loading",
+    "company_name": "Company name",
+    "email": "Email",
+    "city": "City",
+    "add_client": "Add customer",
+    "search_placeholder": "Search customers...",
+    "delete_modal": {
+      "title": "Delete customer",
+      "ok_title": "Delete",
+      "cancel_title": "Dismiss"
+    },
+    "notification_deleted": "Customer deleted"
+  },
+  "customizations-modal": {
+    "title": "Customize your invoices",
+    "textarea_label": "Insert your custom CSS",
+    "updated": "Updated"
+  },
+  "empty-state": {
+    "content": "Nothing here yet"
+  },
+  "import-modal": {
+    "title": "Import data",
+    "warning": "Your current data will be erased and overwritten with the imported data!",
+    "button_text": "Select import file",
+    "import-error": "Invalid JSON format"
+  },
+  "invoice-bank-details": {
+    "bank_name": "Add bank",
+    "bank_account_no": "Add bank details",
+    "bank_account_modal_title": "Choose bank account"
+  },
+  "invoice-client-details": {
+    "client_address": "Address",
+    "client_postal_code": "Postal code",
+    "client_city": "City",
+    "client_county": "County/State",
+    "client_country": "Country",
+    "client_email": "Client's email"
+  },
+  "invoice-company-details": {
+    "your_company_name": "Your company name",
+    "address": "Address",
+    "postal_code": "Postal code",
+    "city": "City",
+    "county": "County/State",
+    "country": "Country",
+    "your_email": "Your email"
+  },
+  "invoice-contact-details": {
+    "add_website": "Add website",
+    "add_email": "Add email",
+    "add_phone": "Add phone"
+  },
+  "invoice-controls": {
+    "back": "Back",
+    "book": "Book",
+    "design_and_layout": "Design & layout",
+    "compact": "Compact",
+    "comfortable": "Comfortable",
+    "customize": "Customize",
+    "download_pdf": "Download PDF",
+    "delete": "Delete",
+    "delete_modal": {
+      "title": "Delete invoice",
+      "ok_title": "Delete",
+      "cancel_title": "Dismiss"
+    },
+    "notification_deleted": "Deleted"
+  },
+  "invoice-form": {
+    "insert_note": "Insert note"
+  },
+  "invoice-header": {
+    "invoice_title": "Invoice ",
+    "invoice_number": "No.",
+    "issued_at": "Issued at: ",
+    "due_at": "Due at:",
+    "late_fee": "Late fee:",
+    "add_late_fee": "Add late fee"
+  },
+  "invoice-row": {
+    "enter_item": "Enter item",
+    "enter_quantity": "Enter quantity",
+    "enter_unit": "Enter unit",
+    "enter_price": "Enter price",
+    "enter_tax": "Enter tax"
+  },
+  "invoice-rows-header": {
+    "item": "Item",
+    "quantity": "Quantity",
+    "unit": "Unit",
+    "price": "Price",
+    "sum": "Sum"
+  },
+  "invoice-totals": {
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "add_currency": "Add currency"
+  },
+  "invoices": {
+    "title": "Invoices",
+    "new_invoice": "New invoice",
+    "export": "Export",
+    "import": "Import",
+    "hide_paid_invoices": "Hide Paid Invoices",
+    "show_fy_summary": "Show FY Summary",
+    "search_client_placeholder": "Search by client name...",
+    "manage_customers": "Manage Customers",
+    "customer_ranking": "Customer Ranking",
+    "fy_start": "Financial Year Start",
+    "financial_year": "FY {{start}}-{{end}}",
+    "save_in_s3": "Save in S3",
+    "last_backup": "Last backup: {{when}}",
+    "never": "never",
+    "last_backup_hint": "Use “Save in S3” in the menu",
+    "backup_saved": "Backup successfully saved!",
+    "backup_failed": "Failed to upload file to S3. Please try again.",
+    "total_invoiced": "Total Invoiced",
+    "total_paid": "Total Paid",
+    "total_booked": "Total Booked",
+    "total_pending": "Total Pending",
+    "invoice_count_one": "{{count}} invoice",
+    "invoice_count_other": "{{count}} invoices",
+    "ranking_title": "Customer Ranking by Invoiced Amounts",
+    "ranking_subtitle": "Showing top customers by total invoiced amounts",
+    "customer_count_one": "{{count}} customer",
+    "customer_count_other": "{{count}} customers",
+    "unknown_customer": "Unknown Customer",
+    "no_invoices": "No invoices found"
+  },
+  "invoices-list": {
+    "invoice_number": "No.",
+    "client": "Client",
+    "issued_at": "Issued at",
+    "total": "Total",
+    "status": "Status",
+    "overdue": "Overdue",
+    "duplicate": "Duplicate Invoice",
+    "tax_amount": "({{amount}} tax)"
+  },
+  "statuses": {
+    "statuses": {
+      "draft": "draft",
+      "booked": "booked",
+      "sent": "sent",
+      "paid": "paid",
+      "written_off": "written-off",
+      "cancelled": "cancelled"
+    }
+  },
+  "team-fields": {
+    "label": "Label",
+    "field": "Field",
+    "delete_modal": {
+      "title": "Delete field",
+      "ok_title": "Delete",
+      "cancel_title": "Dismiss"
+    },
+    "notification_delete": "Deleted"
+  },
+  "team-form": {
+    "title": "Your company",
+    "done": "Done",
+    "updated": "Updated",
+    "loading": "Loading",
+    "tabs": {
+      "general": "General",
+      "invoicing": "Invoicing",
+      "address": "Address",
+      "taxes": "Taxes"
+    },
+    "general": {
+      "company_name": "Company name",
+      "contact_email": "Email",
+      "contact_phone": "Phone",
+      "website": "Website",
+      "logo": "Logo"
+    },
+    "invoicing": {
+      "invoice_late_fee": "Late fee (%)",
+      "invoice_due_days": "Payment terms, days",
+      "currency": "Default currency"
+    },
+    "address": {
+      "company_address": "Company address",
+      "company_postal_code": "Postal code",
+      "company_city": "City",
+      "company_county": "County/State",
+      "company_country": "Country"
+    },
+    "tax_modal": {
+      "title": "Overwrite taxes for current invoice rows?",
+      "ok_title": "Overwrite",
+      "cancel_title": "Dismiss",
+      "taxes_updated": "Taxes updated"
+    }
+  },
+  "team-logo": {
+    "modal_title": "Choose logo",
+    "button_text": "Select from files",
+    "logo_url": "Insert image web url",
+    "logo_url_err": "Logo has to be under 512kb.",
+    "or": "or"
+  },
+  "team-taxes": {
+    "label": "Label",
+    "tax": "Tax",
+    "delete_modal": {
+      "title": "Delete tax",
+      "ok_title": "Delete",
+      "cancel_title": "Dismiss"
+    },
+    "notification_deleted": "Deleted"
+  },
+  "the-footer": {
+    "lights-on": "Lights on",
+    "lights-off": "Lights off",
+    "title": "All your data is saved in your browser and not on any server.\n                                   This application is truly serverless and only you have access to your data.",
+    "what_about_my_data": "What about my data? "
+  }
+}

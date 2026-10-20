@@ -3,15 +3,15 @@ import i18next from 'i18next';
 import { initialized } from '@/config/i18n.config';
 import { useTeamsStore } from '@/store/teams';
 
+const loadData = () => useTeamsStore().init();
+
 const routes = [
   {
     path: '/',
     name: 'dashboard',
     redirect: { name: 'invoices' },
     component: () => import('@/views/dashboard/Dashboard.vue'),
-    beforeEnter: async () => {
-      await useTeamsStore().init();
-    },
+    beforeEnter: loadData,
     children: [
       {
         path: '/invoices',
@@ -28,6 +28,7 @@ const routes = [
   {
     path: '/invoices/:id/print',
     name: 'invoice-print',
+    beforeEnter: loadData,
     component: () => import('@/views/InvoicePrint.vue'),
   },
 ];

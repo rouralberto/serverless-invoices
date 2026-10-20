@@ -11,6 +11,17 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="msapplication-config" content="/browserconfig.xml">
     <title>Serverless Invoices</title>
+    <script>
+      // Apply the saved (or OS) colour mode before the app loads, so there's no flash of the wrong theme.
+      (function () {
+        var theme = null;
+        try { theme = localStorage.getItem('theme'); } catch (e) {}
+        if (theme !== 'dark' && theme !== 'light') {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-bs-theme', theme);
+      })();
+    </script>
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="Serverless Invoices - Free Invoice Generator">
