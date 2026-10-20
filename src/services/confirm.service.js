@@ -1,4 +1,5 @@
 import { reactive } from 'vue';
+import i18next from 'i18next';
 
 /**
  * State for the single <AppConfirm> mounted in App.vue.
@@ -6,9 +7,9 @@ import { reactive } from 'vue';
 export const confirmState = reactive({
   open: false,
   message: '',
-  okTitle: 'OK',
+  okTitle: '',
   okVariant: 'primary',
-  cancelTitle: 'Cancel',
+  cancelTitle: '',
   resolve: null,
 });
 
@@ -16,7 +17,11 @@ class ConfirmService {
   /**
    * Shows a confirmation dialog and resolves to true when the user confirms.
    */
-  confirm(message, { okTitle = 'OK', okVariant = 'primary', cancelTitle = 'Cancel' } = {}) {
+  confirm(message, {
+    okTitle = i18next.t('common:ok'),
+    okVariant = 'primary',
+    cancelTitle = i18next.t('common:cancel'),
+  } = {}) {
     return new Promise((resolve) => {
       Object.assign(confirmState, {
         open: true, message, okTitle, okVariant, cancelTitle, resolve,

@@ -65,7 +65,7 @@
 <script>
 import { mapState, mapStores } from 'pinia';
 import { useTranslation } from 'i18next-vue';
-import dayjs from 'dayjs';
+import dayjs from 'dayjs/esm';
 import EmptyState from '@/components/EmptyState.vue';
 import { formatCurrency, formatDate } from '@/utils/format';
 import { useInvoicesStore } from '@/store/invoices';

@@ -81,6 +81,11 @@
     },
     "notification_deleted": "Kunde gelöscht"
   },
+  "common": {
+    "close": "Schließen",
+    "ok": "OK",
+    "cancel": "Abbrechen"
+  },
   "customizations-modal": {
     "title": "Rechnungen anpassen",
     "textarea_label": "Benutzerdefiniertes CSS einfügen",
@@ -287,6 +292,33 @@
     "lights-on": "Licht an",
     "lights-off": "Licht aus",
     "title": "All deine Daten sind in deinem Browser gespeichtert und auf keinem Server.\n                                   This application is truly serverless and only you have access to your data.",
-    "what_about_my_data": "Was passiert mit meinen Daten? "
+    "what_about_my_data": "Was passiert mit meinen Daten? ",
+    "github_alt": "Serverless Invoices auf GitHub"
+  },
+  "validation": {
+    "required": "{{field}} ist erforderlich",
+    "fields": {
+      "currency": "Währung",
+      "issued_at": "Ausstellungsdatum",
+      "due_at": "Fälligkeitsdatum",
+      "number": "Nummer",
+      "client": "Kunde",
+      "client_name": "Kundenname",
+      "address": "Adresse",
+      "postal_code": "Postleitzahl",
+      "city": "Stadt",
+      "client_email": "E-Mail des Kunden",
+      "country": "Land",
+      "name": "Name",
+      "website": "Website",
+      "your_email": "Deine E-Mail",
+      "your_phone": "Deine Telefonnummer",
+      "bank_name": "Name der Bank",
+      "bank_account": "Bankverbindung",
+      "item": "Position",
+      "quantity": "Menge",
+      "price": "Preis",
+      "unit": "Einheit"
+    }
   }
 }

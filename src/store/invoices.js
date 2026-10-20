@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import dayjs from 'dayjs';
+import dayjs from 'dayjs/esm';
 import * as db from '@/services/db';
 import { useBankAccountsStore } from '@/store/bank-accounts';
 import { useClientsStore } from '@/store/clients';
@@ -10,40 +10,38 @@ import {
 } from '@/utils/helpers';
 import Errors from '@/utils/errors';
 
+// Required fields mapped to their label in the `validation.fields` translations.
 const REQUIRED_FIELDS = {
-  currency: 'Currency',
-  issued_at: 'Issued At',
-  due_at: 'Due At',
-  number: 'Number',
+  currency: 'currency',
+  issued_at: 'issued_at',
+  due_at: 'due_at',
+  number: 'number',
 };
 
 const REQUIRED_FOR_BOOKING = {
-  currency: 'Currency',
-  issued_at: 'Issued at',
-  due_at: 'Due at',
-  number: 'Number',
-  client_id: 'Client',
-  client_name: 'Client name',
-  client_address: 'Address',
-  client_postal_code: 'Postal code',
-  client_city: 'City',
-  client_email: 'Client\'s email',
-  client_country: 'Country',
-  from_name: 'Name',
-  from_address: 'Address',
-  from_postal_code: 'Postal code',
-  from_country: 'Country',
-  from_city: 'City',
-  from_website: 'Website',
-  from_email: 'Your email',
-  from_phone: 'Your phone',
-  bank_name: 'Bank name',
-  bank_account_no: 'Bank account details',
+  ...REQUIRED_FIELDS,
+  client_id: 'client',
+  client_name: 'client_name',
+  client_address: 'address',
+  client_postal_code: 'postal_code',
+  client_city: 'city',
+  client_email: 'client_email',
+  client_country: 'country',
+  from_name: 'name',
+  from_address: 'address',
+  from_postal_code: 'postal_code',
+  from_country: 'country',
+  from_city: 'city',
+  from_website: 'website',
+  from_email: 'your_email',
+  from_phone: 'your_phone',
+  bank_name: 'bank_name',
+  bank_account_no: 'bank_account',
   rows: {
-    item: 'Item',
-    quantity: 'Quantity',
-    price: 'Price',
-    unit: 'Unit',
+    item: 'item',
+    quantity: 'quantity',
+    price: 'price',
+    unit: 'unit',
   },
 };
 

@@ -15,7 +15,7 @@
     "add_bank_account": "Adicionar nova conta"
   },
   "client-fields": {
-    "label": "Label",
+    "label": "Rótulo",
     "field": "Campo",
     "delete_modal": {
       "title": "Apagar campo",
@@ -28,7 +28,7 @@
     "title": "Cliente",
     "delete": "Apagar",
     "done": "Concluir",
-    "create": "Create",
+    "create": "Criar",
     "loading": "Carregando",
     "tabs": {
       "general": "Geral",
@@ -81,6 +81,11 @@
     },
     "notification_deleted": "Cliente excluído"
   },
+  "common": {
+    "close": "Fechar",
+    "ok": "OK",
+    "cancel": "Cancelar"
+  },
   "customizations-modal": {
     "title": "Personalizar suas faturas",
     "textarea_label": "Inserir CSS personalizado",
@@ -129,7 +134,7 @@
     "compact": "Compacto",
     "comfortable": "Confortável",
     "customize": "Personalizado",
-    "download_pdf": "Download PDF",
+    "download_pdf": "Baixar PDF",
     "delete": "Apagar",
     "delete_modal": {
       "title": "Apagar fatura",
@@ -220,7 +225,7 @@
     }
   },
   "team-fields": {
-    "label": "Label",
+    "label": "Rótulo",
     "field": "Campo",
     "delete_modal": {
       "title": "Apagar campo",
@@ -274,7 +279,7 @@
     "or": "ou"
   },
   "team-taxes": {
-    "label": "Label",
+    "label": "Rótulo",
     "tax": "Imposto",
     "delete_modal": {
       "title": "Apagar imposto",
@@ -287,6 +292,33 @@
     "lights-on": "Modo Escuro",
     "lights-off": "Modo Claro",
     "title": "Todos os seus dados são salvos no navegador e não no servidor.\n                                   Este aplicativo é realmente serverless e apenas você tem acesso aos seus dados.",
-    "what_about_my_data": "E sobre meus dados? "
+    "what_about_my_data": "E sobre meus dados? ",
+    "github_alt": "Serverless Invoices no GitHub"
+  },
+  "validation": {
+    "required": "{{field}} é obrigatório",
+    "fields": {
+      "currency": "Moeda",
+      "issued_at": "Data de emissão",
+      "due_at": "Data de vencimento",
+      "number": "Número",
+      "client": "Cliente",
+      "client_name": "Nome do cliente",
+      "address": "Endereço",
+      "postal_code": "CEP",
+      "city": "Cidade",
+      "client_email": "E-mail do cliente",
+      "country": "País",
+      "name": "Nome",
+      "website": "Site",
+      "your_email": "Seu e-mail",
+      "your_phone": "Seu telefone",
+      "bank_name": "Nome do banco",
+      "bank_account": "Dados bancários",
+      "item": "Item",
+      "quantity": "Quantidade",
+      "price": "Preço",
+      "unit": "Unidade"
+    }
   }
 }

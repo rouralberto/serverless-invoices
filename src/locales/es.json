@@ -81,10 +81,15 @@
     },
     "notification_deleted": "Cliente eliminado"
   },
+  "common": {
+    "close": "Cerrar",
+    "ok": "Aceptar",
+    "cancel": "Cancelar"
+  },
   "customizations-modal": {
-    "title": "Customize your invoices",
-    "textarea_label": "Insert your custom CSS",
-    "updated": "Updated"
+    "title": "Personaliza tus facturas",
+    "textarea_label": "Introduce tu CSS personalizado",
+    "updated": "Actualizado"
   },
   "empty-state": {
     "content": "Nada aquí todavía"
@@ -125,10 +130,10 @@
   "invoice-controls": {
     "back": "Atrás",
     "book": "Libro",
-    "design_and_layout": "Design & layout",
-    "compact": "Compact",
-    "comfortable": "Comfortable",
-    "customize": "Customize",
+    "design_and_layout": "Diseño y maquetación",
+    "compact": "Compacto",
+    "comfortable": "Amplio",
+    "customize": "Personalizar",
     "download_pdf": "Descargar PDF",
     "delete": "Eliminar",
     "delete_modal": {
@@ -287,6 +292,33 @@
     "lights-on": "Luces encendidas",
     "lights-off": "Luces apagadas",
     "title": "Todos sus datos se guardan en su navegador y no en el servidor.\n                                   Esta aplicacíon es verdaderamente sin servidor y solo usted tiene acceso a sus datos",
-    "what_about_my_data": "¿Qué hay de mis datos? "
+    "what_about_my_data": "¿Qué hay de mis datos? ",
+    "github_alt": "Serverless Invoices en GitHub"
+  },
+  "validation": {
+    "required": "{{field}} es obligatorio",
+    "fields": {
+      "currency": "Moneda",
+      "issued_at": "Fecha de emisión",
+      "due_at": "Fecha de vencimiento",
+      "number": "Número",
+      "client": "Cliente",
+      "client_name": "Nombre del cliente",
+      "address": "Dirección",
+      "postal_code": "Código postal",
+      "city": "Ciudad",
+      "client_email": "Correo del cliente",
+      "country": "País",
+      "name": "Nombre",
+      "website": "Sitio web",
+      "your_email": "Tu correo",
+      "your_phone": "Tu teléfono",
+      "bank_name": "Nombre del banco",
+      "bank_account": "Datos de la cuenta bancaria",
+      "item": "Concepto",
+      "quantity": "Cantidad",
+      "price": "Precio",
+      "unit": "Unidad"
+    }
   }
 }

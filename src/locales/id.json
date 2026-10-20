@@ -81,6 +81,11 @@
     },
     "notification_deleted": "Pelanggan dihapus"
   },
+  "common": {
+    "close": "Tutup",
+    "ok": "OK",
+    "cancel": "Batal"
+  },
   "customizations-modal": {
     "title": "Sesuaikan Invoice Anda",
     "textarea_label": "Sisipkan CSS Khusus",
@@ -142,7 +147,7 @@
     "insert_note": "Sisipkan catatan"
   },
   "invoice-header": {
-    "invoice_title": "Invoice ",
+    "invoice_title": "Faktur ",
     "invoice_number": "No.",
     "issued_at": "Diterbikan pada: ",
     "due_at": "Tenggat Pembayaran:",
@@ -287,6 +292,33 @@
     "lights-on": "Beralih ke Mode Terang",
     "lights-off": "Beralih ke Mode Gelap",
     "title": "Semua data tersimpan di peramban Anda, bukan di peladen/server manapun.\n                                   Aplikasi ini benar-benar serverless dan hanya Anda yang memiliki akses ke data Anda.",
-    "what_about_my_data": "Bagaimana dengan data saya? "
+    "what_about_my_data": "Bagaimana dengan data saya? ",
+    "github_alt": "Serverless Invoices di GitHub"
+  },
+  "validation": {
+    "required": "{{field}} wajib diisi",
+    "fields": {
+      "currency": "Mata uang",
+      "issued_at": "Tanggal terbit",
+      "due_at": "Tanggal jatuh tempo",
+      "number": "Nomor",
+      "client": "Pelanggan",
+      "client_name": "Nama pelanggan",
+      "address": "Alamat",
+      "postal_code": "Kode pos",
+      "city": "Kota",
+      "client_email": "Email pelanggan",
+      "country": "Negara",
+      "name": "Nama",
+      "website": "Situs web",
+      "your_email": "Email Anda",
+      "your_phone": "Telepon Anda",
+      "bank_name": "Nama bank",
+      "bank_account": "Detail rekening bank",
+      "item": "Item",
+      "quantity": "Jumlah",
+      "price": "Harga",
+      "unit": "Satuan"
+    }
   }
 }

@@ -81,10 +81,15 @@
     },
     "notification_deleted": "Klient kustutatud"
   },
+  "common": {
+    "close": "Sulge",
+    "ok": "OK",
+    "cancel": "Loobu"
+  },
   "customizations-modal": {
-    "title": "Customize your invoices",
-    "textarea_label": "Insert your custom CSS",
-    "updated": "Updated"
+    "title": "Kohanda oma arveid",
+    "textarea_label": "Sisesta oma kohandatud CSS",
+    "updated": "Uuendatud"
   },
   "empty-state": {
     "content": "Arveid pole veel lisatud"
@@ -125,10 +130,10 @@
   "invoice-controls": {
     "back": "Tagasi",
     "book": "Kinnita",
-    "design_and_layout": "Design & layout",
-    "compact": "Compact",
-    "comfortable": "Comfortable",
-    "customize": "Customize",
+    "design_and_layout": "Kujundus ja paigutus",
+    "compact": "Kompaktne",
+    "comfortable": "Avar",
+    "customize": "Kohanda",
     "download_pdf": "Lae alla PDF",
     "delete": "Kustuta",
     "delete_modal": {
@@ -287,6 +292,33 @@
     "lights-on": "Tuled sisse",
     "lights-off": "Tuled välja",
     "title": "Kõik sinu andmed salvestatakse veebilehitseja mällu ja mitte üheski serveris. \n Antud rakendus on \"Serverless\" ja ainult sinul on ligipääs sinu andmetele.",
-    "what_about_my_data": "Kus mu andmed on? "
+    "what_about_my_data": "Kus mu andmed on? ",
+    "github_alt": "Serverless Invoices GitHubis"
+  },
+  "validation": {
+    "required": "{{field}} on kohustuslik",
+    "fields": {
+      "currency": "Valuuta",
+      "issued_at": "Väljastamise kuupäev",
+      "due_at": "Maksetähtaeg",
+      "number": "Number",
+      "client": "Klient",
+      "client_name": "Kliendi nimi",
+      "address": "Aadress",
+      "postal_code": "Postiindeks",
+      "city": "Linn",
+      "client_email": "Kliendi e-post",
+      "country": "Riik",
+      "name": "Nimi",
+      "website": "Veebileht",
+      "your_email": "Sinu e-post",
+      "your_phone": "Sinu telefon",
+      "bank_name": "Panga nimi",
+      "bank_account": "Pangakonto andmed",
+      "item": "Toode",
+      "quantity": "Kogus",
+      "price": "Hind",
+      "unit": "Ühik"
+    }
   }
 }

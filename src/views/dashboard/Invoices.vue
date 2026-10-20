@@ -304,7 +304,8 @@ export default {
       this.invoices
         .filter(invoice => invoice.status !== 'draft' && invoice.status !== 'cancelled' && invoice.status !== 'written_off')
         .forEach(invoice => {
-          const customerName = invoice.client_name || 'Unknown Customer';
+          // Invoices without a client are grouped under '' and shown as "Unknown Customer".
+          const customerName = invoice.client_name || '';
 
           if (!customerTotals[customerName]) {
             customerTotals[customerName] = {
