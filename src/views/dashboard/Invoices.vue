@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="row">
-            <div class="col-12 mb-4 pr-0 d-flex justify-content-between">
+            <div class="col-12 mb-4 pe-0 d-flex justify-content-between">
               <h4 class="mb-0">
-                {{ $t('title') }}
-                <span class="badge font-weight-light">
+                {{ t('title') }}
+                <span class="badge fw-light">
                   <span class="text-primary" v-b-tooltip.hover title="Total Invoiced">
                     {{ getInvoiceTotals().amount }} ({{ getInvoiceTotals().count }})
                   </span>
@@ -23,29 +23,29 @@
                 </span>
               </h4>
                 <div>
-                    <button class="btn btn-sm btn-outline-secondary mr-2"
+                    <button class="btn btn-sm btn-outline-secondary me-2"
                             @click="openCustomerRankingModal">
-                      <i class="material-icons md-18 mr-1">leaderboard</i>
+                      <i class="material-icons md-18 me-1">leaderboard</i>
                       Customer Ranking
                     </button>
                     <button class="btn btn-sm btn-outline-dark"
-                            @click="createNewInvoice">{{ $t('new_invoice') }}
+                            @click="createNewInvoice">{{ t('new_invoice') }}
                     </button>
-                    <b-dropdown variant="link" size="sm" no-caret right>
-                        <template slot="button-content">
+                    <BDropdown variant="link" size="sm" no-caret placement="bottom-end">
+                        <template #button-content>
                             <i class="material-icons">more_vert</i>
                         </template>
 
-                        <b-dropdown-item @click="openClientsListModal">{{ $t('manage_customers') }}</b-dropdown-item>
+                        <BDropdownItem @click="openClientsListModal">{{ t('manage_customers') }}</BDropdownItem>
 
                         <template v-if="isStorageLocal">
-                        <hr/>
+                        <BDropdownDivider divider-class="my-3"/>
 
-                        <div class="dropdown-item-text px-3 pb-3">
+                        <li class="dropdown-item-text px-3 pb-3">
                             <label class="form-label mb-2 text-muted small">Financial Year Start</label>
                             <select
                                 v-model="selectedFyStartMonth"
-                                class="form-control form-control-sm"
+                                class="form-select form-select-sm"
                                 @change="onFyStartMonthChange">
                                 <option v-for="month in monthOptions"
                                         :key="month.value"
@@ -53,42 +53,42 @@
                                     {{ month.text }}
                                 </option>
                             </select>
-                        </div>
+                        </li>
 
-                        <div class="dropdown-item-text px-3">
-                            <div class="custom-control custom-checkbox" style="width: 100%;">
+                        <li class="dropdown-item-text px-3">
+                            <div class="form-check">
                                 <input type="checkbox"
-                                       class="custom-control-input"
+                                       class="form-check-input"
                                        id="hidePaidInvoicesCheckbox"
                                        v-model="hidePaidInvoices"
                                        @change="onHidePaidInvoicesChange">
-                                <label class="custom-control-label text-muted small" for="hidePaidInvoicesCheckbox">
-                                    {{ $t('hide_paid_invoices') }}
+                                <label class="form-check-label text-muted small" for="hidePaidInvoicesCheckbox">
+                                    {{ t('hide_paid_invoices') }}
                                 </label>
                             </div>
-                        </div>
+                        </li>
 
-                        <div class="dropdown-item-text px-3">
-                            <div class="custom-control custom-checkbox" style="width: 100%;">
+                        <li class="dropdown-item-text px-3">
+                            <div class="form-check">
                                 <input type="checkbox"
-                                       class="custom-control-input"
+                                       class="form-check-input"
                                        id="showFySummaryCheckbox"
                                        v-model="showFySummary"
                                        @change="onShowFySummaryChange">
-                                <label class="custom-control-label text-muted small" for="showFySummaryCheckbox">
-                                    {{ $t('show_fy_summary') }}
+                                <label class="form-check-label text-muted small" for="showFySummaryCheckbox">
+                                    {{ t('show_fy_summary') }}
                                 </label>
                             </div>
-                        </div>
+                        </li>
 
-                        <hr/>
+                        <BDropdownDivider divider-class="my-3"/>
 
-                        <b-dropdown-item @click="exportJson">{{ $t('export') }}</b-dropdown-item>
-                        <b-dropdown-item @click="openImportModal">{{ $t('import') }}</b-dropdown-item>
+                        <BDropdownItem @click="exportJson">{{ t('export') }}</BDropdownItem>
+                        <BDropdownItem @click="openImportModal">{{ t('import') }}</BDropdownItem>
                         <li role="presentation"><span class="dropdown-item">—</span></li>
-                        <b-dropdown-item @click="saveJson">Save in S3</b-dropdown-item>
+                        <BDropdownItem @click="saveJson">Save in S3</BDropdownItem>
                         </template>
-                    </b-dropdown>
+                    </BDropdown>
                 </div>
             </div>
         </div>
@@ -96,12 +96,12 @@
             <div class="col-12">
                 <div class="border rounded p-3">
                     <div class="d-flex flex-wrap">
-                        <div v-for="fyData in getFinancialYearTotals()" :key="fyData.label" class="mr-4 mb-3">
+                        <div v-for="fyData in getFinancialYearTotals()" :key="fyData.label" class="me-4 mb-3">
                             <div class="mb-2">
                                 <small class="text-muted d-block">{{ fyData.label }}</small>
-                                <div class="font-weight-bold text-primary">{{ fyData.total }}</div>
+                                <div class="fw-bold text-primary">{{ fyData.total }}</div>
                             </div>
-                            <div class="ml-2">
+                            <div class="ms-2">
                                 <div v-for="month in fyData.months" :key="month.label" class="mb-1">
                                     <small class="text-muted">{{ month.label }}: </small>
                                     <small class="font-weight-medium">{{ month.amount }}</small>
@@ -116,24 +116,21 @@
             <div class="col-12">
                 <div class="d-flex align-items-center">
                     <div class="input-group search-input-group flex-grow-1">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text search-icon">
-                                <i class="material-icons md-18">search</i>
-                            </span>
-                        </div>
+                        <span class="input-group-text search-icon">
+                            <i class="material-icons md-18">search</i>
+                        </span>
                         <input type="text"
                                class="form-control search-input"
                                v-model="searchQuery"
-                               :placeholder="$t('search_client_placeholder')">
-                        <div class="input-group-append" v-if="searchQuery">
-                            <button class="btn search-clear-btn"
-                                    type="button"
-                                    @click="searchQuery = ''">
-                                <i class="material-icons md-18">close</i>
-                            </button>
-                        </div>
+                               :placeholder="t('search_client_placeholder')">
+                        <button v-if="searchQuery"
+                                class="btn search-clear-btn"
+                                type="button"
+                                @click="searchQuery = ''">
+                            <i class="material-icons md-18">close</i>
+                        </button>
                     </div>
-                    <div class="search-results-summary ml-3" v-if="searchQuery">
+                    <div class="search-results-summary ms-3" v-if="searchQuery">
                         <span class="text-muted small">
                             {{ filteredInvoices.length }} {{ filteredInvoices.length === 1 ? 'invoice' : 'invoices' }}
                             <span class="mx-1">·</span>
@@ -141,10 +138,10 @@
                         </span>
                     </div>
                     <button v-if="searchQuery && filteredInvoices.length"
-                            class="btn btn-outline-secondary btn-sm ml-2 d-flex align-items-center"
+                            class="btn btn-outline-secondary btn-sm ms-2 d-flex align-items-center"
                             type="button"
                             @click="copyFilteredInvoices">
-                        <i class="material-icons md-18 mr-1">{{ copyIcon }}</i>
+                        <i class="material-icons md-18 me-1">{{ copyIcon }}</i>
                     </button>
                 </div>
             </div>
@@ -156,19 +153,19 @@
         </div>
 
         <!-- Manage Customers Modal -->
-        <b-modal v-model="isClientsListModalOpen"
+        <BModal v-model="isClientsListModalOpen"
                  centered
-                 hide-footer
-                 :title="$t('manage_customers')"
+                 no-footer
+                 :title="t('manage_customers')"
                  size="lg"
                  content-class="bg-base dp--24">
             <ClientsList/>
-        </b-modal>
+        </BModal>
 
         <!-- Customer Ranking Modal -->
-        <b-modal v-model="isCustomerRankingModalOpen"
+        <BModal v-model="isCustomerRankingModalOpen"
                  centered
-                 hide-footer
+                 no-footer
                  title="Customer Ranking by Invoiced Amounts"
                  size="lg"
                  content-class="bg-base dp--24">
@@ -182,14 +179,14 @@
                          :key="customer.name || 'Unknown'"
                          class="list-group-item d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
-                            <div class="ranking-position mr-3">
+                            <div class="ranking-position me-3">
                                 <span class="badge badge-lg"
                                       :class="getRankingBadgeClass(index)">
                                     {{ index + 1 }}
                                 </span>
                             </div>
                             <div>
-                                <div class="font-weight-bold">
+                                <div class="fw-bold">
                                     {{ customer.name || 'Unknown Customer' }}
                                 </div>
                                 <small class="text-muted">
@@ -197,10 +194,10 @@
                                 </small>
                             </div>
                         </div>
-                        <div class="text-right">
-                            <div class="font-weight-bold text-primary">
+                        <div class="text-end">
+                            <div class="fw-bold text-primary">
                                 {{ formatCurrency(customer.totalInvoiced.toFixed(0)) }}
-                                <small class="text-muted ml-1">({{ customer.percentage.toFixed(1) }}%)</small>
+                                <small class="text-muted ms-1">({{ customer.percentage.toFixed(1) }}%)</small>
                             </div>
                         </div>
                     </div>
@@ -210,29 +207,38 @@
                 <i class="material-icons md-48 text-muted">people_outline</i>
                 <p class="text-muted mt-2">No invoices found</p>
             </div>
-        </b-modal>
+        </BModal>
     </div>
 </template>
 
 <script>
-import { BDropdown, BDropdownItem, BModal, VBTooltip } from 'bootstrap-vue';
-import { mapGetters } from 'vuex';
-import InvoicesList from '@/components/invoices/InvoicesList';
-import ClientsList from '@/components/clients/ClientsList';
+import { mapState, mapStores } from 'pinia';
+import {
+  BDropdown, BDropdownDivider, BDropdownItem, BModal, vBTooltip,
+} from 'bootstrap-vue-next';
+import { useTranslation } from 'i18next-vue';
+import InvoicesList from '@/components/invoices/InvoicesList.vue';
+import ClientsList from '@/components/clients/ClientsList.vue';
 import config from '@/config/app.config';
+import { useDataStore } from '@/store/data';
+import { useInvoicesStore } from '@/store/invoices';
+import { useTeamsStore } from '@/store/teams';
 
 export default {
   name: 'invoices',
-  i18nOptions: { namespaces: 'invoices' },
+  setup() {
+    return useTranslation('invoices');
+  },
   components: {
     InvoicesList,
     ClientsList,
     BDropdown,
+    BDropdownDivider,
     BDropdownItem,
     BModal,
   },
   directives: {
-    'b-tooltip': VBTooltip,
+    'b-tooltip': vBTooltip,
   },
   data() {
     return {
@@ -260,10 +266,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      team: 'teams/team',
-      invoices: 'invoices/all',
-    }),
+    ...mapStores(useInvoicesStore, useDataStore),
+    ...mapState(useTeamsStore, ['team']),
+    ...mapState(useInvoicesStore, { invoices: 'all' }),
     isStorageLocal() {
       return config.storageType === 'local';
     },
@@ -362,17 +367,17 @@ export default {
       setTimeout(() => { this.copiedToClipboard = false; }, 2000);
     },
     createNewInvoice() {
-      this.$store.dispatch('invoices/createNewInvoice')
+      this.invoicesStore.createNewInvoice()
         .then(id => this.$router.push({ name: 'invoice', params: { id } }));
     },
     exportJson() {
-      this.$store.dispatch('data/exportJson');
+      this.dataStore.exportJson();
     },
     saveJson() {
-      this.$store.dispatch('data/saveJson');
+      this.dataStore.saveJson();
     },
     openImportModal() {
-      this.$store.commit('data/isImportModalOpen', true);
+      this.dataStore.isImportModalOpen = true;
     },
     openClientsListModal() {
       this.isClientsListModalOpen = true;
@@ -381,10 +386,10 @@ export default {
       this.isCustomerRankingModalOpen = true;
     },
     getRankingBadgeClass(index) {
-      if (index === 0) return 'badge-warning'; // Gold
-      if (index === 1) return 'badge-secondary'; // Silver
-      if (index === 2) return 'badge-info'; // Bronze
-      return 'badge-light';
+      if (index === 0) return 'text-bg-warning'; // Gold
+      if (index === 1) return 'text-bg-secondary'; // Silver
+      if (index === 2) return 'text-bg-info'; // Bronze
+      return 'text-bg-light';
     },
     getInvoiceTotals(status = 'all') {
       const filteredInvoices = status === 'all'
@@ -579,8 +584,8 @@ export default {
 
 .search-input-group:hover .search-icon,
 .search-input-group:focus-within .search-icon,
-.search-input-group .search-input:focus + .input-group-append .search-clear-btn,
-.search-input-group .search-input:hover + .input-group-append .search-clear-btn {
+.search-input-group .search-input:focus + .search-clear-btn,
+.search-input-group .search-input:hover + .search-clear-btn {
   border-color: var(--text-secondary);
 }
 

@@ -1,36 +1,35 @@
+import { defineStore } from 'pinia';
+import { useRepo } from 'pinia-orm';
 import InvoiceTeamField from '@/store/models/invoice-team-field';
+import { useInvoicesStore } from '@/store/invoices';
+import { updateRecord } from '@/store/orm';
 
-export default {
-  namespaced: true,
-  state: {},
-  mutations: {},
+const repo = () => useRepo(InvoiceTeamField);
+
+export const useInvoiceTeamFieldsStore = defineStore('invoiceTeamFields', {
   actions: {
     init() {},
     terminate() {},
-    invoiceTeamFieldProps(store, payload) {
-      return InvoiceTeamField.update({
-        where: payload.fieldId,
-        data: payload.props,
+    invoiceTeamFieldProps(payload) {
+      return updateRecord(repo(), payload.fieldId, payload.props);
+    },
+    updateInvoiceTeamField(payload) {
+      this.invoiceTeamFieldProps(payload);
+      return useInvoicesStore().updateInvoice({
+        invoiceId: payload.invoiceId,
       });
     },
-    async updateInvoiceTeamField({ dispatch }, payload) {
-      await dispatch('invoiceTeamFieldProps', payload);
-      return dispatch('invoices/updateInvoice', {
-        invoiceId: payload.invoiceId,
-      }, { root: true });
-    },
-    async addInvoiceTeamField(store, payload) {
-      const field = await InvoiceTeamField.createNew();
-      await field.$update({
+    addInvoiceTeamField(payload) {
+      repo().save({
         ...payload.props,
         invoice_id: payload.invoiceId,
       });
     },
-    async removeInvoiceTeamFields(store, invoiceId) {
-      return InvoiceTeamField.delete(field => field.invoice_id === invoiceId);
+    removeInvoiceTeamFields(invoiceId) {
+      return repo().where('invoice_id', invoiceId).delete();
     },
-    removeInvoiceTeamField(store, fieldId) {
-      return InvoiceTeamField.delete(fieldId);
+    removeInvoiceTeamField(fieldId) {
+      return repo().destroy(fieldId);
     },
   },
-};
+});

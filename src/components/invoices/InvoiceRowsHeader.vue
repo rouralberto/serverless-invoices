@@ -1,28 +1,29 @@
 <template>
     <thead>
         <tr>
-            <th>{{ $t('item') }}</th>
-            <th>{{ $t('quantity') }}</th>
-            <th>{{ $t('unit') }}</th>
-            <th>{{ $t('price') }}</th>
+            <th>{{ t('item') }}</th>
+            <th>{{ t('quantity') }}</th>
+            <th>{{ t('unit') }}</th>
+            <th>{{ t('price') }}</th>
             <th v-for="tax in taxes" :key="tax.id">
                 {{ tax.label }} %
             </th>
-            <th class="text-right">{{ $t('sum') }}</th>
+            <th class="text-end">{{ t('sum') }}</th>
         </tr>
     </thead>
 </template>
 
 <script>
-
-import { mapGetters } from 'vuex';
+import { mapState } from 'pinia';
+import { useTranslation } from 'i18next-vue';
+import { useInvoiceRowsStore } from '@/store/invoice-rows';
 
 export default {
-  i18nOptions: { namespaces: 'invoice-rows-header' },
+  setup() {
+    return useTranslation('invoice-rows-header');
+  },
   computed: {
-    ...mapGetters({
-      taxes: 'invoiceRows/taxes',
-    }),
+    ...mapState(useInvoiceRowsStore, ['taxes']),
   },
 };
 </script>

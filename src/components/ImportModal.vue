@@ -1,28 +1,33 @@
 <template>
     <BModal v-model="isOpen"
             centered
-            hide-footer
-            :title="$t('title')"
+            no-footer
+            :title="t('title')"
             size="md"
             content-class="bg-base dp--24 text-center">
         <p>
-            <AppFileInput @selected="onSelected" :button-text="$t('button_text')"/>
+            <AppFileInput @selected="onSelected" :button-text="t('button_text')"/>
             <AppError :errors="errors" field="file"/>
         </p>
         <p>
-            <small>{{ $t('warning') }}</small>
+            <small>{{ t('warning') }}</small>
         </p>
     </BModal>
 </template>
 
 <script>
-import { BModal } from 'bootstrap-vue';
-import AppFileInput from './form/AppFileInput';
+import { mapStores, mapWritableState } from 'pinia';
+import { BModal } from 'bootstrap-vue-next';
+import { useTranslation } from 'i18next-vue';
+import { useDataStore } from '@/store/data';
+import AppFileInput from './form/AppFileInput.vue';
 import Errors from '../utils/errors';
-import AppError from './form/AppError';
+import AppError from './form/AppError.vue';
 
 export default {
-  i18nOptions: { namespaces: 'import-modal' },
+  setup() {
+    return useTranslation('import-modal');
+  },
   components: {
     AppError,
     AppFileInput,
@@ -34,14 +39,8 @@ export default {
     };
   },
   computed: {
-    isOpen: {
-      get() {
-        return this.$store.state.data.isImportModalOpen;
-      },
-      set(val) {
-        this.$store.commit('data/isImportModalOpen', val);
-      },
-    },
+    ...mapStores(useDataStore),
+    ...mapWritableState(useDataStore, { isOpen: 'isImportModalOpen' }),
   },
   methods: {
     close() {
@@ -51,11 +50,11 @@ export default {
       try {
         const data = JSON.parse(payload.content);
 
-        this.$store.dispatch('data/importJson', data);
+        this.dataStore.importJson(data);
         this.close();
-      } catch (e) {
+      } catch {
         return this.errors.set({
-          file: [this.$t('on-select-error')],
+          file: [this.t('on-select-error')],
         });
       }
     },

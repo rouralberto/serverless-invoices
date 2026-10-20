@@ -8,7 +8,9 @@
         <span ref="editable"
               class="editable__item"
               :contenteditable="!disabled"
-              v-on="listeners"
+              @input="onInput"
+              @focusin="onFocusIn"
+              @focusout="onFocusOut"
               :class="{'position-absolute': !tmpVal || (!tmpVal && !isFocused)}"
         ></span>
         <span v-if="!tmpVal" @click="focus"
@@ -19,12 +21,12 @@
 </template>
 
 <script>
-import AppError from '@/components/form/AppError';
+import AppError from '@/components/form/AppError.vue';
 
 export default {
   props: {
     value: {
-      type: String,
+      type: [String, Number],
       default: '',
     },
     placeholder: {
@@ -38,6 +40,7 @@ export default {
     errors: {},
     field: {},
   },
+  emits: ['input', 'change'],
   components: {
     AppError,
   },
@@ -45,18 +48,8 @@ export default {
     return {
       focusInVal: null,
       tmpVal: null,
+      isFocused: false,
     };
-  },
-  computed: {
-    listeners() {
-      return {
-        ...this.$listeners,
-        input: this.onInput,
-        focusin: this.onFocusIn,
-        focusout: this.onFocusOut,
-        isFocused: false,
-      };
-    },
   },
   watch: {
     value() {

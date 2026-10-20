@@ -2,31 +2,20 @@
     <div>
         <label :for="field" :class="labelClasses" v-if="label">{{ label }}</label>
         <div :class="containerClasses">
-            <!-- <div class="input-group-prepend">
-               <span class="input-group-text">
-                 <i class="material-icons md-18 text-muted" v-if="value">today</i>
-                 <i class="material-icons md-18 text-muted" v-else>calendar_today</i>
-               </span>
-             </div>-->
-            <DatePicker :disabled="disabled"
-                        :inline="inline"
-                        :id="field"
-                        :class="[
-                            errors && errors.has(field) ? 'is-invalid' : '',
-                            ...inputClasses,
-                            ]"
-                        :placeholder="placeholder"
-                        autocomplete="off"
-                        @change="outputValue"
-                        :lang="{
-                            formatLocale: {
-                                firstDayOfWeek: 1,
-                            },
-                        }"
-                        :range="mode === 'range'"
-                        :format="format"
-                        :type="type"
-                        :value="inputValue"/>
+            <VueDatePicker :disabled="disabled"
+                           :inline="inline"
+                           :class="[
+                               errors && errors.has(field) ? 'is-invalid' : '',
+                               inputClasses,
+                               ]"
+                           :placeholder="placeholder"
+                           auto-apply
+                           :week-start="1"
+                           :time-config="{ enableTimePicker: type === 'datetime' }"
+                           :formats="{ input: formatInput }"
+                           :range="mode === 'range'"
+                           :model-value="inputValue"
+                           @update:model-value="outputValue"/>
             <slot></slot>
             <AppError v-if="errors" :errors="errors" :field="field"/>
         </div>
@@ -35,13 +24,13 @@
 
 <script>
 import dayjs from 'dayjs';
-import DatePicker from 'vue2-datepicker';
-import AppError from '@/components/form/AppError';
+import { VueDatePicker } from '@vuepic/vue-datepicker';
+import AppError from '@/components/form/AppError.vue';
 
 export default {
   components: {
     AppError,
-    DatePicker,
+    VueDatePicker,
   },
   props: {
     errors: {},
@@ -65,6 +54,7 @@ export default {
     inputClasses: {},
     containerClasses: {},
   },
+  emits: ['input', 'change'],
   computed: {
     inputValue() {
       return Array.isArray(this.value)
@@ -73,6 +63,11 @@ export default {
     },
   },
   methods: {
+    formatInput(date) {
+      return Array.isArray(date)
+        ? date.map(val => dayjs(val).format(this.format)).join(' - ')
+        : dayjs(date).format(this.format);
+    },
     outputValue(event) {
       const value = Array.isArray(event)
         ? event.map(val => this.toModelFormat(val))
@@ -86,12 +81,3 @@ export default {
   },
 };
 </script>
-<style lang="scss">
-.mx-datepicker-popup {
-  z-index: 1040;
-}
-
-.mx-datepicker {
-  width: 100%;
-}
-</style>

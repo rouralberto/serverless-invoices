@@ -1,15 +1,15 @@
-import { Model } from '@vuex-orm/core';
-import { uuidv4 } from '@/utils/helpers';
+import { Model } from 'pinia-orm';
 import BankAccount from '@/store/models/bank-account';
 import ClientField from '@/store/models/client-field';
 
 export default class Client extends Model {
-  // This is the name used as module name of the Vuex Store.
   static entity = 'clients';
 
   static fields() {
     return {
-      id: this.attr(() => uuidv4()),
+      id: this.uid(),
+      // Set while a record is being created in a modal and hasn't been persisted yet.
+      $isNew: this.attr(false),
       company_name: this.attr(''),
       company_address: this.attr(''),
       company_postal_code: this.attr(''),

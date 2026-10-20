@@ -12,9 +12,9 @@
                      :select-label="selectLabel"
                      :selected-label="selectedLabel"
                      :preserve-search="true"
-                     @input="$emit('input', $event)"
+                     @update:model-value="$emit('input', $event)"
                      @search-change="$emit('search-change', $event)"
-                     :value="value"
+                     :model-value="value"
                      :placeholder="placeholder"
                      :loading="loading"
                      :class="{
@@ -22,8 +22,8 @@
                      }"
                      :multiple="multiple"
         >
-            <template v-for="(_, name) in $scopedSlots" :slot="name" slot-scope="slotData">
-                <slot :name="name" v-bind="slotData"/>
+            <template v-for="(_, name) in $slots" #[name]="slotData">
+                <slot :name="name" v-bind="slotData || {}"/>
             </template>
         </Multiselect>
         <AppError v-if="errors" :errors="errors" :field="field"/>
@@ -31,9 +31,9 @@
 </template>
 
 <script>
-import Multiselect from 'vue-multiselect';
+import { Multiselect } from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
-import AppError from '@/components/form/AppError';
+import AppError from '@/components/form/AppError.vue';
 
 export default {
   components: {
@@ -58,5 +58,6 @@ export default {
     selectedLabel: { default: '' },
     disabled: { default: false },
   },
+  emits: ['input', 'search-change'],
 };
 </script>

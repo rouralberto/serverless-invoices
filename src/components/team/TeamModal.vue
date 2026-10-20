@@ -1,17 +1,19 @@
 <template>
     <BModal v-model="isOpen"
             centered
-            hide-footer
-            hide-header
+            no-footer
+            no-header
             content-class="bg-base dp--24">
         <TeamForm @done="close"/>
     </BModal>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { BModal } from 'bootstrap-vue';
-import TeamForm from '@/components/team/TeamForm';
+import { mapState, mapStores, mapWritableState } from 'pinia';
+import { BModal } from 'bootstrap-vue-next';
+import TeamForm from '@/components/team/TeamForm.vue';
+import { useInvoicesStore } from '@/store/invoices';
+import { useTeamsStore } from '@/store/teams';
 
 export default {
   components: {
@@ -19,25 +21,17 @@ export default {
     BModal,
   },
   computed: {
-    isOpen: {
-      get() {
-        return this.$store.state.teams.isModalOpen;
-      },
-      set(val) {
-        this.$store.commit('teams/isModalOpen', val);
-      },
-    },
-    ...mapGetters({
-      team: 'teams/team',
-      invoice: 'invoices/invoice',
-    }),
+    ...mapStores(useTeamsStore, useInvoicesStore),
+    ...mapWritableState(useTeamsStore, { isOpen: 'isModalOpen' }),
+    ...mapState(useTeamsStore, ['team']),
+    ...mapState(useInvoicesStore, ['invoice']),
   },
   mounted() {
     this.getTeam();
   },
   methods: {
     getTeam() {
-      this.$store.dispatch('teams/getTeam');
+      this.teamsStore.getTeam();
     },
     async close() {
       await this.promptUpdateInvoice();
@@ -45,14 +39,14 @@ export default {
     },
     async promptUpdateInvoice() {
       if (this.$route.name === 'invoice') {
-        /* const confirmed = await this.$bvModal.msgBoxConfirm('Update team details on invoice?', {
+        /* const confirmed = await ConfirmService.confirm('Update team details on invoice?', {
           okTitle: 'Update',
           cancelTitle: 'Dismiss',
           cancelVariant: 'btn-link',
           contentClass: 'bg-base dp--24',
         });
         if (confirmed) { */
-        this.$store.dispatch('invoices/prefillTeam', {
+        this.invoicesStore.prefillTeam({
           invoiceId: this.invoice.id,
         });
         /* } */

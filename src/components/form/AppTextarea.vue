@@ -10,7 +10,7 @@
                       :class="[
                        errors && errors.has(field) ? 'is-invalid' : '',
                        size ? 'form-control-' + size : '',
-                       ...inputClasses,
+                       inputClasses,
                        ]"
                       :autocomplete="autocomplete"
                       :maxlength="max"
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import AppError from '@/components/form/AppError';
+import AppError from '@/components/form/AppError.vue';
 
 export default {
   components: {
@@ -52,6 +52,7 @@ export default {
       default: 'on',
     },
   },
+  emits: ['input', 'change', 'submit'],
   methods: {
     focus() {
       this.$refs[this.field].focus();

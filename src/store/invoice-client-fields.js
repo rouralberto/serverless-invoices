@@ -1,36 +1,35 @@
+import { defineStore } from 'pinia';
+import { useRepo } from 'pinia-orm';
 import InvoiceClientField from '@/store/models/invoice-client-field';
+import { useInvoicesStore } from '@/store/invoices';
+import { updateRecord } from '@/store/orm';
 
-export default {
-  namespaced: true,
-  state: {},
-  mutations: {},
+const repo = () => useRepo(InvoiceClientField);
+
+export const useInvoiceClientFieldsStore = defineStore('invoiceClientFields', {
   actions: {
     init() {},
     terminate() {},
-    invoiceClientFieldProps(store, payload) {
-      return InvoiceClientField.update({
-        where: payload.fieldId,
-        data: payload.props,
+    invoiceClientFieldProps(payload) {
+      return updateRecord(repo(), payload.fieldId, payload.props);
+    },
+    updateInvoiceClientField(payload) {
+      this.invoiceClientFieldProps(payload);
+      return useInvoicesStore().updateInvoice({
+        invoiceId: payload.invoiceId,
       });
     },
-    async updateInvoiceClientField({ dispatch }, payload) {
-      await dispatch('invoiceClientFieldProps', payload);
-      return dispatch('invoices/updateInvoice', {
-        invoiceId: payload.invoiceId,
-      }, { root: true });
+    removeInvoiceClientFields(invoiceId) {
+      return repo().where('invoice_id', invoiceId).delete();
     },
-    async removeInvoiceClientFields(store, invoiceId) {
-      return InvoiceClientField.delete(field => field.invoice_id === invoiceId);
-    },
-    async addInvoiceClientField(store, payload) {
-      const field = await InvoiceClientField.createNew();
-      await field.$update({
+    addInvoiceClientField(payload) {
+      repo().save({
         ...payload.props,
         invoice_id: payload.invoiceId,
       });
     },
-    async removeInvoiceClientField(store, fieldId) {
-      await InvoiceClientField.delete(fieldId);
+    removeInvoiceClientField(fieldId) {
+      repo().destroy(fieldId);
     },
   },
-};
+});

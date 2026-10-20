@@ -1,67 +1,61 @@
+import { defineStore } from 'pinia';
+import { useRepo } from 'pinia-orm';
 import BankAccountService from '@/services/bank-account.service';
 import BankAccount from '@/store/models/bank-account';
+import {
+  createNew, persisted, replaceAll, updateRecord,
+} from '@/store/orm';
 
-export default {
-  namespaced: true,
-  state: {
+const repo = () => useRepo(BankAccount);
+
+export const useBankAccountsStore = defineStore('bankAccounts', {
+  state: () => ({
     bankAccountId: null,
     isModalOpen: null,
-  },
-  mutations: {
-    bankAccountId(state, bankAccountId) {
-      state.bankAccountId = bankAccountId;
-    },
-    isModalOpen(state, isOpen) {
-      state.isModalOpen = isOpen;
-    },
-  },
+  }),
   actions: {
-    init({ dispatch }) {
-      return dispatch('getBankAccounts');
+    init() {
+      return this.getBankAccounts();
     },
     terminate() {
-      return BankAccount.deleteAll();
+      return repo().flush();
     },
     async getBankAccounts() {
       const accounts = await BankAccountService.getBankAccounts();
-      await BankAccount.create({ data: accounts });
+      replaceAll(repo(), accounts);
       return accounts;
     },
-    async getBankAccount({ commit }, bankAccountId) {
+    async getBankAccount(bankAccountId) {
       const bankAccount = await BankAccountService.getBankAccount(bankAccountId);
-      commit('bankAccountId', bankAccount.id);
-      return BankAccount.insert({ data: bankAccount });
+      this.bankAccountId = bankAccount.id;
+      return repo().save(persisted(bankAccount));
     },
-    async createNewBankAccount(store, bankAccount) {
+    async createNewBankAccount(bankAccount) {
       const res = await BankAccountService.createBankAccount(bankAccount);
-      await BankAccount.insert({ data: res });
-      return BankAccount.find(res.id);
+      repo().save(persisted(res));
+      return repo().find(res.id);
     },
-    bankAccountProps({ state }, props) {
-      return BankAccount.update({
-        where: state.bankAccountId,
-        data: props,
-      });
+    bankAccountProps(props) {
+      return updateRecord(repo(), this.bankAccountId, props);
     },
-    async updateBankAccount({ getters, dispatch }, props) {
-      await dispatch('bankAccountProps', props);
-      return BankAccountService.updateBankAccount(getters.bankAccount);
+    async updateBankAccount(props) {
+      this.bankAccountProps(props);
+      return BankAccountService.updateBankAccount(this.bankAccount);
     },
-    async openNewBankAccountModal({ commit }) {
-      const bankAccount = await BankAccount.createNew();
-      commit('bankAccountId', bankAccount.id);
-      commit('isModalOpen', true);
+    openNewBankAccountModal() {
+      const bankAccount = createNew(repo());
+      this.bankAccountId = bankAccount.id;
+      this.isModalOpen = true;
     },
   },
   getters: {
     bankAccount(state) {
-      return BankAccount.query()
-        .find(state.bankAccountId);
+      return repo().find(state.bankAccountId);
     },
     all() {
-      return BankAccount.query()
+      return repo()
         .where('$isNew', false)
         .get();
     },
   },
-};
+});

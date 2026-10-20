@@ -4,7 +4,7 @@ A free, open-source invoicing tool for freelancers and small businesses.
 
 Data is stored in your browser — no server required. Run it locally or host it yourself.
 
-Built with [Vue.js](https://vuejs.org/) and [Bootstrap](https://getbootstrap.com/).
+Built with [Vue 3](https://vuejs.org/), [Vite](https://vite.dev/), [Pinia](https://pinia.vuejs.org/) and [Bootstrap 5](https://getbootstrap.com/).
 
 > Originally created by [Moku](https://github.com/mokuappio/serverless-invoices). This fork is independently maintained.
 
@@ -45,7 +45,7 @@ Built with [Vue.js](https://vuejs.org/) and [Bootstrap](https://getbootstrap.com
 
 ## Requirements
 
-- Node 16.18+
+- Node 20.19+ or 22.12+
 - Docker (optional, for containerized setup)
 
 ## Project Setup
@@ -67,6 +67,8 @@ cp src/config/app.config.example.js src/config/app.config.js
 ```bash
 npm run serve
 ```
+
+The dev server runs on http://localhost:8080.
 
 ### 4. Production build
 
@@ -102,14 +104,9 @@ source ~/.zshrc
 
 The included `docker-compose.yml` sets up a dev environment with hot reload behind a reverse proxy.
 
-1. Copy and adjust the Vue config:
-   ```bash
-   cp vue.config.js.example vue.config.js
-   ```
+1. Create a `docker-compose.override.yml` for your local environment variables (AWS credentials, etc.). See `.env.example` for available variables.
 
-2. Create a `docker-compose.override.yml` for your local environment variables (AWS credentials, etc.). See `.env.example` for available variables.
-
-3. Start:
+2. Start:
    ```bash
    docker compose up
    ```
@@ -122,13 +119,17 @@ The included `docker-compose.yml` sets up a dev environment with hot reload behi
 | `VUE_APP_AWS_ACCESS_KEY_ID` | AWS access key | — |
 | `VUE_APP_AWS_SECRET_ACCESS_KEY` | AWS secret key | — |
 | `VUE_APP_BUCKET_NAME` | S3 bucket name | — |
+| `DEV_SERVER_HMR_HOST` | Hot reload host, if a reverse proxy exposes it on a different host than the page | page host |
+| `DEV_SERVER_HMR_PORT` | Hot reload port, if a reverse proxy exposes it on a different port than the page | page port |
+| `CHOKIDAR_USEPOLLING` | Set to `true` to poll for file changes (e.g. Docker volumes) | — |
+
+Variables prefixed with `VUE_APP_` or `VITE_` are embedded in the built app at build time.
 
 ## Configuration Files
 
 | File | Created from | Purpose |
 |------|-------------|---------|
 | `src/config/app.config.js` | `app.config.example.js` | Storage adapter config |
-| `vue.config.js` | `vue.config.js.example` | Dev server & PWA config |
 | `docker-compose.override.yml` | — | Local Docker overrides |
 
 ## License

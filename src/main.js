@@ -1,27 +1,28 @@
-import 'es6-promise';
-import VueProgressBar from 'vue-progressbar';
-import progressbarConfig from '@/config/progressbar.config';
 import '@/config/local-storage.config';
-import { ModalPlugin } from 'bootstrap-vue';
-import Vue from 'vue';
+import { createApp } from 'vue';
+import { createBootstrap } from 'bootstrap-vue-next';
+import Notifications from '@kyvg/vue3-notification';
+import I18NextVue from 'i18next-vue';
 import App from '@/App.vue';
 import router from '@/router';
-import store from '@/store/store';
-import VueNotifications from 'vue-notification';
-import './registerServiceWorker';
-import i18n from './config/i18n.config';
+import pinia from '@/store/store';
+import i18next from '@/config/i18n.config';
 
-Vue.use(ModalPlugin);
-Vue.use(VueNotifications);
-Vue.use(VueProgressBar, progressbarConfig);
+const app = createApp(App);
 
-Vue.config.productionTip = false;
+app.use(pinia);
+app.use(router);
+app.use(I18NextVue, { i18next });
+app.use(createBootstrap({
+  components: {
+    // Keep dropdowns inline like BootstrapVue's `btn-group` wrapper did.
+    BDropdown: { wrapperClass: 'btn-group' },
+    // Like BootstrapVue, only render modal content while the modal is shown.
+    BModal: { lazy: true, unmountLazy: true },
+  },
+}));
+app.use(Notifications);
 
-const app = new Vue({
-  router,
-  store,
-  i18n,
-  render: h => h(App),
-}).$mount('#app');
+app.mount('#app');
 
 export default app;

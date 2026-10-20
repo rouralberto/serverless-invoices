@@ -1,25 +1,23 @@
 <template>
     <div>
-        <div v-if="!clients">{{ $t('loading') }}</div>
+        <div v-if="!clients">{{ t('loading') }}</div>
         <div v-else-if="clients.length > 0">
             <div class="input-group search-input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text search-icon">
-                        <i class="material-icons md-18">search</i>
-                    </span>
-                </div>
+                <span class="input-group-text search-icon">
+                    <i class="material-icons md-18">search</i>
+                </span>
                 <input type="text"
                        class="form-control search-input"
                        v-model="searchQuery"
-                       :placeholder="$t('search_placeholder')">
+                       :placeholder="t('search_placeholder')">
             </div>
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>{{ $t('company_name') }}</th>
-                    <th>{{ $t('email') }}</th>
-                    <th>{{ $t('city') }}</th>
-                    <th class="text-right"></th>
+                    <th>{{ t('company_name') }}</th>
+                    <th>{{ t('email') }}</th>
+                    <th>{{ t('city') }}</th>
+                    <th class="text-end"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -27,7 +25,7 @@
                     <td>{{ client.company_name }}</td>
                     <td>{{ client.invoice_email }}</td>
                     <td>{{ client.company_city }}</td>
-                    <td class="text-right text-nowrap">
+                    <td class="text-end text-nowrap">
                         <i class="material-icons md-18 p-1 pointer"
                            @click="openClientModal(client)">
                             edit
@@ -40,22 +38,25 @@
                 </tr>
                 </tbody>
             </table>
-            <button class="btn btn-sm btn-link" @click="createNewClient">{{ $t('add_client') }}</button>
+            <button class="btn btn-sm btn-link" @click="createNewClient">{{ t('add_client') }}</button>
         </div>
         <EmptyState v-else>
-            <template v-slot>
-                <button class="btn btn-sm btn-link" @click="createNewClient">{{ $t('add_client') }}</button>
-            </template>
+            <button class="btn btn-sm btn-link" @click="createNewClient">{{ t('add_client') }}</button>
         </EmptyState>
     </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
-import EmptyState from '@/components/EmptyState';
+import { mapState, mapStores } from 'pinia';
+import { useTranslation } from 'i18next-vue';
+import EmptyState from '@/components/EmptyState.vue';
 import NotificationService from '@/services/notification.service';
+import ConfirmService from '@/services/confirm.service';
+import { useClientsStore } from '@/store/clients';
 
 export default {
-  i18nOptions: { namespaces: 'clients-list' },
+  setup() {
+    return useTranslation('clients-list');
+  },
   components: {
     EmptyState,
   },
@@ -65,9 +66,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      clients: 'clients/all',
-    }),
+    ...mapStores(useClientsStore),
+    ...mapState(useClientsStore, { clients: 'all' }),
     filteredClients() {
       if (!this.clients) {
         return [];
@@ -90,14 +90,14 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch('clients/getClients');
+    this.clientsStore.getClients();
   },
   methods: {
     createNewClient() {
-      this.$store.dispatch('clients/openNewClientModal');
+      this.clientsStore.openNewClientModal();
     },
     openClientModal(client) {
-      this.$store.commit('clients/clientId', client.id);
+      this.clientsStore.clientId = client.id;
       this.$router.push({
         query: {
           clientId: client.id,
@@ -105,12 +105,12 @@ export default {
       });
     },
     async deleteClient(client) {
-      const confirmed = await this.$bvModal.msgBoxConfirm(
-        `${this.$t('delete_modal.title')} ${client.company_name}?`,
+      const confirmed = await ConfirmService.confirm(
+        `${this.t('delete_modal.title')} ${client.company_name}?`,
         {
-          okTitle: this.$t('delete_modal.ok_title'),
+          okTitle: this.t('delete_modal.ok_title'),
           okVariant: 'danger',
-          cancelTitle: this.$t('delete_modal.cancel_title'),
+          cancelTitle: this.t('delete_modal.cancel_title'),
           cancelVariant: 'btn-link',
           contentClass: 'bg-base dp--24',
         },
@@ -120,10 +120,10 @@ export default {
         return;
       }
 
-      await this.$store.dispatch('clients/deleteClient', client.id);
+      await this.clientsStore.deleteClient(client.id);
 
       try {
-        NotificationService.success(this.$t('notification_deleted'));
+        NotificationService.success(this.t('notification_deleted'));
       } catch (err) {
         NotificationService.error(err.message);
       }

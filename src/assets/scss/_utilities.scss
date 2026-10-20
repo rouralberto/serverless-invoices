@@ -9,8 +9,17 @@ html, body {
   height: 100%;
 }
 
+:root {
+  --bs-body-bg: #{$app-body-bg};
+  --bs-body-color: #{$app-body-color};
+  // Bootstrap 4 emitted these right after the theme variables, so they won over the
+  // light theme values above. Kept so the light theme looks the same as before.
+  --primary: #{$primary};
+  --success: #{$success};
+}
+
 body {
-  background-color: $body-bg;
+  background-color: $app-body-bg;
   overflow-x: hidden;
 }
 
@@ -138,4 +147,12 @@ body {
 
 .bg-dark {
   background-color: var(--text-primary) !important;
+}
+
+.text-muted {
+  color: var(--text-disabled) !important;
+}
+
+[data-theme="dark"] .btn-close {
+  filter: $btn-close-white-filter;
 }

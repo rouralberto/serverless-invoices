@@ -4,3 +4,18 @@
   font-weight: 400;
   color: var(--error-darken);
 }
+
+// Bootstrap 5 dropped .form-group; the form components still rely on its spacing.
+.form-group {
+  margin-bottom: $spacer;
+}
+
+// Bootstrap 4's reboot spaced every label; Bootstrap 5 only spaces .form-label.
+label {
+  display: inline-block;
+  margin-bottom: .5rem;
+}
+
+.form-check-label {
+  margin-bottom: 0;
+}

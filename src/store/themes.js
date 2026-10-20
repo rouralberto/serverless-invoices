@@ -1,11 +1,7 @@
-export default {
-  namespaced: true,
-  state: {
+import { defineStore } from 'pinia';
+
+export const useThemesStore = defineStore('themes', {
+  state: () => ({
     theme: 'light',
-  },
-  mutations: {
-    theme(state, theme) {
-      state.theme = theme;
-    },
-  },
-};
+  }),
+});

@@ -1,8 +1,8 @@
 <template>
     <BModal v-model="isOpen"
             centered
-            hide-footer
-            hide-header
+            no-footer
+            no-header
             size="md"
             content-class="bg-base dp--24">
         <BankAccountForm @done="close()"/>
@@ -10,9 +10,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { BModal } from 'bootstrap-vue';
-import BankAccountForm from '@/components/bank-accounts/BankAccountForm';
+import { mapState, mapStores } from 'pinia';
+import { BModal } from 'bootstrap-vue-next';
+import BankAccountForm from '@/components/bank-accounts/BankAccountForm.vue';
+import { useBankAccountsStore } from '@/store/bank-accounts';
 
 export default {
   components: {
@@ -22,19 +23,18 @@ export default {
   computed: {
     isOpen: {
       get() {
-        return this.$store.state.bankAccounts.isModalOpen;
+        return !!this.bankAccountsStore.isModalOpen;
       },
       set(val) {
         if (!val) {
           this.$router.push({ query: {} });
-          this.$store.dispatch('bankAccounts/getBankAccounts');
+          this.bankAccountsStore.getBankAccounts();
         }
-        this.$store.commit('bankAccounts/isModalOpen', val);
+        this.bankAccountsStore.isModalOpen = val;
       },
     },
-    ...mapGetters({
-      bankAccount: 'bankAccounts/bankAccount',
-    }),
+    ...mapStores(useBankAccountsStore),
+    ...mapState(useBankAccountsStore, ['bankAccount']),
   },
   watch: {
     '$route.query.bankAccountId'() {
@@ -47,14 +47,14 @@ export default {
   methods: {
     getBankAccount() {
       const query = this.$route.query;
-      if (query.hasOwnProperty('bankAccountId')) {
+      if (Object.hasOwn(query, 'bankAccountId')) {
         if ((this.bankAccount && this.bankAccount.id !== query.bankAccountId) || !this.bankAccount) {
-          this.$store.dispatch('bankAccounts/getBankAccount', query.bankAccountId);
+          this.bankAccountsStore.getBankAccount(query.bankAccountId);
         }
 
-        this.$store.commit('bankAccounts/isModalOpen', true);
+        this.bankAccountsStore.isModalOpen = true;
       } else {
-        this.$store.commit('bankAccounts/isModalOpen', false);
+        this.bankAccountsStore.isModalOpen = false;
       }
     },
     close() {

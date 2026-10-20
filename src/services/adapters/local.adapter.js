@@ -1,5 +1,5 @@
 import storage from 'localforage';
-import { removeVuexORMFlags } from '@/utils/helpers';
+import { toStorable } from '@/utils/helpers';
 
 class LocalAdapter {
   async get(uri) {
@@ -23,7 +23,7 @@ class LocalAdapter {
   async post(uri, data) {
     const items = await this.get(uri);
 
-    removeVuexORMFlags(data);
+    data = toStorable(data);
     items.push(data);
 
     await storage.setItem(uri, items);
@@ -38,7 +38,7 @@ class LocalAdapter {
       const items = await this.get(parts[0]);
 
       const index = items.findIndex(it => it.id === parts[1]);
-      removeVuexORMFlags(data);
+      data = toStorable(data);
       items[index] = data;
 
       await storage.setItem(parts[0], items);
@@ -50,7 +50,7 @@ class LocalAdapter {
   }
 
   async put(uri, data) {
-    return storage.setItem(uri, data);
+    return storage.setItem(uri, toStorable(data));
   }
 
   async delete(uri) {

@@ -1,0 +1,27 @@
+@import '../../../../node_modules/@vuepic/vue-datepicker/dist/main';
+
+.dp--theme-light {
+  --dp-background-color: transparent;
+  --dp-text-color: var(--text-primary);
+  --dp-hover-color: var(--shade);
+  --dp-hover-text-color: var(--text-primary);
+  --dp-hover-icon-color: var(--text-secondary);
+  --dp-primary-color: var(--primary);
+  --dp-primary-text-color: var(--bg-primary);
+  --dp-secondary-color: var(--text-disabled);
+  --dp-border-color: var(--text-caption);
+  --dp-menu-border-color: transparent;
+  --dp-border-color-hover: var(--text-secondary);
+  --dp-disabled-color: var(--shade);
+  --dp-icon-color: var(--text-secondary);
+  --dp-font-family: #{$font-family-base};
+  --dp-font-size: .8125rem;
+}
+
+.dp--main {
+  width: 100%;
+}
+
+.dp--menu-inner {
+  padding: 0;
+}

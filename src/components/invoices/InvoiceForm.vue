@@ -6,18 +6,18 @@
                     <div class="row mb-5">
                         <TeamLogo class="col-4" :errors="errors"/>
                         <InvoiceHeader :invoice="invoice" :errors="errors" @update="updateProp"
-                                       class="col-8 text-right mb-2"/>
+                                       class="col-8 text-end mb-2"/>
                     </div>
                     <div class="row">
                         <InvoiceClientDetails :invoice="invoice" :errors="errors" @update="updateProp"
                                               class="col-6"/>
                         <InvoiceCompanyDetails :invoice="invoice" :errors="errors" @update="updateProp"
-                                               class="col-6 text-right"/>
+                                               class="col-6 text-end"/>
                     </div>
                     <div class="row mt-3">
                         <AppEditable :value="invoice.notes"
                                      class="col-12"
-                                     :placeholder="$t('insert_note')"
+                                     :placeholder="t('insert_note')"
                                      @change="updateProp({ notes: $event })"/>
                     </div>
                     <div class="row">
@@ -32,10 +32,11 @@
                         </table>
                     </div>
                     <hr>
-                    <div class="row pl-3 pr-3 justify-content-between">
-                        <InvoiceBankDetails :invoice="invoice" :errors="errors" @update="updateProp"/>
+                    <div class="row ps-3 pe-3 justify-content-between">
+                        <InvoiceBankDetails :invoice="invoice" :errors="errors" @update="updateProp"
+                                            class="col-auto px-0"/>
                         <InvoiceContactDetails :invoice="invoice" :errors="errors" @update="updateProp"
-                                               class="text-right"/>
+                                               class="col-auto px-0 text-end"/>
                     </div>
                 </div>
             </div>
@@ -43,21 +44,25 @@
     </div>
 </template>
 <script>
-import { mapGetters, mapState } from 'vuex';
-import InvoiceRow from '@/components/invoices/InvoiceRow';
-import InvoiceClientDetails from '@/components/invoices/InvoiceClientDetails';
-import InvoiceCompanyDetails from '@/components/invoices/InvoiceCompanyDetails';
-import InvoiceBankDetails from '@/components/invoices/InvoiceBankDetails';
-import InvoiceContactDetails from '@/components/invoices/InvoiceContactDetails';
-import InvoiceHeader from '@/components/invoices/InvoiceHeader';
-import InvoiceTotals from '@/components/invoices/InvoiceTotals';
-import AppEditable from '@/components/form/AppEditable';
-import TeamLogo from '@/components/team/TeamLogo';
-import InvoiceRowsHeader from '@/components/invoices/InvoiceRowsHeader';
-import InvoiceAddRowBtn from '@/components/invoices/InvoiceAddRowBtn';
+import { mapState, mapStores } from 'pinia';
+import { useTranslation } from 'i18next-vue';
+import InvoiceRow from '@/components/invoices/InvoiceRow.vue';
+import InvoiceClientDetails from '@/components/invoices/InvoiceClientDetails.vue';
+import InvoiceCompanyDetails from '@/components/invoices/InvoiceCompanyDetails.vue';
+import InvoiceBankDetails from '@/components/invoices/InvoiceBankDetails.vue';
+import InvoiceContactDetails from '@/components/invoices/InvoiceContactDetails.vue';
+import InvoiceHeader from '@/components/invoices/InvoiceHeader.vue';
+import InvoiceTotals from '@/components/invoices/InvoiceTotals.vue';
+import AppEditable from '@/components/form/AppEditable.vue';
+import TeamLogo from '@/components/team/TeamLogo.vue';
+import InvoiceRowsHeader from '@/components/invoices/InvoiceRowsHeader.vue';
+import InvoiceAddRowBtn from '@/components/invoices/InvoiceAddRowBtn.vue';
+import { useInvoicesStore } from '@/store/invoices';
 
 export default {
-  i18nOptions: { namespaces: 'invoice-form' },
+  setup() {
+    return useTranslation('invoice-form');
+  },
   components: {
     InvoiceAddRowBtn,
     TeamLogo,
@@ -72,12 +77,8 @@ export default {
     AppEditable,
   },
   computed: {
-    ...mapState({
-      errors: state => state.invoices.errors,
-    }),
-    ...mapGetters({
-      invoice: 'invoices/invoice',
-    }),
+    ...mapStores(useInvoicesStore),
+    ...mapState(useInvoicesStore, ['errors', 'invoice']),
   },
   watch: {
     '$route.params.id'() {
@@ -89,10 +90,10 @@ export default {
   },
   methods: {
     getInvoice() {
-      this.$store.dispatch('invoices/getInvoice', this.$route.params.id);
+      this.invoicesStore.getInvoice(this.$route.params.id);
     },
     updateProp(props) {
-      this.$store.dispatch('invoices/updateInvoice', {
+      this.invoicesStore.updateInvoice({
         props,
         invoiceId: this.invoice.id,
       });

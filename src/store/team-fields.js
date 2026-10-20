@@ -1,31 +1,28 @@
+import { defineStore } from 'pinia';
+import { useRepo } from 'pinia-orm';
 import TeamField from '@/store/models/team-field';
+import { useTeamsStore } from '@/store/teams';
+import { updateRecord } from '@/store/orm';
 
-export default {
-  namespaced: true,
-  state: {},
-  mutations: {},
+const repo = () => useRepo(TeamField);
+
+export const useTeamFieldsStore = defineStore('teamFields', {
   actions: {
     init() {},
     terminate() {},
-    async teamFieldProps(store, payload) {
-      return TeamField.update({
-        where: payload.fieldId,
-        data: payload.props,
-      });
+    teamFieldProps(payload) {
+      return updateRecord(repo(), payload.fieldId, payload.props);
     },
-    async updateTeamField({ dispatch }, payload) {
-      await dispatch('teamFieldProps', payload);
-      return dispatch('teams/updateTeam', null, { root: true });
+    updateTeamField(payload) {
+      this.teamFieldProps(payload);
+      return useTeamsStore().updateTeam(null);
     },
-    async addNewField(store, teamId) {
-      const field = await TeamField.createNew();
-      field.$update({
-        team_id: teamId,
-      });
+    addNewField(teamId) {
+      repo().save({ team_id: teamId });
     },
-    async deleteTeamField({ dispatch }, fieldId) {
-      await TeamField.delete(fieldId);
-      return dispatch('teams/updateTeam', null, { root: true });
+    deleteTeamField(fieldId) {
+      repo().destroy(fieldId);
+      return useTeamsStore().updateTeam(null);
     },
   },
-};
+});

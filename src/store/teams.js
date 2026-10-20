@@ -1,55 +1,54 @@
+import { defineStore } from 'pinia';
+import { useRepo } from 'pinia-orm';
 import TeamService from '@/services/team.service';
 import Team from '@/store/models/team';
+import TeamField from '@/store/models/team-field';
+import { useBankAccountsStore } from '@/store/bank-accounts';
+import { useClientsStore } from '@/store/clients';
+import { useDataStore } from '@/store/data';
+import { useInvoicesStore } from '@/store/invoices';
+import { useTaxesStore } from '@/store/taxes';
+import { replaceAll, updateRecord } from '@/store/orm';
 
-export default {
-  namespaced: true,
-  state: {
+const repo = () => useRepo(Team);
+
+export const useTeamsStore = defineStore('teams', {
+  state: () => ({
     isModalOpen: false,
-  },
-  mutations: {
-    isModalOpen(state, isOpen) {
-      state.isModalOpen = isOpen;
-    },
-  },
+  }),
   actions: {
-    async init({ dispatch }) {
-      await dispatch('data/migrate', null, { root: true });
+    async init() {
+      await useDataStore().migrate();
 
-      await Promise.all([
-        dispatch('clients/terminate', null, { root: true }),
-        dispatch('bankAccounts/terminate', null, { root: true }),
-        dispatch('invoices/terminate', null, { root: true }),
-        dispatch('taxes/terminate', null, { root: true }),
-      ]);
+      const stores = [useClientsStore(), useBankAccountsStore(), useInvoicesStore(), useTaxesStore()];
+      await Promise.all(stores.map(store => store.terminate()));
 
-      await dispatch('getTeam');
+      await this.getTeam();
 
-      dispatch('clients/init', null, { root: true });
-      dispatch('bankAccounts/init', null, { root: true });
-      dispatch('invoices/init', null, { root: true });
-      dispatch('taxes/init', null, { root: true });
+      stores.forEach(store => store.init());
     },
     async terminate() {
-      return Team.deleteAll();
+      useRepo(TeamField).flush();
+      return repo().flush();
     },
     async getTeam() {
       const team = await TeamService.getTeam();
-      await Team.create({ data: team });
+      replaceAll(repo(), team);
       return team;
     },
-    async teamProps({ getters }, props) {
-      return getters.team.$update(props);
+    teamProps(props) {
+      return updateRecord(repo(), this.team.id, props);
     },
-    async updateTeam({ getters, dispatch }, props) {
+    async updateTeam(props) {
       if (props) {
-        await dispatch('teamProps', props);
+        this.teamProps(props);
       }
-      return TeamService.updateTeam(getters.team);
+      return TeamService.updateTeam(this.team);
     },
   },
   getters: {
     team() {
-      return Team.query().with(['fields']).first();
+      return repo().query().with('fields').first();
     },
   },
-};
+});

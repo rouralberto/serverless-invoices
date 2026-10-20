@@ -1,3 +1,4 @@
+import { useRepo } from 'pinia-orm';
 import data from '@/services/data.service';
 import Team from '@/store/models/team';
 
@@ -5,7 +6,7 @@ class TeamService {
   async getTeam() {
     let team = await data.get('team');
     if (!team) {
-      team = new Team();
+      team = useRepo(Team).make();
       await this.updateTeam(team);
     }
 

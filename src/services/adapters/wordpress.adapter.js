@@ -1,8 +1,8 @@
 import axios from 'axios';
-import app from '@/main';
+import progress from '@/services/progress.service';
 import config from '@/config/app.config';
 import NotificationService from '@/services/notification.service';
-import { removeVuexORMFlags } from '@/utils/helpers';
+import { toStorable } from '@/utils/helpers';
 
 const http = axios.create({
   baseURL: config.api_url || '',
@@ -13,25 +13,25 @@ const http = axios.create({
 
 http.interceptors.request.use((request) => {
   if (typeof request.hideLoading === 'undefined' || !request.hideLoading) {
-    app.$Progress.start();
+    progress.start();
   }
   return request;
 }, (error) => {
-  app.$Progress.finish();
+  progress.finish();
 
   NotificationService.error('Network error. Check your connection');
   return Promise.reject(error);
 });
 
 http.interceptors.response.use((response) => {
-  app.$Progress.finish();
+  progress.finish();
 
   return response;
 }, (error) => {
-  app.$Progress.finish();
+  progress.finish();
 
   // Server down
-  if (error.response.status >= 500) {
+  if (error.response && error.response.status >= 500) {
     NotificationService.error('Server Unavailable.');
     return Promise.reject(error);
   }
@@ -73,7 +73,7 @@ class WordpressAdapter {
   }
 
   async post(uri, data) {
-    removeVuexORMFlags(data);
+    data = toStorable(data);
     await http.post(`si_${uri}`, {
       content: JSON.stringify(data),
       status: 'publish',
@@ -83,7 +83,7 @@ class WordpressAdapter {
   }
 
   async patch(uri, data) {
-    removeVuexORMFlags(data);
+    data = toStorable(data);
     const parts = uri.split('/');
 
     if (parts.length === 2) {

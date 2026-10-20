@@ -1,49 +1,46 @@
+import { defineStore } from 'pinia';
+import { useRepo } from 'pinia-orm';
 import ClientField from '@/store/models/client-field';
+import { useClientsStore } from '@/store/clients';
+import { updateRecord } from '@/store/orm';
 
-export default {
-  namespaced: true,
-  state: {},
-  mutations: {},
+const repo = () => useRepo(ClientField);
+
+export const useClientFieldsStore = defineStore('clientFields', {
   actions: {
     init() {},
     terminate() {},
-    async clientFieldProps(store, payload) {
-      return ClientField.update({
-        where: payload.fieldId,
-        data: payload.props,
-      });
+    clientFieldProps(payload) {
+      return updateRecord(repo(), payload.fieldId, payload.props);
     },
-    async updateClientField({ dispatch }, payload) {
-      const field = await dispatch('clientFieldProps', payload);
-      return dispatch('clients/updateClient', {
+    updateClientField(payload) {
+      const field = this.clientFieldProps(payload);
+      if (!field) {
+        return;
+      }
+      return useClientsStore().updateClient({
         clientId: field.client_id,
-      }, { root: true });
-    },
-    async addNewField(store, clientId) {
-      const field = await ClientField.createNew();
-      field.$update({
-        client_id: clientId,
       });
     },
-    async addAllFields(store, clientId) {
+    addNewField(clientId) {
+      repo().save({ client_id: clientId });
+    },
+    addAllFields(clientId) {
       // Get all distinct custom fields
-      const uniqueLabels = ClientField.all()
+      const uniqueLabels = repo().all()
         .map(field => field.label)
         .filter((value, index, self) => self.indexOf(value) === index);
 
-      await Promise.all(uniqueLabels.map(async (label) => {
-        const field = await ClientField.createNew();
-        await field.$update({
-          label,
-          client_id: clientId,
-        });
-      }));
+      repo().save(uniqueLabels.map(label => ({
+        label,
+        client_id: clientId,
+      })));
     },
-    async deleteClientField({ dispatch }, fieldId) {
-      const field = await ClientField.delete(fieldId);
-      return dispatch('clients/updateClient', {
+    deleteClientField(fieldId) {
+      const field = repo().destroy(fieldId);
+      return useClientsStore().updateClient({
         clientId: field.client_id,
-      }, { root: true }); // TODO: pass clientId to make generic
+      }); // TODO: pass clientId to make generic
     },
   },
-};
+});

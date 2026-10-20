@@ -1,6 +1,6 @@
 <template>
     <div class="invalid-feedback" v-if="errors.has(field)">
-        <template v-for="error in errors.get(field)">
+        <template v-for="error in errors.get(field)" :key="error">
             {{ error }} <br>
         </template>
     </div>

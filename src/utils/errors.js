@@ -15,7 +15,7 @@ export default class Errors {
   }
 
   has(field) {
-    return this.errors && this.errors.hasOwnProperty(field);
+    return this.errors && Object.hasOwn(this.errors, field);
   }
 
   clear() {

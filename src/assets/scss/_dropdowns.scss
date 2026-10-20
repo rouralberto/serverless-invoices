@@ -9,3 +9,8 @@
     transition: all 0.15s ease-out;
   }
 }
+
+// bootstrap-vue-next marks caret-less toggles but leaves hiding the caret to the app.
+.dropdown-toggle-no-caret::after {
+  display: none;
+}

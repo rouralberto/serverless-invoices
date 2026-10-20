@@ -18,12 +18,13 @@
 </template>
 
 <script>
-import AppError from '@/components/form/AppError';
+import AppError from '@/components/form/AppError.vue';
 
 export default {
   components: {
     AppError,
   },
   props: ['errors', 'label', 'value', 'field'],
+  emits: ['input'],
 };
 </script>

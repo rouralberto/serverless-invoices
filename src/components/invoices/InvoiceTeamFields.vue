@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-for="field in invoice.team_fields">
+        <div v-for="field in invoice.team_fields" :key="field.id">
             <span :class="{'d-print-none': !field.value }">{{ field.label }}: </span>
             <AppEditable :value="field.value"
                          :placeholder="field.label"
@@ -10,21 +10,27 @@
     </div>
 </template>
 <script>
-import AppEditable from '@/components/form/AppEditable';
+import { mapStores } from 'pinia';
+import AppEditable from '@/components/form/AppEditable.vue';
+import { useTeamFieldsStore } from '@/store/team-fields';
+import { useInvoiceTeamFieldsStore } from '@/store/invoice-team-fields';
 
 export default {
   props: ['invoice'],
   components: {
     AppEditable,
   },
+  computed: {
+    ...mapStores(useInvoiceTeamFieldsStore, useTeamFieldsStore),
+  },
   methods: {
     updateProp(props, field) {
-      this.$store.dispatch('invoiceTeamFields/updateInvoiceTeamField', {
+      this.invoiceTeamFieldsStore.updateInvoiceTeamField({
         props,
         fieldId: field.id,
         invoiceId: this.invoice.id,
       });
-      this.$store.dispatch('teamFields/updateTeamField', {
+      this.teamFieldsStore.updateTeamField({
         fieldId: field.team_field_id,
         props,
       });

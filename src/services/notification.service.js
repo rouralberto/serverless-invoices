@@ -1,23 +1,23 @@
-import Vue from 'vue';
+import { notify } from '@kyvg/vue3-notification';
 
 class NotificationService {
   success(text) {
-    return Vue.notify({
+    return notify({
       type: 'success',
       text,
     });
   }
 
   error(text, duration = 5000) {
-    return Vue.notify({
+    return notify({
       type: 'error',
       text,
       duration,
     });
   }
 
-  stickyError(text, title) {
-    return this.error(text, title, -1);
+  stickyError(text) {
+    return this.error(text, -1);
   }
 }
 

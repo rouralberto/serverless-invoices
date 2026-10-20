@@ -1,4 +1,11 @@
 .table {
+  // Bootstrap 5 draws a bottom border on every cell; keep Bootstrap 4's top borders
+  // so there's no line under the last row.
+  > :not(caption) > * > * {
+    border-bottom-width: 0;
+    border-top-width: var(--bs-border-width);
+  }
+
   &--card {
     background-color: var(--dp02);
     border-radius: $card-border-radius;
