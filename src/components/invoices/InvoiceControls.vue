@@ -1,38 +1,54 @@
 <template>
-    <div class="row" v-if="invoice">
-        <div class="col-12 mb-4 d-flex justify-content-between align-items-start">
-            <router-link class="btn btn-sm btn-light btn--icon-left"
-                         :to="{name: 'invoices'}">
-                <i class="material-icons">arrow_back</i>
-                <span class="d-inline-block">{{ t('back') }}</span>
+    <div class="editor-toolbar" v-if="invoice">
+        <div class="editor-toolbar__start">
+            <router-link class="btn-icon" :to="{ name: 'invoices' }" :title="t('back')">
+                <i class="material-icons-round md-20">arrow_back</i>
             </router-link>
-            <div class="d-flex align-items-center">
-                <AppSelect :value="getStatusObj"
-                           class="mb-0 me-2 text-capitalize"
-                           :options="invoiceStatuses"
-                           track-by="value"
-                           label-field="name"
-                           @input="updateProp({status: $event.value})"/>
-                <button class="btn btn-outline-dark"
-                        v-if="invoice.status === 'draft'"
-                        @click="bookInvoice">{{ t('book') }}
-                </button>
-                <AppDropdown>
-                    <template #button-content>
-                        <i class="material-icons">more_vert</i>
-                    </template>
-                    <li><h6 class="dropdown-header">{{ t('design_and_layout') }}</h6></li>
-                    <li>
-                        <button type="button" class="dropdown-item" @click="toggleCompact">
-                            {{ invoice.is_compact ? t('comfortable') : t('compact') }}
-                        </button>
-                    </li>
-                    <li><button type="button" class="dropdown-item" @click="openCustomizationsModal">{{ t('customize') }}</button></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><button type="button" class="dropdown-item" @click="print">{{ t('download_pdf') }}</button></li>
-                    <li><button type="button" class="dropdown-item" @click="deleteInvoice">{{ t('delete') }}</button></li>
-                </AppDropdown>
+            <div>
+                <div class="editor-toolbar__title">{{ t('invoice-header:invoice_title') }} {{ invoice.number }}</div>
+                <span class="status-pill" :class="`status-pill--${invoice.status}`">{{ t(`statuses.${invoice.status}`) }}</span>
             </div>
+        </div>
+        <div class="editor-toolbar__end">
+            <AppSelect :value="getStatusObj"
+                       class="mb-0 text-capitalize"
+                       :options="invoiceStatuses"
+                       track-by="value"
+                       label-field="name"
+                       @input="updateProp({status: $event.value})"/>
+            <button class="btn btn-outline-secondary"
+                    v-if="invoice.status === 'draft'"
+                    @click="bookInvoice">
+                <i class="material-icons-round md-18">bookmark_added</i>
+                {{ t('book') }}
+            </button>
+            <button class="btn btn-primary" @click="print">
+                <i class="material-icons-round md-18">picture_as_pdf</i>
+                {{ t('download_pdf') }}
+            </button>
+            <AppDropdown toggle-class="btn-icon">
+                <template #button-content>
+                    <i class="material-icons-round md-20">more_vert</i>
+                </template>
+                <li><h6 class="dropdown-header">{{ t('design_and_layout') }}</h6></li>
+                <li>
+                    <button type="button" class="dropdown-item" @click="toggleCompact">
+                        <i class="material-icons-round md-18">{{ invoice.is_compact ? 'density_medium' : 'density_small' }}</i>
+                        {{ invoice.is_compact ? t('comfortable') : t('compact') }}
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="dropdown-item" @click="openCustomizationsModal">
+                        <i class="material-icons-round md-18">palette</i>{{ t('customize') }}
+                    </button>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <button type="button" class="dropdown-item text-danger" @click="deleteInvoice">
+                        <i class="material-icons-round md-18">delete</i>{{ t('delete') }}
+                    </button>
+                </li>
+            </AppDropdown>
         </div>
     </div>
 </template>
@@ -48,7 +64,7 @@ import { useInvoicesStore } from '@/store/invoices';
 
 export default {
   setup() {
-    return useTranslation(['invoice-controls', 'statuses']);
+    return useTranslation(['invoice-controls', 'statuses', 'invoice-header']);
   },
   components: {
     AppDropdown,

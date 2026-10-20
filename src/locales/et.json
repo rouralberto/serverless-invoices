@@ -1,4 +1,12 @@
 {
+  "app-header": {
+    "invoices": "Arved",
+    "clients": "Kliendid",
+    "company": "Ettevõte",
+    "data": "Andmed",
+    "theme_dark": "Tume režiim",
+    "theme_light": "Hele režiim"
+  },
   "bank-account-form": {
     "title": "Pangakonto",
     "bank_name": "Panga nimi",
@@ -78,7 +86,9 @@
       "ok_title": "Kustuta",
       "cancel_title": "Loobu"
     },
-    "notification_deleted": "Klient kustutatud"
+    "notification_deleted": "Klient kustutatud",
+    "clients_count_one": "{{count}} klient",
+    "clients_count_other": "{{count}} klienti"
   },
   "common": {
     "close": "Sulge",
@@ -179,7 +189,6 @@
     "hide_paid_invoices": "Peida Makstud Arved",
     "show_fy_summary": "Näita Majandusaasta Kokkuvõtet",
     "search_client_placeholder": "Otsi kliendi nime järgi...",
-    "manage_customers": "Halda kliente",
     "customer_ranking": "Klientide edetabel",
     "fy_start": "Majandusaasta algus",
     "financial_year": "Majandusaasta {{start}}-{{end}}",
@@ -200,7 +209,11 @@
     "customer_count_one": "{{count}} klient",
     "customer_count_other": "{{count}} klienti",
     "unknown_customer": "Tundmatu klient",
-    "no_invoices": "Arveid ei leitud"
+    "no_invoices": "Arveid ei leitud",
+    "fy_summary": "Majandusaasta kokkuvõte",
+    "hide": "Peida",
+    "no_invoices_yet": "Arveid veel pole",
+    "create_first_invoice": "Loo oma esimene arve"
   },
   "invoices-list": {
     "invoice_number": "#",
@@ -288,8 +301,6 @@
     "notification_deleted": "Kustutatud"
   },
   "the-footer": {
-    "lights-on": "Tuled sisse",
-    "lights-off": "Tuled välja",
     "title": "Kõik sinu andmed salvestatakse veebilehitseja mällu ja mitte üheski serveris. \n Antud rakendus on \"Serverless\" ja ainult sinul on ligipääs sinu andmetele.",
     "what_about_my_data": "Kus mu andmed on? ",
     "github_alt": "Serverless Invoices GitHubis"

@@ -46,3 +46,10 @@ export function formatCurrency(val, digits = 2) {
     return parts.join('.');
   }
 }
+
+/**
+ * "Acme Corp" -> "AC", for avatar placeholders.
+ */
+export function initials(name) {
+  return (name || '?').split(/\s+/).slice(0, 2).map(word => word[0]).join('').toUpperCase();
+}

@@ -1,0 +1,643 @@
+// App chrome: header, page headers, cards, tables and toolbars around the invoice.
+// Everything here uses its own classes so the printed invoice is never affected.
+
+$status-colors: (
+  draft: #6b7280,
+  booked: $cyan,
+  sent: $brand,
+  paid: $green,
+  written_off: #9ca3af,
+  cancelled: #9ca3af,
+  overdue: $red,
+);
+
+// The content column. Print keeps the original 3rem offset and full-page height,
+// so invoices land on the page exactly where they always did.
+.app-main {
+  min-height: calc(100vh - #{$header-height});
+  padding-top: 2rem;
+
+  @media print {
+    min-height: 100vh;
+    padding-top: 3rem !important;
+  }
+}
+
+// Header
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  height: $header-height;
+  background: var(--header-bg);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--surface-border);
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    height: 100%;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: .9375rem;
+    letter-spacing: -.01em;
+    white-space: nowrap;
+
+    &:hover {
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    gap: .25rem;
+    overflow-x: auto;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    height: 32px;
+    padding: 0 .7rem;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: .875rem;
+    line-height: 1.5;
+    white-space: nowrap;
+    transition: background-color .15s, color .15s;
+
+    &:hover {
+      color: var(--text-primary);
+      background: var(--shade);
+      text-decoration: none;
+    }
+
+    &.active {
+      color: var(--primary);
+      background: var(--primary-soft);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+    margin-left: auto;
+  }
+}
+
+.backup-status {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  height: 32px;
+  margin-right: .25rem;
+  padding: 0 .7rem;
+  border: 1px solid var(--surface-border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: .78rem;
+  white-space: nowrap;
+
+  &:hover {
+    color: var(--text-primary);
+  }
+
+  i {
+    color: $green;
+  }
+
+  &--stale {
+    color: $red;
+
+    i {
+      color: $red;
+    }
+  }
+}
+
+// Icon buttons (header actions, table actions, toolbars)
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .25rem;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 .35rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  transition: background-color .15s, color .15s;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--text-primary);
+    background: var(--shade);
+    text-decoration: none;
+  }
+
+  &--danger:hover {
+    color: $red;
+  }
+
+  &--text {
+    padding: 0 .6rem;
+  }
+}
+
+// AppDropdown passes `btn btn-link` too; keep icon buttons from looking like links.
+.btn.btn-icon {
+  padding: 0 .35rem;
+  font-size: inherit;
+
+  &.btn-icon--text {
+    padding: 0 .6rem;
+  }
+}
+
+// Buttons centre their icon and label with flexbox rather than nudging the icon.
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .375rem;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+
+  > .material-icons-round {
+    color: var(--text-secondary);
+  }
+
+  &.active,
+  &:active {
+    color: var(--primary);
+    background: var(--primary-soft);
+  }
+}
+
+// Page header
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+
+  &__title {
+    margin: 0;
+    font-size: 1.375rem;
+    font-weight: 600;
+    letter-spacing: -.02em;
+    line-height: 1.25;
+  }
+
+  &__subtitle {
+    margin: .1rem 0 0;
+    color: var(--text-secondary);
+    font-size: .8125rem;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+  }
+}
+
+// Surfaces (cards)
+
+.surface {
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--surface-border);
+  border-radius: $surface-radius;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+
+  &__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    padding: .75rem 1.1rem;
+    border-bottom: 1px solid var(--surface-border);
+  }
+
+  &__title {
+    margin: 0;
+    font-size: .9375rem;
+    font-weight: 600;
+  }
+
+  &__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .75rem 1.25rem;
+    padding: .75rem 1.1rem;
+    border-bottom: 1px solid var(--surface-border);
+  }
+}
+
+// KPI cards
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: .875rem;
+  margin-bottom: 1.25rem;
+}
+
+.kpi {
+  display: flex;
+  align-items: center;
+  gap: .875rem;
+  margin: 0;
+  padding: .875rem 1rem;
+
+  &__icon {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--kpi-color) 14%, transparent);
+    color: var(--kpi-color);
+  }
+
+  &__icon .material-icons-round {
+    font-size: 20px;
+  }
+
+  &__label {
+    color: var(--text-secondary);
+    font-size: .75rem;
+    font-weight: 500;
+  }
+
+  &__value {
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -.02em;
+    line-height: 1.3;
+  }
+
+  &__meta {
+    color: var(--text-disabled);
+    font-size: .75rem;
+  }
+
+  &--primary { --kpi-color: var(--primary); }
+  &--success { --kpi-color: #{$green}; }
+  &--info { --kpi-color: #{$cyan}; }
+  &--danger { --kpi-color: #{$red}; }
+}
+
+// Financial year summary
+
+.fy-summary {
+  .form-select {
+    width: auto;
+  }
+
+  &__years {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem 2.5rem;
+    padding: 1rem 1.1rem;
+  }
+
+  &__label {
+    color: var(--text-secondary);
+    font-size: .75rem;
+    font-weight: 500;
+  }
+
+  &__total {
+    margin-bottom: .5rem;
+    color: var(--primary);
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+}
+
+.fy-bar {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr auto;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: .3rem;
+  font-size: .75rem;
+
+  &__label {
+    color: var(--text-secondary);
+  }
+
+  &__track {
+    height: 6px;
+    border-radius: 999px;
+    background: var(--shade);
+    overflow: hidden;
+  }
+
+  &__fill {
+    display: block;
+    height: 100%;
+    min-width: 4px;
+    border-radius: inherit;
+    background: var(--primary);
+  }
+
+  &__amount {
+    font-weight: 500;
+    text-align: right;
+  }
+}
+
+// Search
+
+.search-field {
+  position: relative;
+  flex: 1 1 280px;
+  max-width: 420px;
+  margin: 0;
+
+  > .material-icons-round {
+    position: absolute;
+    top: 50%;
+    left: .7rem;
+    transform: translateY(-50%);
+    color: var(--text-disabled);
+    pointer-events: none;
+  }
+
+  .form-control {
+    padding-left: 2.2rem;
+  }
+}
+
+.search-results-summary {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  white-space: nowrap;
+}
+
+// Data tables (invoice and client lists)
+
+.data-table {
+  margin: 0;
+  font-size: .875rem;
+
+  > :not(caption) > * > * {
+    padding: .6rem 1.1rem;
+    vertical-align: middle;
+  }
+
+  thead th {
+    padding-top: .55rem;
+    padding-bottom: .55rem;
+    color: var(--text-secondary);
+    font-size: .6875rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  tbody tr {
+    transition: background-color .12s;
+
+    &:hover > * {
+      background-color: var(--surface-hover);
+    }
+  }
+}
+
+.avatar {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: .625rem;
+  font-weight: 700;
+}
+
+// Invoice numbers in lists, so digits line up from row to row.
+.invoice-number {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .8125rem;
+  font-weight: 500;
+  letter-spacing: -.01em;
+}
+
+.with-avatar {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+}
+
+// Status pills
+
+.status-pill {
+  --pill-color: #6b7280;
+  display: inline-flex;
+  align-items: center;
+  gap: .2rem;
+  height: 20px;
+  // Baseline alignment differs between pills with and without an icon.
+  vertical-align: middle;
+  // Work Sans capitals sit high in their line box; this centres the ink, not the box.
+  padding: 1px .5rem 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--pill-color) 14%, transparent);
+  color: var(--pill-color);
+  font-size: .6875rem;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: capitalize;
+  white-space: nowrap;
+
+  @each $status, $color in $status-colors {
+    &--#{$status} {
+      --pill-color: #{$color};
+    }
+  }
+
+  &--cancelled {
+    text-decoration: line-through;
+  }
+
+  [data-bs-theme="dark"] & {
+    color: color-mix(in srgb, var(--pill-color) 55%, white);
+  }
+
+  [data-bs-theme="dark"] &--sent {
+    --pill-color: #{$brand-light};
+  }
+}
+
+// Empty states
+
+.empty-state {
+  padding: 2.5rem 1rem;
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: .75rem;
+    border-radius: 14px;
+    background: var(--primary-soft);
+    color: var(--primary);
+
+    .material-icons-round {
+      font-size: 24px;
+    }
+  }
+
+  &__text {
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+    font-size: .875rem;
+  }
+}
+
+// Invoice editor toolbar
+
+.editor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+
+  &__start,
+  &__end {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  &__start {
+    gap: .75rem;
+  }
+
+  &__title {
+    margin-bottom: .15rem;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    line-height: 1.2;
+  }
+
+  // Match the 34px buttons and selects next to it.
+  .btn-icon {
+    min-width: 34px;
+    height: 34px;
+  }
+
+  .form-group {
+    margin: 0;
+  }
+}
+
+// Footer
+
+.app-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--surface-border);
+  color: var(--text-secondary);
+
+  &__github img {
+    max-width: 1.4rem;
+    opacity: .7;
+    transition: opacity .15s;
+  }
+
+  &__github:hover img {
+    opacity: 1;
+  }
+}
+
+.dropdown-item.text-danger > .material-icons-round {
+  color: inherit;
+}
+
+
+// Small screens: navigation gets its own row, KPIs go two per row.
+@include media-breakpoint-down(md) {
+  .app-header {
+    height: auto;
+
+    &__inner {
+      flex-wrap: wrap;
+      row-gap: .25rem;
+      padding-top: .6rem;
+      padding-bottom: .4rem;
+    }
+
+    &__nav {
+      order: 3;
+      width: 100%;
+    }
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .75rem;
+  }
+
+  .kpi {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .6rem;
+    padding: 1rem;
+
+    &__value {
+      font-size: 1.2rem;
+    }
+  }
+
+  .page-header__title {
+    font-size: 1.5rem;
+  }
+}

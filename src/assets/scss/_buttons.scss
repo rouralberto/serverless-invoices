@@ -12,9 +12,9 @@
     }
   }
 
+  // Outlines are drawn inside the button so every variant has the same height.
   &-outline-secondary {
-    border-width: $btn-border-width;
-    border-color: $input-border-color;
+    box-shadow: inset 0 0 0 1px $input-border-color;
   }
 
   &-primary {
@@ -45,9 +45,8 @@
 
   &-outline-dark {
     color: var(--text-primary);
-    border-color: var(--text-primary);
+    box-shadow: inset 0 0 0 1px var(--text-primary);
     background-color: transparent;
-    border-width: $btn-border-width;
 
     &:not(:disabled):not(.disabled):active,
     &:not(:disabled):not(.disabled).active, {

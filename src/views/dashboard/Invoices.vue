@@ -1,169 +1,111 @@
 <template>
     <div>
-        <div class="row">
-            <div class="col-12 mb-4 pe-0 d-flex justify-content-between">
-              <h4 class="mb-0">
-                <img src="@/assets/img/logo.svg" alt="" width="28" height="28" class="brand-mark me-2">
-                {{ t('title') }}
-                <span class="badge fw-light">
-                  <span class="text-primary" :title="t('total_invoiced')">
-                    {{ getInvoiceTotals().amount }} ({{ getInvoiceTotals().count }})
-                  </span>
-                  <span class="text-secondary mx-2">|</span>
-                  <span class="text-success" :title="t('total_paid')">
-                    {{ getInvoiceTotals('paid').amount }} ({{ getInvoiceTotals('paid').count }})
-                  </span>
-                  <span class="text-secondary mx-2">|</span>
-                  <span class="text-info" :title="t('total_booked')">
-                    {{ getInvoiceTotals('booked').amount }} ({{ getInvoiceTotals('booked').count }})
-                  </span>
-                  <span class="text-secondary mx-2">|</span>
-                  <span class="text-danger" :title="t('total_pending')">
-                    {{ getInvoiceTotals('sent').amount }} ({{ getInvoiceTotals('sent').count }})
-                  </span>
-                </span>
-              </h4>
+        <div class="page-header">
+            <div>
+                <h1 class="page-header__title">{{ t('title') }}</h1>
+                <p class="page-header__subtitle">{{ t('invoice_count', { count: invoices.length }) }}</p>
+            </div>
+            <div class="page-header__actions">
+                <button class="btn btn-outline-secondary" @click="openCustomerRankingModal">
+                    <i class="material-icons-round md-18">leaderboard</i>
+                    {{ t('customer_ranking') }}
+                </button>
+                <button class="btn btn-primary" @click="createNewInvoice">
+                    <i class="material-icons-round md-18">add</i>
+                    {{ t('new_invoice') }}
+                </button>
+            </div>
+        </div>
+
+        <div class="kpi-grid">
+            <div v-for="kpi in kpis" :key="kpi.key" class="kpi surface" :class="`kpi--${kpi.tone}`">
+                <span class="kpi__icon"><i class="material-icons-round">{{ kpi.icon }}</i></span>
                 <div>
-                    <small class="me-3"
-                           :class="isBackupStale ? 'text-danger' : 'text-muted'"
-                           :title="lastBackupAt ? new Date(lastBackupAt).toLocaleString(locale) : t('last_backup_hint')">
-                        {{ t('last_backup', { when: lastBackupLabel }) }}
-                    </small>
-                    <button class="btn btn-sm btn-outline-secondary me-2"
-                            @click="openCustomerRankingModal">
-                      <i class="material-icons md-18 me-1">leaderboard</i>
-                      {{ t('customer_ranking') }}
-                    </button>
-                    <button class="btn btn-sm btn-outline-dark"
-                            @click="createNewInvoice">{{ t('new_invoice') }}
-                    </button>
-                    <AppDropdown size="sm">
-                        <template #button-content>
-                            <i class="material-icons">more_vert</i>
-                        </template>
-
-                        <li><button type="button" class="dropdown-item" @click="openClientsListModal">{{ t('manage_customers') }}</button></li>
-
-                        <li><hr class="dropdown-divider my-3"></li>
-
-                        <li class="dropdown-item-text px-3 pb-3">
-                            <label class="form-label mb-2 text-muted small">{{ t('fy_start') }}</label>
-                            <select
-                                v-model="selectedFyStartMonth"
-                                class="form-select form-select-sm"
-                                @change="onFyStartMonthChange">
-                                <option v-for="month in monthOptions"
-                                        :key="month.value"
-                                        :value="month.value">
-                                    {{ month.text }}
-                                </option>
-                            </select>
-                        </li>
-
-                        <li class="dropdown-item-text px-3">
-                            <div class="form-check">
-                                <input type="checkbox"
-                                       class="form-check-input"
-                                       id="hidePaidInvoicesCheckbox"
-                                       v-model="hidePaidInvoices"
-                                       @change="onHidePaidInvoicesChange">
-                                <label class="form-check-label text-muted small" for="hidePaidInvoicesCheckbox">
-                                    {{ t('hide_paid_invoices') }}
-                                </label>
-                            </div>
-                        </li>
-
-                        <li class="dropdown-item-text px-3">
-                            <div class="form-check">
-                                <input type="checkbox"
-                                       class="form-check-input"
-                                       id="showFySummaryCheckbox"
-                                       v-model="showFySummary"
-                                       @change="onShowFySummaryChange">
-                                <label class="form-check-label text-muted small" for="showFySummaryCheckbox">
-                                    {{ t('show_fy_summary') }}
-                                </label>
-                            </div>
-                        </li>
-
-                        <li><hr class="dropdown-divider my-3"></li>
-
-                        <li><button type="button" class="dropdown-item" @click="exportJson">{{ t('export') }}</button></li>
-                        <li><button type="button" class="dropdown-item" @click="openImportModal">{{ t('import') }}</button></li>
-                        <li role="presentation"><span class="dropdown-item-text px-4">—</span></li>
-                        <li><button type="button" class="dropdown-item" @click="saveJson">{{ t('save_in_s3') }}</button></li>
-                    </AppDropdown>
+                    <div class="kpi__label">{{ t(kpi.key) }}</div>
+                    <div class="kpi__value">{{ kpi.amount }}</div>
+                    <div class="kpi__meta">{{ t('invoice_count', { count: kpi.count }) }}</div>
                 </div>
             </div>
         </div>
-        <div class="row mb-4" v-if="showFySummary">
-            <div class="col-12">
-                <div class="border rounded p-3">
-                    <div class="d-flex flex-wrap">
-                        <div v-for="fyData in getFinancialYearTotals()" :key="fyData.label" class="me-4 mb-3">
-                            <div class="mb-2">
-                                <small class="text-muted d-block">{{ fyData.label }}</small>
-                                <div class="fw-bold text-primary">{{ fyData.total }}</div>
-                            </div>
-                            <div class="ms-2">
-                                <div v-for="month in fyData.months" :key="month.label" class="mb-1">
-                                    <small class="text-muted">{{ month.label }}: </small>
-                                    <small class="font-weight-medium">{{ month.amount }}</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+        <div class="surface fy-summary" v-if="showFySummary">
+            <div class="surface__header">
+                <h2 class="surface__title">{{ t('fy_summary') }}</h2>
+                <div class="d-flex align-items-center gap-2">
+                    <label class="text-secondary small text-nowrap mb-0" for="fyStartMonth">{{ t('fy_start') }}</label>
+                    <select id="fyStartMonth"
+                            v-model="selectedFyStartMonth"
+                            class="form-select form-select-sm"
+                            @change="onFyStartMonthChange">
+                        <option v-for="month in monthOptions" :key="month.value" :value="month.value">{{ month.text }}</option>
+                    </select>
+                    <button type="button" class="btn-icon" :title="t('hide')" @click="setShowFySummary(false)">
+                        <i class="material-icons-round md-18">close</i>
+                    </button>
                 </div>
             </div>
+            <div class="fy-summary__years">
+                <div v-for="fyData in financialYearTotals" :key="fyData.label" class="fy-summary__year">
+                    <div class="fy-summary__label">{{ fyData.label }}</div>
+                    <div class="fy-summary__total">{{ fyData.total }}</div>
+                    <div v-for="month in fyData.months" :key="month.label" class="fy-bar">
+                        <span class="fy-bar__label">{{ month.label }}</span>
+                        <span class="fy-bar__track"><span class="fy-bar__fill" :style="{ width: `${month.share}%` }"></span></span>
+                        <span class="fy-bar__amount">{{ month.amount }}</span>
+                    </div>
+                </div>
+                <p v-if="financialYearTotals.length === 0" class="text-secondary small mb-0">{{ t('no_invoices') }}</p>
+            </div>
         </div>
-        <div class="row mb-3">
-            <div class="col-12">
-                <div class="d-flex align-items-center">
-                    <div class="input-group search-input-group flex-grow-1">
-                        <span class="input-group-text search-icon">
-                            <i class="material-icons md-18">search</i>
-                        </span>
-                        <input type="text"
-                               class="form-control search-input"
-                               v-model="searchQuery"
-                               :placeholder="t('search_client_placeholder')">
-                        <button v-if="searchQuery"
-                                class="btn search-clear-btn"
-                                type="button"
-                                @click="searchQuery = ''">
-                            <i class="material-icons md-18">close</i>
-                        </button>
-                    </div>
-                    <div class="search-results-summary ms-3" v-if="searchQuery">
-                        <span class="text-muted small">
-                            {{ t('invoice_count', { count: filteredInvoices.length }) }}
-                            <span class="mx-1">·</span>
-                            <span class="font-weight-medium">{{ formatCurrency(filteredInvoicesTotal) }}</span>
-                        </span>
-                    </div>
-                    <button v-if="searchQuery && filteredInvoices.length"
-                            class="btn btn-outline-secondary btn-sm ms-2 d-flex align-items-center"
+
+        <div class="surface">
+            <div class="surface__toolbar">
+                <label class="search-field">
+                    <i class="material-icons-round md-18">search</i>
+                    <input type="search"
+                           class="form-control"
+                           v-model="searchQuery"
+                           :placeholder="t('search_client_placeholder')">
+                </label>
+                <div class="form-check form-switch mb-0">
+                    <input type="checkbox"
+                           class="form-check-input"
+                           role="switch"
+                           id="hidePaidInvoicesCheckbox"
+                           v-model="hidePaidInvoices"
+                           @change="onHidePaidInvoicesChange">
+                    <label class="form-check-label small" for="hidePaidInvoicesCheckbox">{{ t('hide_paid_invoices') }}</label>
+                </div>
+                <button v-if="!showFySummary" type="button" class="btn btn-sm btn-link" @click="setShowFySummary(true)">
+                    <i class="material-icons-round md-16">insights</i>
+                    {{ t('show_fy_summary') }}
+                </button>
+                <div class="search-results-summary ms-auto" v-if="searchQuery">
+                    <span class="text-secondary small">
+                        {{ t('invoice_count', { count: filteredInvoices.length }) }}
+                        <span class="mx-1">·</span>
+                        <span class="fw-medium">{{ formatCurrency(filteredInvoicesTotal) }}</span>
+                    </span>
+                    <button v-if="filteredInvoices.length"
+                            class="btn-icon"
                             type="button"
                             @click="copyFilteredInvoices">
-                        <i class="material-icons md-18 me-1">{{ copyIcon }}</i>
+                        <i class="material-icons-round md-18">{{ copyIcon }}</i>
                     </button>
                 </div>
             </div>
+            <InvoicesList :invoices="filteredInvoices">
+                <template #empty>
+                    <EmptyState v-if="invoices.length === 0" icon="receipt_long" :content="t('no_invoices_yet')">
+                        <button type="button" class="btn btn-primary" @click="createNewInvoice">
+                            <i class="material-icons-round md-18">add</i>
+                            {{ t('create_first_invoice') }}
+                        </button>
+                    </EmptyState>
+                    <EmptyState v-else icon="search_off"/>
+                </template>
+            </InvoicesList>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <InvoicesList :invoices="filteredInvoices"/>
-            </div>
-        </div>
-
-        <!-- Manage Customers Modal -->
-        <AppModal v-model="isClientsListModalOpen"
-                  centered
-                  :title="t('manage_customers')"
-                  size="lg"
-                  content-class="bg-base dp--24">
-            <ClientsList/>
-        </AppModal>
 
         <!-- Customer Ranking Modal -->
         <AppModal v-model="isCustomerRankingModalOpen"
@@ -217,12 +159,9 @@
 import { mapState, mapStores } from 'pinia';
 import { useTranslation } from 'i18next-vue';
 import InvoicesList from '@/components/invoices/InvoicesList.vue';
-import ClientsList from '@/components/clients/ClientsList.vue';
-import AppDropdown from '@/components/ui/AppDropdown.vue';
+import EmptyState from '@/components/EmptyState.vue';
 import AppModal from '@/components/ui/AppModal.vue';
 import { intlLocale } from '@/config/i18n.config';
-import { fromNow } from '@/utils/format';
-import { useDataStore } from '@/store/data';
 import { useLanguageStore } from '@/store/language';
 import { useInvoicesStore } from '@/store/invoices';
 import { useTeamsStore } from '@/store/teams';
@@ -234,13 +173,11 @@ export default {
   },
   components: {
     InvoicesList,
-    ClientsList,
-    AppDropdown,
+    EmptyState,
     AppModal,
   },
   data() {
     return {
-      isClientsListModalOpen: false,
       isCustomerRankingModalOpen: false,
       selectedFyStartMonth: this.loadFyStartMonth(),
       hidePaidInvoices: this.loadHidePaidInvoices(),
@@ -250,10 +187,9 @@ export default {
     };
   },
   computed: {
-    ...mapStores(useInvoicesStore, useDataStore),
+    ...mapStores(useInvoicesStore),
     ...mapState(useTeamsStore, ['team']),
     ...mapState(useInvoicesStore, { invoices: 'all' }),
-    ...mapState(useDataStore, ['lastBackupAt']),
     ...mapState(useLanguageStore, { languageCode: 'code' }),
     locale() {
       return intlLocale(this.languageCode);
@@ -265,12 +201,16 @@ export default {
         text: format.format(new Date(2000, index, 1)),
       }));
     },
-    lastBackupLabel() {
-      return this.lastBackupAt ? fromNow(this.lastBackupAt, this.locale) : this.t('never');
+    kpis() {
+      return [
+        { key: 'total_invoiced', icon: 'receipt_long', tone: 'primary', ...this.getInvoiceTotals() },
+        { key: 'total_paid', icon: 'payments', tone: 'success', ...this.getInvoiceTotals('paid') },
+        { key: 'total_booked', icon: 'bookmark_added', tone: 'info', ...this.getInvoiceTotals('booked') },
+        { key: 'total_pending', icon: 'schedule', tone: 'danger', ...this.getInvoiceTotals('sent') },
+      ];
     },
-    isBackupStale() {
-      const weekMs = 7 * 24 * 60 * 60 * 1000;
-      return !this.lastBackupAt || Date.now() - new Date(this.lastBackupAt).getTime() > weekMs;
+    financialYearTotals() {
+      return this.getFinancialYearTotals();
     },
     filteredInvoices() {
       let result = this.invoices;
@@ -371,19 +311,6 @@ export default {
       this.invoicesStore.createInvoice()
         .then(id => this.$router.push({ name: 'invoice', params: { id } }));
     },
-    exportJson() {
-      this.dataStore.exportJson();
-    },
-    saveJson() {
-      // storeInBucket already alerts the user when the upload fails.
-      this.dataStore.saveJson().catch(() => {});
-    },
-    openImportModal() {
-      this.dataStore.isImportModalOpen = true;
-    },
-    openClientsListModal() {
-      this.isClientsListModalOpen = true;
-    },
     openCustomerRankingModal() {
       this.isCustomerRankingModalOpen = true;
     },
@@ -452,16 +379,21 @@ export default {
       // Convert to array format and sort
       return Object.keys(fyData)
         .sort((a, b) => fyData[b].fyStart - fyData[a].fyStart) // Most recent first
-        .map(fyLabel => ({
-          label: fyLabel,
-          total: this.formatCurrency(fyData[fyLabel].total.toFixed(0)),
-          months: Object.keys(fyData[fyLabel].months)
-            .sort((a, b) => fyData[fyLabel].months[a].sortKey - fyData[fyLabel].months[b].sortKey)
-            .map(monthLabel => ({
-              label: monthLabel,
-              amount: this.formatCurrency(fyData[fyLabel].months[monthLabel].amount.toFixed(0))
-            }))
-        }));
+        .map((fyLabel) => {
+          const { months } = fyData[fyLabel];
+          const largest = Math.max(...Object.values(months).map(month => month.amount), 1);
+          return {
+            label: fyLabel,
+            total: this.formatCurrency(fyData[fyLabel].total.toFixed(0)),
+            months: Object.keys(months)
+              .sort((a, b) => months[a].sortKey - months[b].sortKey)
+              .map(monthLabel => ({
+                label: monthLabel,
+                amount: this.formatCurrency(months[monthLabel].amount.toFixed(0)),
+                share: Math.max(0, (months[monthLabel].amount / largest) * 100),
+              })),
+          };
+        });
     },
     formatCurrency(value) {
       return new Intl.NumberFormat('en-AU', {
@@ -511,19 +443,15 @@ export default {
       // Save the show FY summary preference to localStorage
       localStorage.setItem('showFySummary', JSON.stringify(show));
     },
-    onShowFySummaryChange() {
-      // Save the preference when user changes the selection
-      this.saveShowFySummary(this.showFySummary);
+    setShowFySummary(show) {
+      this.showFySummary = show;
+      this.saveShowFySummary(show);
     },
   },
 };
 </script>
 
 <style scoped>
-.brand-mark {
-  vertical-align: -5px;
-}
-
 .ranking-position .badge-lg {
   width: 32px;
   height: 32px;
@@ -532,66 +460,5 @@ export default {
   justify-content: center;
   font-size: 14px;
   font-weight: bold;
-}
-
-.dropdown-item-text {
-  min-width: 200px;
-}
-
-.dropdown-item-text .form-control-sm {
-  font-size: 0.875rem;
-}
-
-/* Search input styles with dark mode support */
-.search-input-group {
-  width: 100%;
-}
-
-.search-input-group .search-icon {
-  background-color: var(--bg-primary);
-  border: 1px solid var(--text-caption);
-  border-right: none;
-  color: var(--text-secondary);
-}
-
-.search-input-group .search-input {
-  background-color: var(--bg-primary);
-  border: 1px solid var(--text-caption);
-  border-left: none;
-  color: var(--text-primary);
-}
-
-.search-input-group .search-input::placeholder {
-  color: var(--text-disabled);
-}
-
-.search-input-group .search-input:focus,
-.search-input-group .search-input:hover {
-  background-color: var(--bg-primary);
-  border-color: var(--text-secondary);
-  box-shadow: none;
-}
-
-.search-input-group:hover .search-icon,
-.search-input-group:focus-within .search-icon,
-.search-input-group .search-input:focus + .search-clear-btn,
-.search-input-group .search-input:hover + .search-clear-btn {
-  border-color: var(--text-secondary);
-}
-
-.search-input-group .search-clear-btn {
-  background-color: var(--bg-primary);
-  border: 1px solid var(--text-caption);
-  border-left: none;
-  color: var(--text-secondary);
-}
-
-.search-input-group .search-clear-btn:hover {
-  background-color: var(--shade);
-  color: var(--text-primary);
-}
-
-.search-results-summary {
-  white-space: nowrap;
 }
 </style>

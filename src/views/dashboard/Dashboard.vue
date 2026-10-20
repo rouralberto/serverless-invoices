@@ -1,8 +1,9 @@
 <template>
     <div>
+        <AppHeader/>
         <div class="container app__content">
             <div class="row justify-content-center">
-                <div class="d-flex flex-column justify-content-between col-12 min-vh-100 pt-5 pb-2">
+                <div class="d-flex flex-column justify-content-between col-12 app-main pb-2">
                     <router-view v-slot="{ Component }">
                         <transition name="fade" mode="out-in">
                             <component :is="Component"/>
@@ -22,6 +23,7 @@
 
 <script>
 import { mapState } from 'pinia';
+import AppHeader from '@/components/AppHeader.vue';
 import ClientModal from '@/components/clients/ClientModal.vue';
 import BankAccountModal from '@/components/bank-accounts/BankAccountModal.vue';
 import TeamModal from '@/components/team/TeamModal.vue';
@@ -32,6 +34,7 @@ import { useTeamsStore } from '@/store/teams';
 
 export default {
   components: {
+    AppHeader,
     TheFooter,
     TeamModal,
     ImportModal,

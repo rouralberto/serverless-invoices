@@ -1,4 +1,12 @@
 {
+  "app-header": {
+    "invoices": "Invoices",
+    "clients": "Clients",
+    "company": "Company",
+    "data": "Data",
+    "theme_dark": "Dark mode",
+    "theme_light": "Light mode"
+  },
   "bank-account-form": {
     "title": "Bank account",
     "bank_name": "Bank name",
@@ -71,14 +79,16 @@
     "company_name": "Company name",
     "email": "Email",
     "city": "City",
-    "add_client": "Add customer",
-    "search_placeholder": "Search customers...",
+    "add_client": "Add client",
+    "search_placeholder": "Search clients...",
     "delete_modal": {
-      "title": "Delete customer",
+      "title": "Delete client",
       "ok_title": "Delete",
       "cancel_title": "Dismiss"
     },
-    "notification_deleted": "Customer deleted"
+    "notification_deleted": "Client deleted",
+    "clients_count_one": "{{count}} client",
+    "clients_count_other": "{{count}} clients"
   },
   "common": {
     "close": "Close",
@@ -179,7 +189,6 @@
     "hide_paid_invoices": "Hide Paid Invoices",
     "show_fy_summary": "Show FY Summary",
     "search_client_placeholder": "Search by client name...",
-    "manage_customers": "Manage Customers",
     "customer_ranking": "Customer Ranking",
     "fy_start": "Financial Year Start",
     "financial_year": "FY {{start}}-{{end}}",
@@ -200,7 +209,11 @@
     "customer_count_one": "{{count}} customer",
     "customer_count_other": "{{count}} customers",
     "unknown_customer": "Unknown Customer",
-    "no_invoices": "No invoices found"
+    "no_invoices": "No invoices found",
+    "fy_summary": "Financial year summary",
+    "hide": "Hide",
+    "no_invoices_yet": "No invoices yet",
+    "create_first_invoice": "Create your first invoice"
   },
   "invoices-list": {
     "invoice_number": "No.",
@@ -288,8 +301,6 @@
     "notification_deleted": "Deleted"
   },
   "the-footer": {
-    "lights-on": "Lights on",
-    "lights-off": "Lights off",
     "title": "All your data is saved in your browser and not on any server.\n                                   This application is truly serverless and only you have access to your data.",
     "what_about_my_data": "What about my data? ",
     "github_alt": "Serverless Invoices on GitHub"

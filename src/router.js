@@ -19,6 +19,11 @@ const routes = [
         component: () => import('@/views/dashboard/Invoices.vue'),
       },
       {
+        path: '/clients',
+        name: 'clients',
+        component: () => import('@/views/dashboard/Clients.vue'),
+      },
+      {
         path: '/invoice/:id',
         name: 'invoice',
         component: () => import('@/views/dashboard/Invoice.vue'),

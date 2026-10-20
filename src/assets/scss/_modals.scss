@@ -21,6 +21,26 @@
   &[open] .modal-dialog {
     animation: modal-slide-in .2s $base-ease;
   }
+
+  // Compact form chrome inside modals (client, company, bank account, ...).
+  .modal-title {
+    font-size: 1.0625rem;
+    font-weight: 600;
+  }
+
+  h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
+  label {
+    font-size: .8125rem;
+    font-weight: 500;
+  }
+
+  .nav-tabs .nav-link {
+    font-size: .875rem;
+  }
 }
 
 // The page behind an open modal shouldn't scroll.

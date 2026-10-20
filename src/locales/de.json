@@ -1,4 +1,12 @@
 {
+  "app-header": {
+    "invoices": "Rechnungen",
+    "clients": "Kunden",
+    "company": "Unternehmen",
+    "data": "Daten",
+    "theme_dark": "Dunkler Modus",
+    "theme_light": "Heller Modus"
+  },
   "bank-account-form": {
     "title": "Bankkonto",
     "bank_name": "Bankname",
@@ -78,7 +86,9 @@
       "ok_title": "Löschen",
       "cancel_title": "Abbrechen"
     },
-    "notification_deleted": "Kunde gelöscht"
+    "notification_deleted": "Kunde gelöscht",
+    "clients_count_one": "{{count}} Kunde",
+    "clients_count_other": "{{count}} Kunden"
   },
   "common": {
     "close": "Schließen",
@@ -179,7 +189,6 @@
     "hide_paid_invoices": "Bezahlte Rechnungen Ausblenden",
     "show_fy_summary": "FY-Zusammenfassung Anzeigen",
     "search_client_placeholder": "Nach Kundenname suchen...",
-    "manage_customers": "Kunden verwalten",
     "customer_ranking": "Kundenranking",
     "fy_start": "Beginn des Geschäftsjahres",
     "financial_year": "GJ {{start}}-{{end}}",
@@ -200,7 +209,11 @@
     "customer_count_one": "{{count}} Kunde",
     "customer_count_other": "{{count}} Kunden",
     "unknown_customer": "Unbekannter Kunde",
-    "no_invoices": "Keine Rechnungen gefunden"
+    "no_invoices": "Keine Rechnungen gefunden",
+    "fy_summary": "Geschäftsjahr im Überblick",
+    "hide": "Ausblenden",
+    "no_invoices_yet": "Noch keine Rechnungen",
+    "create_first_invoice": "Erstelle deine erste Rechnung"
   },
   "invoices-list": {
     "invoice_number": "Nein.",
@@ -288,8 +301,6 @@
     "notification_deleted": "Gelöscht"
   },
   "the-footer": {
-    "lights-on": "Licht an",
-    "lights-off": "Licht aus",
     "title": "All deine Daten sind in deinem Browser gespeichtert und auf keinem Server.\n                                   This application is truly serverless and only you have access to your data.",
     "what_about_my_data": "Was passiert mit meinen Daten? ",
     "github_alt": "Serverless Invoices auf GitHub"

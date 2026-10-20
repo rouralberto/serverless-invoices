@@ -1,65 +1,56 @@
 <template>
     <div class="table-responsive">
-        <div v-if="!displayInvoices" class="col-12">{{ t('loading') }}</div>
-        <table class="table table--card table-hover" v-else-if="displayInvoices && displayInvoices.length > 0">
+        <div v-if="!displayInvoices" class="p-3">{{ t('loading') }}</div>
+        <table class="table data-table" v-else-if="displayInvoices.length > 0">
             <thead>
             <tr>
                 <th>{{ t('invoice_number') }}</th>
                 <th>{{ t('client') }}</th>
                 <th>{{ t('issued_at') }}</th>
-                <th>{{ t('total') }}</th>
-                <th class="text-end">{{ t('status') }}</th>
-                <th class="text-end">
-                  <i class="pointer material-icons material-icons-round md-18">
-                    handyman
-                  </i>
-                </th>
+                <th class="text-end">{{ t('total') }}</th>
+                <th>{{ t('status') }}</th>
+                <th></th>
             </tr>
             </thead>
-            <tbody v-if="displayInvoices">
-            <tr v-for="invoice in displayInvoices" :key="invoice.id">
-                <td class="pointer" @click="openInvoice(invoice)">
-                  {{ invoice.number }}
+            <tbody>
+            <tr v-for="invoice in displayInvoices" :key="invoice.id" class="pointer" @click="openInvoice(invoice)">
+                <td class="text-nowrap"><span class="invoice-number">{{ invoice.number }}</span></td>
+                <td class="text-nowrap">
+                    <span v-if="invoice.client || invoice.client_name" class="with-avatar">
+                        <span class="avatar">{{ initials(invoice.client ? invoice.client.company_name : invoice.client_name) }}</span>
+                        {{ invoice.client ? invoice.client.company_name : invoice.client_name }}
+                    </span>
                 </td>
-                <td class="pointer" @click="openInvoice(invoice)">
-                  {{ invoice.client ? invoice.client.company_name : '' }}
-                </td>
-                <td class="pointer" @click="openInvoice(invoice)">
-                  {{ formatDate(invoice.issued_at, 'D MMM YYYY', 'YYYY-MM-DD') }}
-                </td>
-                <td class="pointer" @click="openInvoice(invoice)">
-                    {{ formatCurrency(invoice.subTotal) }}
+                <td class="text-secondary text-nowrap">{{ formatDate(invoice.issued_at, 'D MMM YYYY', 'YYYY-MM-DD') }}</td>
+                <td class="text-end text-nowrap">
+                    <span class="fw-medium">{{ formatCurrency(invoice.subTotal) }}</span>
                     <span v-if="getClientTotal(invoice.client_id) > 0" class="text-secondary">
                       / {{ formatCurrency(getClientTotal(invoice.client_id)) }}
                     </span>
-                    <small class="text-secondary" v-if="invoice.taxTotal">
-                      <br>{{ t('tax_amount', { amount: formatCurrency(invoice.taxTotal) }) }}
+                    <small class="d-block text-secondary" v-if="invoice.taxTotal">
+                      {{ t('tax_amount', { amount: formatCurrency(invoice.taxTotal) }) }}
                     </small>
                 </td>
-                <td class="pointer text-end text-capitalize" @click="openInvoice(invoice)">
-                    <i class="material-icons material-icons-round md-18 me-2 text-danger"
-                       v-if="isOverDue(invoice)"
-                       :title="t('overdue')">warning</i>
-                    <i class="material-icons material-icons-round md-18 me-2 text-warning"
-                       v-else-if="invoice.status === 'draft'">edit_note</i>
-                    <i class="material-icons material-icons-round md-18 me-2 text-success"
-                       v-else-if="invoice.status === 'paid'">done</i>
-                    <i class="material-icons material-icons-round md-18 me-2 text-muted"
-                       v-else-if="invoice.status === 'written_off'"
-                       :title="t('statuses.written_off')">money_off</i>
-                    {{ t(`statuses.${invoice.status}`) }}
+                <td class="text-nowrap">
+                    <span class="status-pill" :class="`status-pill--${invoice.status}`">{{ t(`statuses.${invoice.status}`) }}</span>
+                    <span v-if="isOverDue(invoice)" class="status-pill status-pill--overdue ms-1">
+                        <i class="material-icons-round md-14">schedule</i>{{ t('overdue') }}
+                    </span>
                 </td>
-              <td class="text-end">
-                <i class="pointer material-icons material-icons-round md-18"
-                   :title="t('duplicate')"
-                   @click="duplicateInvoice(invoice.id)">
-                  copy
-                </i>
-              </td>
+                <td class="text-end">
+                    <button type="button"
+                            class="btn-icon"
+                            :title="t('duplicate')"
+                            @click.stop="duplicateInvoice(invoice.id)">
+                        <i class="material-icons-round md-18">content_copy</i>
+                    </button>
+                </td>
             </tr>
             </tbody>
         </table>
-        <EmptyState v-else/>
+        <slot v-else name="empty">
+            <EmptyState icon="receipt_long"/>
+        </slot>
     </div>
 </template>
 <script>
@@ -67,7 +58,7 @@ import { mapState, mapStores } from 'pinia';
 import { useTranslation } from 'i18next-vue';
 import dayjs from 'dayjs/esm';
 import EmptyState from '@/components/EmptyState.vue';
-import { formatCurrency, formatDate } from '@/utils/format';
+import { formatCurrency, formatDate, initials } from '@/utils/format';
 import { useInvoicesStore } from '@/store/invoices';
 
 export default {
@@ -92,6 +83,7 @@ export default {
     },
   },
   methods: {
+    initials,
     formatDate,
     formatCurrency,
     openInvoice(invoice) {

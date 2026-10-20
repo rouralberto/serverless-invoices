@@ -1,3 +1,6 @@
+import '@fontsource/jetbrains-mono/500.css';
+import '@fontsource/material-icons';
+import '@fontsource/material-icons-round';
 import { createApp } from 'vue';
 import Notifications from '@kyvg/vue3-notification';
 import I18NextVue from 'i18next-vue';

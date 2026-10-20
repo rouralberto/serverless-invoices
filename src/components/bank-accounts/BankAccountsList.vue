@@ -26,7 +26,7 @@
             </table>
             <button class="btn btn-sm btn-link" @click="createNewAccount">{{ t('add_bank_account') }}</button>
         </div>
-        <EmptyState v-else>
+        <EmptyState v-else icon="account_balance">
             <button class="btn btn-sm btn-link" @click="createNewAccount">{{ t('add_bank_account') }}</button>
         </EmptyState>
     </div>

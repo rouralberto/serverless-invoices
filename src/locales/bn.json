@@ -1,4 +1,12 @@
 {
+  "app-header": {
+    "invoices": "চালান",
+    "clients": "গ্রাহক",
+    "company": "প্রতিষ্ঠান",
+    "data": "ডেটা",
+    "theme_dark": "ডার্ক মোড",
+    "theme_light": "লাইট মোড"
+  },
   "bank-account-form": {
     "title": "ব্যাংক অ্যাকাউন্ট",
     "bank_name": "ব্যাংক নাম",
@@ -78,7 +86,9 @@
       "ok_title": "মুছুন",
       "cancel_title": "বাতিল"
     },
-    "notification_deleted": "গ্রাহক মুছে ফেলা হয়েছে"
+    "notification_deleted": "গ্রাহক মুছে ফেলা হয়েছে",
+    "clients_count_one": "{{count}} জন গ্রাহক",
+    "clients_count_other": "{{count}} জন গ্রাহক"
   },
   "common": {
     "close": "বন্ধ করুন",
@@ -179,7 +189,6 @@
     "hide_paid_invoices": "পরিশোধিত চালান লুকান",
     "show_fy_summary": "আর্থিক বছরের সারসংক্ষেপ দেখান",
     "search_client_placeholder": "গ্রাহকের নাম দিয়ে অনুসন্ধান করুন...",
-    "manage_customers": "গ্রাহক পরিচালনা",
     "customer_ranking": "গ্রাহক র‍্যাঙ্কিং",
     "fy_start": "আর্থিক বছরের শুরু",
     "financial_year": "অর্থবছর {{start}}-{{end}}",
@@ -200,7 +209,11 @@
     "customer_count_one": "{{count}} জন গ্রাহক",
     "customer_count_other": "{{count}} জন গ্রাহক",
     "unknown_customer": "অজানা গ্রাহক",
-    "no_invoices": "কোনো চালান পাওয়া যায়নি"
+    "no_invoices": "কোনো চালান পাওয়া যায়নি",
+    "fy_summary": "আর্থিক বছরের সারসংক্ষেপ",
+    "hide": "লুকান",
+    "no_invoices_yet": "এখনও কোনো চালান নেই",
+    "create_first_invoice": "আপনার প্রথম চালান তৈরি করুন"
   },
   "invoices-list": {
     "invoice_number": "নাম্বার",
@@ -288,8 +301,6 @@
     "notification_deleted": "ডিলিটেড"
   },
   "the-footer": {
-    "lights-on": "লাইটস অন",
-    "lights-off": "লাইটস অফ",
     "title": "আপনার সমস্ত ডেটা কোনও সার্ভারে নয় আপনার ব্রাউজারে সংরক্ষণ করা হয়েছে। \n                                  এই অ্যাপ্লিকেশনটি সত্যিই সার্ভারহীন এবং কেবলমাত্র আপনি আপনার ডেটার অ্যাক্সেস পাবেন",
     "what_about_my_data": "আমার তথ্য সম্পর্কে কি?",
     "github_alt": "GitHub-এ Serverless Invoices"

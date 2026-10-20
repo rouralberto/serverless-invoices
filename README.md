@@ -12,7 +12,7 @@ Built with [Vue 3](https://vuejs.org/), [Vite](https://vite.dev/), [Pinia](https
 
 ## Features
 
-- **Truly serverless** — data stored in your browser only, no network requests
+- **Truly serverless** — data stored in your browser only; fonts and icons are bundled, so it makes no third-party requests and works fully offline
 - **No hosting required** — works locally
 - **Invoices**
   - Create & manage invoices
@@ -24,7 +24,7 @@ Built with [Vue 3](https://vuejs.org/), [Vite](https://vite.dev/), [Pinia](https
   - Written-off status tracking
 - **Bank accounts**
 - **Clients**
-  - Create & manage clients
+  - Dedicated clients page to create & manage clients
   - Custom fields
   - Client search and ranking
 - **Company details**
@@ -32,9 +32,9 @@ Built with [Vue 3](https://vuejs.org/), [Vite](https://vite.dev/), [Pinia](https
   - Custom fields
   - Default taxes
 - **Dashboard**
-  - Quick totals overview
-  - Monthly summaries
-  - Financial year summaries
+  - Totals at a glance: invoiced, paid, booked and outstanding
+  - Financial year summaries with monthly bars
+  - Search, status pills and overdue flags
   - Customer rankings
 - **S3 backup** — one-click JSON backup to AWS S3, with the time of the last backup on the dashboard
 - **Export & import** JSON data
