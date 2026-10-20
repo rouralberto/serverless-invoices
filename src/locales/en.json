@@ -67,7 +67,6 @@
     "suggest_placeholder": "Search client"
   },
   "clients-list": {
-    "title": "Manage Customers",
     "loading": "Loading",
     "company_name": "Company name",
     "email": "Email",
@@ -97,8 +96,7 @@
   "import-modal": {
     "title": "Import data",
     "warning": "Your current data will be erased and overwritten with the imported data!",
-    "button_text": "Select import file",
-    "import-error": "Invalid JSON format"
+    "button_text": "Select import file"
   },
   "invoice-bank-details": {
     "bank_name": "Add bank",
@@ -212,7 +210,8 @@
     "status": "Status",
     "overdue": "Overdue",
     "duplicate": "Duplicate Invoice",
-    "tax_amount": "({{amount}} tax)"
+    "tax_amount": "({{amount}} tax)",
+    "loading": "Loading"
   },
   "statuses": {
     "statuses": {

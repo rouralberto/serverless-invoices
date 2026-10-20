@@ -67,7 +67,6 @@
     "suggest_placeholder": "Rechercher client"
   },
   "clients-list": {
-    "title": "Gérer les clients",
     "loading": "Chargement",
     "company_name": "Nom de l'entreprise",
     "email": "E-mail",
@@ -97,8 +96,7 @@
   "import-modal": {
     "title": "Importer vos données",
     "warning": "Vos données actuelles seront supprimées et écrasées avec les données importées!",
-    "button_text": "Choisissez votre fichier à importer",
-    "import-error": "Format JSON invalide"
+    "button_text": "Choisissez votre fichier à importer"
   },
   "invoice-bank-details": {
     "bank_name": "Ajouter une banque",
@@ -212,7 +210,8 @@
     "status": "Etat",
     "overdue": "En retard",
     "duplicate": "Dupliquer la facture",
-    "tax_amount": "({{amount}} de taxes)"
+    "tax_amount": "({{amount}} de taxes)",
+    "loading": "Chargement"
   },
   "statuses": {
     "statuses": {

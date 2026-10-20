@@ -3,6 +3,7 @@
         <div class="row">
             <div class="col-12 mb-4 pe-0 d-flex justify-content-between">
               <h4 class="mb-0">
+                <img src="@/assets/img/logo.svg" alt="" width="28" height="28" class="brand-mark me-2">
                 {{ t('title') }}
                 <span class="badge fw-light">
                   <span class="text-primary" :title="t('total_invoiced')">
@@ -519,6 +520,10 @@ export default {
 </script>
 
 <style scoped>
+.brand-mark {
+  vertical-align: -5px;
+}
+
 .ranking-position .badge-lg {
   width: 32px;
   height: 32px;

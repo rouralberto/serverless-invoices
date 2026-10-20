@@ -67,7 +67,6 @@
     "suggest_placeholder": "고객 검색하기"
   },
   "clients-list": {
-    "title": "고객 관리",
     "loading": "로딩 중",
     "company_name": "회사명",
     "email": "이메일",
@@ -97,8 +96,7 @@
   "import-modal": {
     "title": "송장 정보 가져오기",
     "warning": "현재 정보는 지워지거나 가져온 정보로 덮어쓰기 됩니다!",
-    "button_text": "가져오기할 정보 선택하기",
-    "import-error": "가져오기 불가능한 JSON 형식입니다"
+    "button_text": "가져오기할 정보 선택하기"
   },
   "invoice-bank-details": {
     "bank_name": "은행 추가하기",
@@ -212,7 +210,8 @@
     "status": "상태",
     "overdue": "연체",
     "duplicate": "송장 복제",
-    "tax_amount": "(세금 {{amount}})"
+    "tax_amount": "(세금 {{amount}})",
+    "loading": "실행 중"
   },
   "statuses": {
     "statuses": {

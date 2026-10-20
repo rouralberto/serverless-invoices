@@ -79,3 +79,13 @@ body {
 .text-muted {
   color: var(--text-disabled) !important;
 }
+
+:root {
+  accent-color: var(--primary);
+}
+
+// Bootstrap's dark mode keeps --bs-primary as is; lighten it so .text-primary stays readable.
+[data-bs-theme="dark"] {
+  --bs-primary: #{$brand-light};
+  --bs-primary-rgb: #{to-rgb($brand-light)};
+}

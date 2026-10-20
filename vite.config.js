@@ -18,24 +18,25 @@ export default defineConfig(({ mode }) => {
         manifest: {
           name: 'Serverless Invoices',
           short_name: 'Invoices',
-          theme_color: '#edeff1',
-          background_color: '#ffffff',
+          theme_color: '#F5F6FA',
+          background_color: '#F5F6FA',
           display: 'standalone',
           start_url: '/',
           icons: [
-            { src: 'img/icons/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
-            { src: 'img/icons/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
+            { src: 'img/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+            { src: 'img/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
             {
-              src: 'img/icons/android-chrome-maskable-192x192.png', sizes: '192x192', type: 'image/png', purpose: 'maskable',
+              src: 'img/icons/icon-maskable-192.png', sizes: '192x192', type: 'image/png', purpose: 'maskable',
             },
             {
-              src: 'img/icons/android-chrome-maskable-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable',
+              src: 'img/icons/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable',
             },
           ],
         },
         workbox: {
           globPatterns: ['**/*.{js,css,html,ico,png,svg,json}'],
-          globIgnores: ['**/.htaccess*'],
+          // The social preview is only fetched by link crawlers, so keep it out of the offline cache.
+          globIgnores: ['**/.htaccess*', '**/social-preview.png'],
         },
       }),
     ],
