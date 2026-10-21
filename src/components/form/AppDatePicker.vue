@@ -37,14 +37,37 @@ export default {
       return this.$i18next.language && formatDate(this.value, this.displayFormat, 'YYYY-MM-DD');
     },
   },
+  beforeUnmount() {
+    this.stopWatchingOutside();
+  },
   methods: {
     open() {
       const { input } = this.$refs;
+      // Focused, so that leaving it is a blur: some browsers (Safari) only close the picker then.
+      input.focus({ preventScroll: true });
       try {
         input.showPicker();
       } catch {
-        input.focus();
+        // Focus alone has to do.
       }
+      document.addEventListener('pointerdown', this.onPointerDown, true);
+    },
+    close() {
+      const { input } = this.$refs;
+      this.stopWatchingOutside();
+      input.blur();
+      // Taking the input out of the layout for a moment closes the picker in every browser.
+      input.style.display = 'none';
+      void input.offsetWidth;
+      input.style.display = '';
+    },
+    onPointerDown(event) {
+      if (event.target !== this.$refs.input) {
+        this.close();
+      }
+    },
+    stopWatchingOutside() {
+      document.removeEventListener('pointerdown', this.onPointerDown, true);
     },
     onChange(event) {
       this.$emit('change', event.target.value || null);
