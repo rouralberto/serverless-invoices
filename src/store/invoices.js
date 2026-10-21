@@ -6,7 +6,7 @@ import { useClientsStore } from '@/store/clients';
 import { useTaxesStore } from '@/store/taxes';
 import { useTeamsStore } from '@/store/teams';
 import {
-  generateInvoiceNumber, toStorable, uuidv4, validate,
+  firstWorkingDayOfMonth, generateInvoiceNumber, lastWorkingDayOfMonth, toStorable, uuidv4, validate,
 } from '@/utils/helpers';
 import Errors from '@/utils/errors';
 
@@ -199,13 +199,13 @@ export const useInvoicesStore = defineStore('invoices', {
     find(invoiceId) {
       return this.invoices.find(it => it.id === invoiceId) || null;
     },
-    async createInvoice() {
+    async createInvoice({ issuedAt = dayjs(), dueAt = null } = {}) {
       const team = useTeamsStore().team;
       const invoice = newInvoice();
       Object.assign(invoice, {
-        issued_at: dayjs().format('YYYY-MM-DD'),
-        due_at: dayjs().add(team.invoice_due_days || 14, 'days').format('YYYY-MM-DD'),
-        number: generateInvoiceNumber(this.invoices),
+        issued_at: dayjs(issuedAt).format('YYYY-MM-DD'),
+        due_at: dayjs(dueAt || dayjs(issuedAt).add(team.invoice_due_days || 14, 'days')).format('YYYY-MM-DD'),
+        number: generateInvoiceNumber(this.invoices, issuedAt),
         late_fee: team.invoice_late_fee || 0.5,
         currency: team.currency || 'USD',
         ...teamDetails(team, invoice.id),
@@ -214,11 +214,20 @@ export const useInvoicesStore = defineStore('invoices', {
       await this.save();
       return invoice.id;
     },
+    /**
+     * The copy is the next one in a monthly series: issued on the first working day of the month
+     * after the original's, and due on the last working day of that month.
+     */
     async duplicateInvoice(originalInvoiceId) {
       const {
         id, number, status, created_at, due_at, issued_at, updated_at, ...original
       } = toStorable(this.find(originalInvoiceId));
-      const invoiceId = await this.createInvoice();
+      const originalIssuedAt = dayjs(issued_at || undefined);
+      const nextMonth = (originalIssuedAt.isValid() ? originalIssuedAt : dayjs()).add(1, 'month');
+      const invoiceId = await this.createInvoice({
+        issuedAt: firstWorkingDayOfMonth(nextMonth),
+        dueAt: lastWorkingDayOfMonth(nextMonth),
+      });
       const invoice = this.find(invoiceId);
 
       Object.assign(invoice, {

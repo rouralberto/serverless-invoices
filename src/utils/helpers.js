@@ -78,6 +78,27 @@ export function generateInvoiceNumber(invoices, date = dayjs()) {
   return `${prefix}${lastNumberToday + 1}`;
 }
 
+// Monday to Friday; public holidays are not taken into account.
+function isWorkingDay(date) {
+  return date.day() !== 0 && date.day() !== 6;
+}
+
+export function firstWorkingDayOfMonth(date) {
+  let day = dayjs(date).startOf('month');
+  while (!isWorkingDay(day)) {
+    day = day.add(1, 'day');
+  }
+  return day;
+}
+
+export function lastWorkingDayOfMonth(date) {
+  let day = dayjs(date).endOf('month').startOf('day');
+  while (!isWorkingDay(day)) {
+    day = day.subtract(1, 'day');
+  }
+  return day;
+}
+
 export function download(data, filename, type) {
   const url = URL.createObjectURL(new Blob([data], { type }));
   const a = document.createElement('a');
